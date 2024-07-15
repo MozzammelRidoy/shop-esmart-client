@@ -101,11 +101,12 @@ const Footer = () => {
           <NavLogo></NavLogo>
         </nav>
       </div>
-        <aside className="text-center bg-slate-800 text-xs md:text-sm text-white py-3">
+        <aside className="text-center bg-slate-800 text-xs md:text-sm text-white py-4">
           <p>
             Copyright © ${new Date().getFullYear()} - Develop By Mozzammel Ridoy
           </p>
         </aside>
+      
     </section>
   );
 };
