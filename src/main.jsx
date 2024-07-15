@@ -14,7 +14,7 @@ import router from "./Routes/Router";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <div  className="font-exo-2">
+  <div  className="font-exo-2 container mx-auto overflow-hidden">
     <QueryClientProvider client={queryClient}>
       <React.StrictMode>
          <RouterProvider router={router} />

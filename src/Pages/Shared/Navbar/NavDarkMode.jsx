@@ -25,11 +25,11 @@ const NavDarkMode = () => {
   return (
     <label className="swap swap-rotate">
       {/* this hidden checkbox controls the state */}
-      <input onChange={handleDarkMode} checked={theme === 'dark'} type="checkbox" />
+      <input className="outline-none" onChange={handleDarkMode} checked={theme === 'dark'} type="checkbox" />
 
       {/* sun icon */}
        <svg
-        className={`swap-off  text-white md:h-10 h-5 w-5 md:w-10 fill-current`}
+        className={`swap-off  text-[#FF3811] md:h-10 h-5 w-5 md:w-10 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -38,7 +38,7 @@ const NavDarkMode = () => {
         
      
       <svg
-        className={`swap-on  dark:text-black md:h-10 h-5 w-5 md:w-10 fill-current`}
+        className={`swap-on  dark:text-[#FF3811] md:h-10 h-5 w-5 md:w-10 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

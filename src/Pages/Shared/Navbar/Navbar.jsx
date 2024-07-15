@@ -6,7 +6,7 @@ import NavSearchBox from "./NavSearchBox";
 
 const Navbar = () => {
     return (
-        <section className="dark:bg-white bg-slate-900 rounded-b-[25%] grid md:grid-cols-6 grid-cols-4 px-3 md:gap-2 md:items-center md:py-6 py-4">
+        <section className="dark:bg-black bg-slate-900 rounded-b-[25%] grid md:grid-cols-6 grid-cols-4 px-3 md:gap-2 md:items-center md:py-6 py-4">
 
             {/* div for brand logo  */}
             <div className="col-span-2 md:col-span-1 order-1">
