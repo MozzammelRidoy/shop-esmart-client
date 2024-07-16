@@ -1,11 +1,19 @@
+import { Helmet } from "react-helmet-async";
+import Banner from "../Banner/Banner";
+import CategoryBanner from "../CategoryBanner/CategoryBanner";
 
 const Home = () => {
-    return (
-        <section className="">
-            <h2 className="text-4xl text-center dark:text-red-500">This is Home</h2>
-            
-        </section>
-    );
+  return (
+    <section className="md:mt-10 mt-3">
+      <Helmet>
+        <title>Shop Esmart | Home</title>
+      </Helmet>
+      <div   className="grid grid-cols-4">
+        <CategoryBanner></CategoryBanner>
+        <Banner></Banner>
+      </div>
+    </section>
+  );
 };
 
 export default Home;

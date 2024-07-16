@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { FaHome, FaLocationArrow,  FaShoppingCart } from "react-icons/fa";
-import { FaMessage } from "react-icons/fa6";
+import { FaHome, FaLocationArrow, FaShoppingCart } from "react-icons/fa";
 import { IoIosChatbubbles } from "react-icons/io";
-import { IoPersonOutline } from "react-icons/io5";
 import { MdPerson4 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
@@ -10,41 +8,36 @@ const MobileNavbar = () => {
   const [active, setActive] = useState(0);
 
   const menus = [
-    { name: "Home", icone: <FaHome />, path: "/",},
-    
+    { name: "Home", icone: <FaHome />, path: "/" },
+
     {
       name: "Chat",
-      icone: <IoIosChatbubbles  />,
+      icone: <IoIosChatbubbles />,
       path: "/chat",
-     
     },
     {
-        name: "Location",
-        icone: <FaLocationArrow />      ,
-        path: "/setting",
-       
-      },
+      name: "Location",
+      icone: <FaLocationArrow />,
+      path: "/locaion",
+    },
     {
       name: "Cart",
       icone: <FaShoppingCart />,
       path: "/carts",
-     
     },
     {
       name: "Profile",
-      icone: <MdPerson4 />      ,
+      icone: <MdPerson4 />,
       path: "/dashboard/profile",
-     
     },
   ];
 
   return (
     <section className="dark:bg-black bg-white  text-slate-500  max-h-12 container mx-auto rounded-t-[30%]">
       <ul className="flex justify-evenly   relative">
-        
         {menus.map((menu, i) => (
           <li key={i} className="">
-            <NavLink
+            <NavLink to={`${menu.path}`}
               className={"flex flex-col  items-center pt-3 "}
               onClick={() => setActive(i)}
             >
