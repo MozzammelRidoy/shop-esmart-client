@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { FaHome, FaLocationArrow, FaShoppingCart } from "react-icons/fa";
 import { IoIosChatbubbles } from "react-icons/io";
 import { MdPerson4 } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const MobileNavbar = () => {
-  const [active, setActive] = useState(0);
+  const location = useLocation();
 
   const menus = [
     { name: "Home", icone: <FaHome />, path: "/" },
@@ -18,7 +17,7 @@ const MobileNavbar = () => {
     {
       name: "Location",
       icone: <FaLocationArrow />,
-      path: "/locaion",
+      path: "/location",
     },
     {
       name: "Cart",
@@ -37,20 +36,21 @@ const MobileNavbar = () => {
       <ul className="flex justify-evenly   relative">
         {menus.map((menu, i) => (
           <li key={i} className="">
-            <NavLink to={`${menu.path}`}
+            <NavLink
+              to={`${menu.path}`}
               className={"flex flex-col  items-center pt-3 "}
-              onClick={() => setActive(i)}
             >
               <span
                 className={`text-xl cursor-pointer duration-500 ${
-                  i === active && "-mt-2 text-2xl text-[#FF3811] "
+                  location.pathname === menu.path &&
+                  "-mt-2 text-2xl text-[#FF3811] "
                 }`}
               >
                 {menu.icone}
               </span>
               <span
                 className={`${
-                  active === i
+                  location.pathname === menu.path
                     ? "translate-y-0 duration-500  text-[#FF3811] opacity-100"
                     : "translate-y-5 opacity-0"
                 }`}

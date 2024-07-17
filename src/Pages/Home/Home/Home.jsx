@@ -4,14 +4,19 @@ import CategoryBanner from "../CategoryBanner/CategoryBanner";
 
 const Home = () => {
   return (
-    <section className="md:mt-10 mt-3">
+    <section className="md:mt-6 mt-3">
       <Helmet>
         <title>Shop Esmart | Home</title>
       </Helmet>
+
       <div   className="grid grid-cols-4">
         <CategoryBanner></CategoryBanner>
         <Banner></Banner>
       </div>
+
+
+
+
     </section>
   );
 };

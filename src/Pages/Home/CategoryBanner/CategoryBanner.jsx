@@ -4,11 +4,11 @@ const CategoryBanner = () => {
   const categories = [
     { id: 1, category: "mens" },
     { id: 2, category: "womens" },
+    { id: 6, category: "accessores" },
     { id: 3, category: "kids" },
-    { id: 4, category: "toys" },
     { id: 5, category: "cosmetics" },
     { id: 8, category: "sports" },
-    { id: 6, category: "accessores" },
+    { id: 4, category: "toys" },
     { id: 7, category: "electronic" },
   ];
   return (
@@ -18,7 +18,7 @@ const CategoryBanner = () => {
     >
       {categories.map((category) => (
         <Link key={category.id} to={`/category/${category.category}`}>
-          <div className="md:h-full h-16 font-bold flex-col  w-full flex justify-center items-center dark:hover:bg-slate-700 dark:hover:shadow-slate-900 hover:bg-slate-100 hover:shadow-lg md:text-base text-sm uppercase text-wrap">
+          <div className="md:h-full h-16 font-semibold flex-col  w-full flex justify-center items-center dark:hover:bg-slate-700 dark:hover:shadow-slate-900 hover:bg-slate-100 hover:shadow-lg md:text-base text-sm uppercase text-wrap">
             {category.category}
           </div>
         </Link>

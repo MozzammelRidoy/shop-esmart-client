@@ -17,7 +17,7 @@ const NavLoginOrLogout = () => {
           </button>
         </Link>
         <div className=" text-xs md:text-2xl text-[#FF3811]">|</div>
-        <Link to={"/login"}>
+        <Link to={"/signup"}>
           <button className="md:bg-[#FF3811] text-lg md:text-base text-[#FF3811] hover:text-[#ca1e0b] md:hover:text-white md:text-white md:hover:bg-[#ca1e0b] md:px-6  md:font-semibold md:py-2 rounded-md ">
            Sign up
           </button>
