@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Banner from "../Banner/Banner";
 import CategoryBanner from "../CategoryBanner/CategoryBanner";
 import HotPicks from "../HotPicks/HotPicks";
+import ForYouProduct from "../ForYouProduct/ForYouProduct";
 
 const Home = () => {
  
@@ -20,9 +21,15 @@ const Home = () => {
 
 
       {/* Hot Picks */}
-      <div className="mt-6 md:max-w-6xl px-3 md:px-0 mx-auto">
+      <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto">
       
         <HotPicks></HotPicks>
+      </div>
+
+      {/* For You  */}
+      <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto"> 
+        <ForYouProduct></ForYouProduct>
+
       </div>
 
 

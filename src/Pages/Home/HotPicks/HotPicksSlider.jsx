@@ -47,17 +47,16 @@ const HotPicksSlider = ({ collections }) => {
               />
 
               <div className="md:h-20 h-16 px-1 py-1 flex flex-col justify-between">
-                <h2 className="md:text-base text-xs font-bold ">
+                <h2 className="md:text-sm break-all  text-xs font-bold ">
                   {product.name?.length > 29
                     ? `${product.name.slice(0, 29)}...`
                     : product.name}
                 </h2>
-                <div className="flex justify-between ">
+                <div className="flex justify-between align-bottom">
                   <p className=" ">Tk: {product.price}</p>
 
                   {product?.ratings && (
                     <span className="flex items-center text-xs md:text-lg">
-                      {product.ratings}{" "}
                       <Rating
                         className="md:max-w-20 max-w-10"
                         value={product.ratings}

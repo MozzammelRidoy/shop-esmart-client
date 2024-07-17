@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 const CategoryBanner = () => {
   const categories = [
+    { id: 6, category: "all" },
     { id: 1, category: "mens" },
     { id: 2, category: "womens" },
-    { id: 6, category: "accessores" },
     { id: 3, category: "kids" },
     { id: 5, category: "cosmetics" },
     { id: 8, category: "sports" },

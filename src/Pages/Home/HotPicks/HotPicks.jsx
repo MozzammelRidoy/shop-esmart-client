@@ -7,7 +7,6 @@ import HotPicksSlider from "./HotPicksSlider";
 const HotPicks = () => {
     const axiosPublic = useAxiosPublic(); 
     const [hotPicks, setHotPicks] = useState([]);
-    console.log(hotPicks);
 
     useEffect(()=>{
         axiosPublic.get('/products')
