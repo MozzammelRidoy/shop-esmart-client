@@ -29,7 +29,7 @@ const NavDarkMode = () => {
 
       {/* sun icon */}
        <svg
-        className={`swap-off  text-[#FF3811] md:h-10 h-5 w-5 md:w-10 fill-current`}
+        className={`swap-off  text-[#FF3811] md:h-8 h-5 w-5 md:w-8 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -38,7 +38,7 @@ const NavDarkMode = () => {
         
      
       <svg
-        className={`swap-on  dark:text-[#FF3811] md:h-10 h-5 w-5 md:w-10 fill-current`}
+        className={`swap-on  dark:text-[#FF3811] md:h-8 h-5 w-5 md:w-8 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

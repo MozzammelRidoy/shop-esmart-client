@@ -18,8 +18,10 @@ const CategoryBanner = () => {
     >
       {categories.map((category) => (
         <Link key={category.id} to={`/category/${category.category}`}>
-          <div className="md:h-full h-16 font-semibold flex-col  w-full flex justify-center items-center dark:hover:bg-slate-700 dark:hover:shadow-slate-900 hover:bg-slate-100 hover:shadow-lg md:text-base text-sm uppercase text-wrap">
+          <div className="md:h-full h-16 font-semibold flex-col  w-full flex justify-center items-center dark:hover:bg-slate-700 dark:hover:shadow-slate-900 hover:bg-slate-100 hover:shadow-lg md:text-base text-sm uppercase">
+            <p className="w-3/4 text-center mx-auto text-wrap">
             {category.category}
+            </p>
           </div>
         </Link>
       ))}

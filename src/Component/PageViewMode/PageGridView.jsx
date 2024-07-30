@@ -12,7 +12,7 @@ const PageGridView = ({ collections }) => {
         >
           <div className="md:h-80 h-48 overflow-hidden ">
             {item.img && (
-              <div className="h-3/4  border-red-500">
+              <div className="h-3/4">
                 <img
                   className="w-full h-full object-cover"
                   src={item.img}

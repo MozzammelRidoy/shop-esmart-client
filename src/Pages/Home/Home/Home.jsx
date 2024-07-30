@@ -3,6 +3,7 @@ import Banner from "../Banner/Banner";
 import CategoryBanner from "../CategoryBanner/CategoryBanner";
 import HotPicks from "../HotPicks/HotPicks";
 import ForYouProduct from "../ForYouProduct/ForYouProduct";
+import RangeAndFilter from "../../../Component/RangeAndFilter/RangeAndFilter";
 
 const Home = () => {
  
@@ -19,7 +20,7 @@ const Home = () => {
         <Banner></Banner>
       </div>
 
-
+   
       {/* Hot Picks */}
       <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto">
       
@@ -31,6 +32,9 @@ const Home = () => {
         <ForYouProduct></ForYouProduct>
 
       </div>
+     
+
+     
 
 
 

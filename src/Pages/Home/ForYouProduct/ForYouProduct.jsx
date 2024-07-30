@@ -6,13 +6,17 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const ForYouProduct = () => {
   const [collections, setCollections] = useState([]);
   const axiosPublic = useAxiosPublic();
-  const pageViewFromLS = localStorage.getItem('pageView');
+  const pageViewFromLS = localStorage.getItem("pageView") || "grid";
   const [viewMode, setViewMode] = useState(pageViewFromLS);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-    axiosPublic.get('/products')
-    .then(res => setCollections(res.data));
-  },[axiosPublic])
+  useEffect(() => {
+    axiosPublic.get("/products").then((res) => setCollections(res.data));
+  }, [axiosPublic]);
+
+  const handleLoadmore = () => {
+    setLoading(true);
+  };
 
   return (
     <section>
@@ -29,6 +33,16 @@ const ForYouProduct = () => {
       ) : (
         <PageListView collections={collections} />
       )}
+
+      <div className="w-1/3 mx-auto mt-4">
+        <button
+          onClick={handleLoadmore}
+          disabled={loading}
+          className="bg-[#FF3811] py-1 text-white rounded text-base hover:bg-[#da2e0c] text-center md:py-2 w-full "
+        >
+          {loading ? "Loading.." : "Load More"}
+        </button>
+      </div>
     </section>
   );
 };
