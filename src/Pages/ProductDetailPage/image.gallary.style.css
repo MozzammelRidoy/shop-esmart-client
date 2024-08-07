@@ -1,0 +1,6 @@
+.image-gallery-thumbnail-image {
+    @apply w-16 h-14 md:h-16; 
+}
+.image-gallery-image {
+    @apply w-full h-auto; 
+}

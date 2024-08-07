@@ -62,11 +62,11 @@ const Banner = () => {
             sliders.map(image => <SwiperSlide  key={image.id}><img className="md:h-[420px] w-full" src={image.image} alt="" /></SwiperSlide>)
         }
 
-        <div className="autoplay-progress" slot="container-end">
+        <div className="autoplay-progress w-8 h-8 md:w-12 md:h-12" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>
             <circle cx="24" cy="24" r="20"></circle>
           </svg>
-          <span ref={progressContent}></span>
+          <span className="text-xs md:text-lg" ref={progressContent}></span>
         </div>
       </Swiper>
     </div>

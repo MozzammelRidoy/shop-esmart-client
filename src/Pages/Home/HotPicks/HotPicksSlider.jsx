@@ -38,7 +38,7 @@ const HotPicksSlider = ({ collections }) => {
           className=" bg-gray-100 dark:bg-gray-900 "
           key={product._id}
         >
-          <Link to={`${product._id}`}>
+          <Link to={`product/${product._id}`}>
             <div className="flex flex-col  text-left">
               <img
                 src={product.img}

@@ -9,6 +9,7 @@ import ChatMessage from "../Pages/ChatMessage/ChatMessage";
 import Location from "../Pages/Location/Location";
 import Carts from "../Pages/Carts/Carts";
 import Profile from "../Pages/Profile/Profile";
+import ProductDetailPage from "../Pages/ProductDetailPage/ProductDetailPage";
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
         {
           path : 'dashboard/profile',
           element : <Profile></Profile>
+        },
+        {
+          path : 'product/:id',
+          element : <ProductDetailPage></ProductDetailPage>,
+          
         }
       ]
     },

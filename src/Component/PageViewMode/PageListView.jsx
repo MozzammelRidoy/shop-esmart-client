@@ -7,7 +7,7 @@ const PageListView = ({ collections }) => {
   return (
     <section className="grid md:grid-cols-2 grid-cols-1 gap-4">
       {collections.map((item) => (
-        <Link to={`/${item._id}`} key={item._id} className="hover:shadow-2xl dark:shadow-gray-600">
+        <Link to={`product/${item._id}`} key={item._id} className="hover:shadow-2xl dark:shadow-gray-600">
             <div className="grid grid-cols-3 rounded-lg h-38 md:h-48">
           {item.img && (
             <div className="col-span-1">
