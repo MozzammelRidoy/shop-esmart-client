@@ -56,7 +56,9 @@ const HotPicksSlider = ({ collections }) => {
                   <p className=" ">Tk: {product.price}</p>
 
                   {product?.ratings && (
+                    
                     <span className="flex items-center text-xs md:text-lg">
+                      
                       <Rating
                         className="md:max-w-20 max-w-10"
                         value={product.ratings}
