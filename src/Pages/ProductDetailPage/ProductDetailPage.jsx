@@ -113,8 +113,7 @@ const ProductDetailPage = () => {
               amet consectetur adipisicing elit. Nesciunt voluptatem omnis illo
               quaerat fugit molestias consequatur Lorem ipsum dolor sit amet
               consectetur adipisicing elit. Eos quibusdam labore, magni at quia
-              quos pariatur a fugit deserunt adipisci voluptate inventore
-              provident aliquid ut eum? Ipsa quis dicta error.
+              quos pariatur a fugit deserunt adipisci 
             </p>
           </div>
           {/* product action button  */}
