@@ -9,8 +9,17 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
-const HotPicksSlider = ({ collections }) => {
+const ProductsSlider = ({ collections }) => {
+  const axiosPublic = useAxiosPublic();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axiosPublic.get(`/${collections}`).then((res) => setProducts(res.data));
+  }, [axiosPublic, collections]);
+
   return (
     <Swiper
       freeMode={true}
@@ -33,12 +42,12 @@ const HotPicksSlider = ({ collections }) => {
       modules={[FreeMode]}
       className="mySwiper"
     >
-      {collections.slice(0, 9).map((product) => (
+      {products.slice(0, 9).map((product) => (
         <SwiperSlide
           className=" bg-gray-100 dark:bg-gray-900 "
           key={product._id}
         >
-          <Link to={`product/${product._id}`}>
+          <Link to={`/product/${product._id}`}>
             <div className="flex flex-col  text-left">
               <img
                 src={product.img}
@@ -56,9 +65,7 @@ const HotPicksSlider = ({ collections }) => {
                   <p className=" ">Tk: {product.price}</p>
 
                   {product?.ratings && (
-                    
                     <span className="flex items-center text-xs md:text-lg">
-                      
                       <Rating
                         className="md:max-w-20 max-w-10"
                         value={product.ratings}
@@ -88,4 +95,4 @@ const HotPicksSlider = ({ collections }) => {
   );
 };
 
-export default HotPicksSlider;
+export default ProductsSlider;

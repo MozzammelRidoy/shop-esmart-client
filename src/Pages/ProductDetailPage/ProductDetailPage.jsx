@@ -7,6 +7,8 @@ import "./image.gallary.style.css";
 import { Rating } from "@smastrom/react-rating";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import DeliveryInfo from "./DeliveryInfo/DeliveryInfo";
+import ProductsSlider from "../../Component/ProductsSlider/ProductsSlider";
+import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -14,7 +16,7 @@ const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1);
 
   const stockUpdate = "available";
- 
+
   const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
@@ -47,12 +49,17 @@ const ProductDetailPage = () => {
   };
 
   const handleAddtoCart = () => {
-    const cartInfo = { id: productDetail._id, name: productDetail.name, quantity : quantity };
+    const cartInfo = {
+      id: productDetail._id,
+      name: productDetail.name,
+      quantity: quantity,
+    };
     console.log(cartInfo);
   };
 
   return (
     <div className="md:max-w-6xl mx-auto mt-3 ">
+      <HomeAndBackButton></HomeAndBackButton>
       <div className="md:flex md:gap-4 gap-2  ">
         {/* for image  */}
         <div className="md:w-[30%] w-full ">
@@ -113,7 +120,7 @@ const ProductDetailPage = () => {
               amet consectetur adipisicing elit. Nesciunt voluptatem omnis illo
               quaerat fugit molestias consequatur Lorem ipsum dolor sit amet
               consectetur adipisicing elit. Eos quibusdam labore, magni at quia
-              quos pariatur a fugit deserunt adipisci 
+              quos pariatur a fugit deserunt adipisci
             </p>
           </div>
           {/* product action button  */}
@@ -158,8 +165,8 @@ const ProductDetailPage = () => {
               </button>
               {stockUpdate === "available" ? (
                 <Link
+                  to={`/checkout/${productDetail._id}`}
                   className={`w-1/2 md:py-2 py-1 text-white bg-[#ff3811] text-center hover:bg-[#c6290a]`}
-                  to={`checkout/${productDetail._id}`}
                 >
                   <button className=" ">Buy Now</button>
                 </Link>
@@ -176,6 +183,14 @@ const ProductDetailPage = () => {
         {/* delivery information  */}
 
         <DeliveryInfo></DeliveryInfo>
+      </div>
+      {/* releted Product  */}
+      <div className="px-2 md:px-0 md:my-10 my-5 md:space-y-4 space-y-2">
+        <h2 className="md:text-3xl text-xl font-bold flex items-center gap-2">
+          Releted Products{" "}
+        </h2>
+        {/* TODO:  <ProductsSlider collections={productDetail.category}/> */}
+        <ProductsSlider collections={"products"} />
       </div>
     </div>
   );

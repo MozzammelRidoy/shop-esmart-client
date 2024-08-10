@@ -45,7 +45,7 @@ const DeliveryInfo = () => {
             </span>{" "}
             Office Delivery :{" "}
           </span>{" "}
-          <span>Friday to Satardy, 10.00am to 11.00pm. </span>
+          <span>Friday to Saturday, 10.00am to 11.00pm. </span>
         </p>
 
         <p className="">

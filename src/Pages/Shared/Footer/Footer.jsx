@@ -2,7 +2,7 @@ import NavLogo from "./../Navbar/NavLogo";
 
 const Footer = () => {
   return (
-    <section className="flex flex-col min-h-screen justify-end">
+    <section className="flex flex-col justify-end mt-6">
       <div className="footer md:p-10 p-4 dark:bg-black bg-slate-900 text-slate-300 grid grid-cols-2 md:grid-cols-4 gap-2">
         <nav>
           <h6 className="footer-title">Services</h6>

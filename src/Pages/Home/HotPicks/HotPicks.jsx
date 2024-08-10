@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
 import { FaFire } from "react-icons/fa";
-import HotPicksSlider from "./HotPicksSlider";
+import ProductsSlider from "../../../Component/ProductsSlider/ProductsSlider";
 
 const HotPicks = () => {
-    const axiosPublic = useAxiosPublic(); 
-    const [hotPicks, setHotPicks] = useState([]);
-
-    useEffect(()=>{
-        axiosPublic.get('/products')
-        .then(res => setHotPicks(res.data))
-    },[axiosPublic])
+    
 
     return (
         <section>
@@ -21,7 +13,9 @@ const HotPicks = () => {
             </div>
 
             <div>
-                <HotPicksSlider collections={hotPicks}/>
+
+            {/* TODO :    <ProductsSlider collections={"hotPicks"}/> */}
+                <ProductsSlider collections={"products"}/>
             </div>
             
         </section>
