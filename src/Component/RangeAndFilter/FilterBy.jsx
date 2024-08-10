@@ -40,12 +40,12 @@ const FilterDropdown = () => {
   };
 
   return (
-    <div data-aos='fade-left' data-aos-duration="1500" ref={dropDownRef} className="md:w-52 w-40">
+    <div data-aos='fade-left' data-aos-duration="1500" ref={dropDownRef} className="md:w-52 w-[45%]">
       <h3 className="text-base md:text-xl">Filter by</h3>
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full text-left md:py-1 py-[1px] ps-3 pe-8 text-sm md:text-lg  border  rounded-sm outline-none"
+          className="w-full text-left md:py-1 py-[1px] md:ps-3 ps-1 md:pe-8 pe-3 text-sm md:text-lg  border  rounded-sm outline-none"
         >
           {selected}
         </button>

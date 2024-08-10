@@ -33,7 +33,7 @@ const RangeMinToMax = () => {
   };
 
   return (
-    <div data-aos="fade-right" data-aos-duration="1500">
+    <div className="w-[55%] " data-aos="fade-right" data-aos-duration="1500">
       <p className="text-base md:text-xl">Price Range</p>
       <form
         onSubmit={handleSubmit(handlePriceRange)}
@@ -46,7 +46,7 @@ const RangeMinToMax = () => {
           placeholder="min"
           min={0}
           defaultValue={range.min}
-          className="border rounded-md outline-none py-[1px] ps-1 w-16 md:w-20"
+          className="border rounded-md outline-none py-[1px] ps-1 w-12 md:w-20"
         />
         <span>To</span>
         <input
@@ -56,11 +56,11 @@ const RangeMinToMax = () => {
           placeholder="max"
           min={0}
           defaultValue={range.max}
-          className="border rounded-md outline-none py-[1px] ps-1 w-16 md:w-20"
+          className="border rounded-md outline-none py-[1px] ps-1 w-14 md:w-20"
         />
         <input
           type="submit"
-          className={`md:px-4 rounded-md px-3 py-[2px] bg-[#ff3811] hover:bg-[#b12509] text-white cursor-pointer`}
+          className={`md:px-4 rounded-md px-2 py-[2px] bg-[#ff3811] hover:bg-[#b12509] text-white cursor-pointer`}
           value={"Show"}
         />
       </form>

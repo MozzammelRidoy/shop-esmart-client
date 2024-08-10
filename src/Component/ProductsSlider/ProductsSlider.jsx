@@ -42,7 +42,7 @@ const ProductsSlider = ({ collections }) => {
       modules={[FreeMode]}
       className="mySwiper"
     >
-      {products.slice(0, 9).map((product) => (
+      {products.slice(16, 26).map((product) => (
         <SwiperSlide
           className=" bg-gray-100 dark:bg-gray-900 "
           key={product._id}

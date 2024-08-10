@@ -78,7 +78,7 @@ const ProductDetailPage = () => {
         <div className=" md:w-1/2 w-full p-2 flex flex-col justify-between md:space-y-2 space-y-1 ">
           {/* product heading or headline or title  */}
           <div>
-            <h2 className="md:text-3xl text-xl">{productDetail.name}</h2>
+            <h2 className="md:text-3xl text-xl capitalize ">{productDetail.name.toLowerCase()}</h2>
             <p className="font-semibold">
               <span className="text-green-500">Stock : </span>
               {stockUpdate === "available" ? (
