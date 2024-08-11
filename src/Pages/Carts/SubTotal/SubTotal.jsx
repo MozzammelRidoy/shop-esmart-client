@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { IoMdReturnRight } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const SubTotal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Add Shipping Charge");
   const [currentValue, setCurrentValue] = useState(0); 
+  const navigate = useNavigate();
 
   const dropDownRef = useRef(null);
 
   const options = [
-    { value: "70", label: "Inside Dhaka 70 tk" },
-    { value: "150", label: "Outside Dhaka 150 tk" },
-    { value: "00", label: "Office Delivery" },
+    { value: "70",  name: 'insideDhaka', label: "Inside Dhaka 70 tk" },
+    { value: "150", name: 'outsideDhaka', label: "Outside Dhaka 150 tk" },
+    { value: "00",  name: 'officeDelivery', label: "Office Delivery" }
   ];
 
   useEffect(() => {
@@ -46,6 +48,10 @@ const SubTotal = () => {
     e.preventDefault();
     console.log(e.target.cuppon.value);
   };
+
+  const handleCheckout = () => {
+    navigate('/checkout')
+  }
   return (
     <div className="md:w-[25%] mt-3 md:mt-0 w-full flex flex-col h-full space-y-3 bg-gray-200 dark:bg-gray-700 p-4 md:p-6">
       <h2 className="text-xl md:text-2xl">Summery</h2>
@@ -66,7 +72,7 @@ const SubTotal = () => {
             <div
               data-aos="zoom-out"
               data-aos-duration="800"
-              className="absolute bg-gray-100 text-black w-full rounded-b-sm z-10"
+              className="absolute z-20 bg-gray-100 text-black w-full rounded-b-sm "
             >
               {options.map((option, index) => (
                 <button
@@ -116,6 +122,10 @@ const SubTotal = () => {
                 <span>00 tk</span>
             </div>
             <div className="flex justify-between items-center">
+                <span>VAT+Tax</span>
+                <span>00 tk</span>
+            </div>
+            <div className="flex justify-between items-center">
                 <span>Sub Total</span>
                 <span>1200 tk</span>
             </div>
@@ -129,7 +139,7 @@ const SubTotal = () => {
         <div className="">
             <div className="divider"></div>
 
-          <button className="btn-block bg-[#ff3811] py-1 text-center text-white hover:bg-red-600 outline-none">Check Out</button>
+          <button onClick={handleCheckout} className="btn-block bg-[#ff3811] py-1 text-center text-white hover:bg-red-600 outline-none">Check Out</button>
 
         </div>
       </div>

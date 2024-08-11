@@ -10,6 +10,7 @@ import Location from "../Pages/Location/Location";
 import Carts from "../Pages/Carts/Carts";
 import Profile from "../Pages/Profile/Profile";
 import ProductDetailPage from "../Pages/ProductDetailPage/ProductDetailPage";
+import Checkout from "../Pages/Checkout/Checkout";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         {
           path : '/carts',
           element : <Carts></Carts>
+        },
+        {
+          path : '/checkout',
+          element : <Checkout></Checkout>
         },
         {
           path : 'dashboard/profile',

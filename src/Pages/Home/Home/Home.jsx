@@ -5,8 +5,6 @@ import HotPicks from "../HotPicks/HotPicks";
 import ForYouProduct from "../ForYouProduct/ForYouProduct";
 
 const Home = () => {
- 
-
   return (
     <section className="md:mt-6 mt-3">
       <Helmet>
@@ -14,31 +12,20 @@ const Home = () => {
       </Helmet>
 
       {/* brand promotion cover or slider and category section  */}
-      <div   className="grid grid-cols-4">
+      <div className="grid grid-cols-4">
         <CategoryBanner></CategoryBanner>
         <Banner></Banner>
       </div>
 
-
-
       {/* Hot Picks */}
       <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto">
-      
         <HotPicks></HotPicks>
       </div>
 
       {/* For You  */}
-      <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto"> 
+      <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto">
         <ForYouProduct></ForYouProduct>
-
       </div>
-     
-
-     
-
-
-
-
     </section>
   );
 };
