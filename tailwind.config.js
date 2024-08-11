@@ -1,4 +1,3 @@
-
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode : 'class',
@@ -12,7 +11,9 @@ export default {
   theme: {
     extend: {},
     backgroundImage : {
-      'login-bg' : 'url("src/assets/slider/slide 2.png")'
+      'login-bg' : 'url("src/assets/login/login.jpg")',
+      'signup-bg' : 'url("src/assets/login/login2.jpg")',
+      
     },
     fontFamily : {
       'exo-2' : ['"Exo 2", sans-serif'],

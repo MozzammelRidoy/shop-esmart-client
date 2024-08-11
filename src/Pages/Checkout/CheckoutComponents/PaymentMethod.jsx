@@ -100,12 +100,17 @@ const PaymentMethod = () => {
         <div className="divider"></div>
       </div>
 
-        <div>
-            {
-                payment ? <button className="btn-block bg-[#ff3811] hover:bg-red-800 text-white py-2">Order Place</button> : <button className="btn-block bg-gray-300 btn-disabled text-white py-2">Order Place</button>
-            }
-        </div>
-
+      <div>
+        {payment ? (
+          <button className="btn-block bg-[#ff3811] hover:bg-red-800 text-white py-2">
+            Order Place
+          </button>
+        ) : (
+          <button className="btn-block bg-gray-300 btn-disabled text-white py-2">
+            Order Place
+          </button>
+        )}
+      </div>
     </div>
   );
 };

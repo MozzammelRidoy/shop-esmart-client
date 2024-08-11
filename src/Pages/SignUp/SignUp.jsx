@@ -5,7 +5,7 @@ import { HiMiniLockOpen } from "react-icons/hi2";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const navigate = useNavigate();
 
   const hanldeSignUp = (e) => {
@@ -15,7 +15,7 @@ const SignUp = () => {
     <div
       data-aos="zoom-in"
       data-aos-duration="1500"
-      className="md:bg-login-bg bg-cover bg-center  text-white"
+      className="md:bg-signup-bg bg-cover bg-center  text-white"
     >
       <div className="flex justify-between items-center  bg-black bg-opacity-20 w-full px-6 py-4 md:text-xl ">
         <button
@@ -32,7 +32,7 @@ const SignUp = () => {
         </Link>
       </div>
       <div className="md:min-h-screen">
-        <h2 className="text-center md:text-4xl text-xl font-semibold my-4 text-[#ff3811]">
+        <h2 className="text-center md:text-4xl text-xl font-semibold my-4 text-white">
           Sing UP
         </h2>
         <div className="md:w-1/2 md:p-12 p-4  w-11/12 mx-auto bg-transparent backdrop-blur-sm border rounded-md">
@@ -89,10 +89,18 @@ const SignUp = () => {
             />
           </div>
           <div className="text-center mt-3">
-            <p>Already have an Account ? <Link to={'/login'}><span className="text-[#ff3811] underline font-semibold">Log in</span></Link></p>
+            <p>
+              Already have an Account ?{" "}
+              <Link to={"/login"}>
+                <span className="text-[#ff3811] underline font-semibold">
+                  Log in
+                </span>
+              </Link>
+            </p>
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
