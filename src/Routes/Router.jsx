@@ -11,6 +11,22 @@ import Carts from "../Pages/Carts/Carts";
 import Profile from "../Pages/Profile/Profile";
 import ProductDetailPage from "../Pages/ProductDetailPage/ProductDetailPage";
 import Checkout from "../Pages/Checkout/Checkout";
+import DashboardMain from "../Dashboard/AdminLayout/DashboardMain";
+import AdminHome from "../Dashboard/AdminPages/AdminHome/AdminHome/AdminHome";
+import AllProducts from "../Dashboard/AdminPages/AllProducts/AllProducts";
+import AddNewProduct from "../Dashboard/AdminPages/AddNewProduct/AddNewProduct";
+import Categories from "../Dashboard/AdminPages/Categories/Categories";
+import AllOrders from "../Dashboard/AdminPages/AllOrders/AllOrders";
+import PendingOrders from "../Dashboard/AdminPages/PendingOrders/PendingOrders";
+import AllUsers from "../Dashboard/AdminPages/AllUsers/AllUsers";
+import Coupons from "../Dashboard/AdminPages/Coupons/Coupons";
+import Messages from "../Dashboard/AdminPages/Messages/Messages";
+import Transactions from "../Dashboard/AdminPages/Transactions/Transactions";
+import AdminUsers from "../Dashboard/AdminPages/AdminUsers/AdminUsers";
+import CompleteOrders from "../Dashboard/AdminPages/CompleteOrders/CompleteOrders";
+import CanceledOrders from "../Dashboard/AdminPages/CanceledOrders/CanceledOrders";
+import SalesReports from "../Dashboard/AdminPages/SalesReports/SalesReports";
+import SiteSettings from "../Dashboard/AdminPages/SiteSettings/SiteSettings";
 
 const router = createBrowserRouter([
     {
@@ -60,7 +76,79 @@ const router = createBrowserRouter([
     {
       path : '/signup',
       element : <SignUp></SignUp>
+    }, 
+
+    // dashboard
+    {
+      path: '/dashboard',
+      element : <DashboardMain/>,
+      errorElement : <ErrorPage/>,
+      children : [
+        {
+          index : true,
+          element : <AdminHome></AdminHome>
+        },
+        {
+          path : '/dashboard/allProducts',
+          element : <AllProducts></AllProducts>
+        },
+        {
+          path : '/dashboard/addNewProduct',
+          element : <AddNewProduct></AddNewProduct>
+        },
+        {
+          path : '/dashboard/categories',
+          element : <Categories></Categories>
+        },
+        {
+          path : '/dashboard/allOrders',
+          element : <AllOrders></AllOrders>
+        },
+        {
+          path : '/dashboard/pendingOrders',
+          element : <PendingOrders></PendingOrders>
+        },
+        {
+          path : '/dashboard/allUsers',
+          element : <AllUsers></AllUsers>
+        },
+        {
+          path : '/dashboard/coupons',
+          element : <Coupons></Coupons>
+        },
+        {
+          path : '/dashboard/message',
+          element : <Messages></Messages>
+        },
+        {
+          path : '/dashboard/transactions',
+          element : <Transactions></Transactions>
+        },
+        {
+          path : '/dashboard/adminUsers',
+          element : <AdminUsers></AdminUsers>
+        },
+        {
+          path : '/dashboard/completeOrders',
+          element : <CompleteOrders></CompleteOrders>
+        },
+        {
+          path : '/dashboard/canceledOrders',
+          element : <CanceledOrders></CanceledOrders>
+        },
+        {
+          path : '/dashboard/salesReports',
+          element : <SalesReports></SalesReports>
+        },
+        {
+          path : '/dashboard/siteSettings',
+          element : <SiteSettings></SiteSettings>
+        },
+        
+       
+      ]
     }
+
   ]);
 
 
