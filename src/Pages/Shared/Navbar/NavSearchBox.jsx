@@ -11,7 +11,7 @@ const NavSearchBox = () => {
       <input
         type="text"
         name="searchText"
-        className="w-full outline-none border border-[#FF3811] md:py-2 pl-3 md:pl-5 pr-8 md:pr-14 md:text-xl l  py-1 rounded-lg"
+        className="w-full outline-none border text-black dark:text-white border-[#FF3811] md:py-2 pl-3 md:pl-5 pr-8 md:pr-14 md:text-xl l  py-1 rounded-lg"
         placeholder="Search..."
         id=""
       />

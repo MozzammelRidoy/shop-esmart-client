@@ -9,20 +9,20 @@ const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true); 
 
 
-    // user create account 
+    // user create account with email and password
     const createNewUser = (email, password) => {
         setLoading(true); 
         return createUserWithEmailAndPassword(auth, email, password); 
     }
 
-    // user login 
+    // user login with email and password
     const userLogin = (email, password) => {
         setLoading(true); 
         return signInWithEmailAndPassword(auth, email, password);
     }
 
     //user profile update 
-    const userUpdateProfile = (name, photoURL) => {
+    const userUpdateProfile = (name=null, photoURL=null) => {
         setLoading(true); 
         return updateProfile(auth.currentUser, {
             displayName : name, 

@@ -1,21 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiLockClosed } from "react-icons/hi";
 import { HiMiniLockOpen } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import GoogleLogin from "../../Component/SocialLogin/GoogleLogin/GoogleLogin";
 import FacebookLogin from "../../Component/SocialLogin/FacebookLogin/FacebookLogin";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import {
+  confirmAlert,
+  failedAlert,
+} from "../../Component/SweetAlart/SweelAlart";
+import GoogleReCaptcha from "../../Component/GoogleReCaptcha/GoogleReCaptcha";
 
 const Login = () => {
-  const {register, handleSubmit, formState: { errors }} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { user, userLogin } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const [showPassword, setShowPassword] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("Login Failed! Try Again");
+  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [isVarified, setIsVarified] = useState(false);
 
-  const onSubmit = (data) => {
-    
-    console.log(data)
-  
-  }
+  useEffect(() => {
+    if (user) return navigate("/");
+  }, [user, navigate]);
+
+  const onSubmit = async (data) => {
+    if (!isVarified) {
+      setIsCaptchaOpen(true);
+      return;
+    }
+
+    try {
+      const result = await userLogin(data.email, data.password);
+      const firebaseInfo = result?.user;
+
+      const res = await axiosPublic.patch(`/users?email=${data.email}`, {
+        lastSignInTime: firebaseInfo?.metadata?.lastSignInTime,
+      });
+
+      const matchedCount = res?.data?.result?.matchedCount;
+      if (matchedCount) {
+        confirmAlert("Login Success!");
+        return navigate(location?.state ? location.state : "/");
+      }
+    } catch (err) {
+      setIsVarified(false);
+      failedAlert(errorMessage);
+    }
+  };
   return (
     <div
       data-aos="zoom-in"
@@ -23,7 +64,7 @@ const Login = () => {
       className="md:bg-login-bg bg-cover bg-center min-h-screen  dark:text-white text-black md:text-white"
     >
       <Navbar></Navbar>
-      
+
       <div className="">
         <h2 className="text-center md:text-4xl text-xl font-semibold my-4 ">
           Log in
@@ -36,10 +77,22 @@ const Login = () => {
               <input
                 className="w-full outline-none border-b py-2 px-1 bg-transparent "
                 placeholder="your email"
-                type="email" 
-                {...register('email', {required : true})}
+                type="email"
+               
+                {...register("email", {
+                  required: "Email must be required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
+                    message: "Please enter a valid email",
+                  },
+                })}
               />
-              {errors.email && <span className="tooltip tooltip-open tooltip-right tooltip-error absolute left-14 top-3" data-tip={'Email Required'}></span>}
+              {errors.email && (
+                <span
+                  className="tooltip tooltip-open tooltip-right tooltip-error absolute md:left-14 left-12 top-3"
+                  data-tip={errors.email.message}
+                ></span>
+              )}
             </div>
             <div className="relative ">
               <label htmlFor="email">Password</label>
@@ -47,9 +100,16 @@ const Login = () => {
                 className="w-full outline-none border-b py-2 px-1 bg-transparent "
                 placeholder="your password"
                 type={`${showPassword ? "password" : "text"}`}
-                {...register('password',{required : true})}
+                {...register("password", {
+                  required: "Password must be required",
+                })}
               />
-              {errors.password && <span className="tooltip tooltip-open tooltip-right tooltip-error absolute left-20 top-3" data-tip={'Password Required'}></span>}
+              {errors.password && (
+                <span
+                  className="tooltip tooltip-open tooltip-right tooltip-error absolute left-20 top-3"
+                  data-tip={errors.password.message}
+                ></span>
+              )}
               <span
                 className="absolute right-2 top-1/2 text-2xl"
                 onClick={() => setShowPassword(!showPassword)}
@@ -61,9 +121,17 @@ const Login = () => {
               <input
                 type="submit"
                 value="Login"
-                className="btn-block text-white py-2 rounded-sm hover:bg-[#d31f0b] bg-[#FF3811]"
+                className="btn-block cursor-pointer text-white py-2 rounded-sm hover:bg-[#d31f0b] bg-[#FF3811]"
               />
             </div>
+
+            {/* google rechaptcha */}
+            {isCaptchaOpen && (
+              <GoogleReCaptcha
+                setIsVarified={setIsVarified}
+                setIsCaptchaOpen={setIsCaptchaOpen}
+              />
+            )}
           </form>
           <div className="divider">or</div>
           <div className="grid md:grid-cols-2 gap-4">
