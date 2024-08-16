@@ -43,7 +43,7 @@ const Login = () => {
       const result = await userLogin(data.email, data.password);
       const firebaseInfo = result?.user;
 
-      const res = await axiosPublic.patch(`/users?email=${data.email}`, {
+      const res = await axiosPublic.patch('/users/login',{ email : data.email,
         lastSignInTime: firebaseInfo?.metadata?.lastSignInTime,
       });
 

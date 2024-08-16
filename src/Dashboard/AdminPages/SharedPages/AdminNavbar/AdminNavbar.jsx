@@ -9,7 +9,7 @@ const AdminNavbar = () => {
       <div className="">
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
+          <div className="drawer-content ">
             {/* Page content here */}
             <label htmlFor="my-drawer" className="text-3xl text-[#ff3811] font-bold cursor-pointer">
               <RiMenuLine />

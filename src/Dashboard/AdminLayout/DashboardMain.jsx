@@ -5,7 +5,7 @@ import { BiArrowToTop } from "react-icons/bi";
 
 const DashboardMain = () => {
   return (
-    <div>
+    <div className="">
       <AdminNavbar></AdminNavbar>
       <Outlet></Outlet>
 

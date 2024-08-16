@@ -66,6 +66,7 @@ const SignUp = () => {
         isBaned: false,
         creationTime: firebaseInfo?.metadata?.creationTime,
         lastSignInTime: firebaseInfo?.metadata?.lastSignInTime,
+        activity : true
       };
       const res = await axiosPublic.post("/users", newUser);
 

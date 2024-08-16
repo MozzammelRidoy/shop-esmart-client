@@ -185,7 +185,7 @@ const AdminNavMenu = () => {
   );
 
   return (
-    <div className="drawer-side">
+    <div className="drawer-side z-50">
       <label
         htmlFor="my-drawer"
         aria-label="close sidebar"

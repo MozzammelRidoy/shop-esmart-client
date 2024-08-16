@@ -8,8 +8,8 @@ const GoogleReCaptcha = ({ setIsVarified, setIsCaptchaOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
   const axiosPublic = useAxiosPublic();
 
-  const handleCaptchaChangeToken = async (token) => {
-    if (!token) {
+  const handleCaptchaChangeToken = async (captchaToken) => {
+    if (!captchaToken) {
       failedAlert("Robot Checking Failed!");
       return;
     }
@@ -17,7 +17,7 @@ const GoogleReCaptcha = ({ setIsVarified, setIsCaptchaOpen }) => {
     setIsLoading(true);
 
     try {
-      const res = await axiosPublic.post("/captcha/verify", { token: token });
+      const res = await axiosPublic.post("/captcha/verify", { captchaToken: captchaToken });
       if (res.data.success) {
         setIsVarified(true);
       } else {

@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import TitleCover from "../../Component/TitleCover/TitleCover";
 import { Helmet } from "react-helmet-async";
-import useCapitalize from "../../hooks/useCapitalize";
+import { fristLetterCapitalize } from "../../utils/modules";
 
 
 
 const Category = () => {
     const {category} = useParams(); 
-    const capitalizedCategory = useCapitalize(category)
+    const capitalizedCategory = fristLetterCapitalize(category)
     
     
 

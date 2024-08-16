@@ -1,16 +1,28 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { confirmAlert } from "../../../Component/SweetAlart/SweelAlart";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const NavLoginOrLogout = () => {
   const { user, userLogout } = useAuth();
-  const handleLogout = () => {
-    userLogout()
-      .then(() => {
-        //logout success
-        confirmAlert("Log out Success !!");
-      })
-      .catch(() => {});
+  const axiosPublic = useAxiosPublic();
+
+  const handleLogout = async () => {
+    const logoutInfo = {
+      email: user?.email,
+      lastSignOutTime: new Date().toISOString(),
+    }
+    const res = await axiosPublic.patch('/users/logout', logoutInfo );
+    console.log(res.data);
+
+    if (res.data.success) {
+      userLogout()
+        .then(() => {
+          //logout success
+          confirmAlert("Log out Success !!");
+        })
+        .catch((err) => {console.log(err)});
+    }
   };
 
   return (
