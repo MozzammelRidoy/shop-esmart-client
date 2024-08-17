@@ -13,6 +13,7 @@ import {
   failedAlert,
 } from "../../Component/SweetAlart/SweelAlart";
 import GoogleReCaptcha from "../../Component/GoogleReCaptcha/GoogleReCaptcha";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const {
@@ -20,12 +21,13 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { user, userLogin } = useAuth();
+  const { user, userLogin, forgotPassword } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const [showPassword, setShowPassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState("Login Failed! Try Again");
+  const [showForgotPass, setShowForgotPass] = useState(false);
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isVarified, setIsVarified] = useState(false);
 
@@ -50,18 +52,52 @@ const Login = () => {
       const matchedCount = res?.data?.result?.matchedCount;
       if (matchedCount) {
         confirmAlert("Login Success!");
+        setShowForgotPass(false)
         return navigate(location?.state ? location.state : "/");
       }
     } catch (err) {
       setIsVarified(false);
+     setShowForgotPass(true)
       failedAlert(errorMessage);
     }
   };
+
+  const hadleForgotPassword = async () => {
+    
+    const  { value: email } = await Swal.fire({
+      title: "Forgot your Password ?",
+      input: "email",
+      inputLabel: "Please Enter your email address and we'll send you instructions on how to reset your password",
+      inputPlaceholder: "Enter your email address",
+      confirmButtonText: 'Reset Request',
+      confirmButtonColor: 'green',
+      customClass: {
+        title: "text-lg md:text-2xl",
+        inputLabel: 'text-xs md:w-3/5 text-center',
+        text: "text-sm md:text-xl",
+      },
+    });
+    if (email) {
+      forgotPassword(email)
+      .then(()=>{
+        confirmAlert('Password Reset Success! Check your Email')
+        setShowForgotPass(false)
+      })
+      .catch(err => {
+        console.log(err);
+        if(err){
+          failedAlert('Password Reset Failed')
+        }
+      })
+
+      
+    }
+  }
   return (
     <div
       data-aos="zoom-in"
       data-aos-duration="1500"
-      className="md:bg-login-bg bg-cover bg-center min-h-screen  dark:text-white text-black md:text-white"
+      className="md:bg-login-bg bg-cover  bg-center min-h-screen  dark:text-white text-black md:text-white"
     >
       <Navbar></Navbar>
 
@@ -116,6 +152,7 @@ const Login = () => {
               >
                 {showPassword ? <HiLockClosed /> : <HiMiniLockOpen />}
               </span>
+            {showForgotPass && <span className="absolute top-0 cursor-pointer right-0 underline text-[#ff3811] " onClick={hadleForgotPassword}>Forgot Password</span>}
             </div>
             <div className="mt-2">
               <input
