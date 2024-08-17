@@ -31,13 +31,13 @@ export const failedAlert = (message) => {
 };
 
 export const confirmationAlert = (
-  titleText = "Are you sure?",
-  textText = "You won't be able to revert this!",
-  confirmButtonText = "Yes, delete it!"
+ { titleText = "Are you sure?",
+  detailsText = "You won't be able to revert this!",
+  confirmButtonText = "Yes, delete it!"}
 ) => {
   return Swal.fire({
     title: `${titleText}`,
-    text: `${textText}`,
+    text: `${detailsText}`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#ff3811",

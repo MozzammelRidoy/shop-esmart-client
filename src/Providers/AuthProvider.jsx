@@ -62,12 +62,14 @@ const AuthProvider = ({ children }) => {
   //user observing.
   useEffect(() => {
     const unSubcribe = onAuthStateChanged(auth, async (currentUser) => {
+      setLoading(true)
+
       setUser(currentUser);
 
-      setLoading(false);
       if (!currentUser) {
         await axiosPublic.post("/logout");
       }
+      setLoading(false);
     });
     return () => {
       unSubcribe();

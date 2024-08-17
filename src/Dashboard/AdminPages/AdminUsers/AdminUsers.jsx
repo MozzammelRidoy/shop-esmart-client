@@ -12,7 +12,6 @@ import { MdDeleteForever } from "react-icons/md";
 
 const AdminUsers = () => {
   const [users, isLoading, refetch] = useUsers("/users/admin");
-  const [userType, setUserType] = useState("");
   const axiosSecure = useAxiosSecure();
 
   const isMod = true;
@@ -36,8 +35,58 @@ const AdminUsers = () => {
     );
   }
 
-  const handleUserRoleChange = (e) => {
-    setUserType(e.target.value);
+  const handleUserRoleChange = (e, email) => {
+
+    //TODO : user role check thek access change other user role check
+
+    const type = e.target.value;
+
+    confirmationAlert({
+      detailsText: "Change the type of user?",
+      confirmButtonText: "Yes! Change it",
+    }).then(async (res) => {
+      if (res.isConfirmed) {
+        const userRole = { email: email, type: type };
+
+        const res = await axiosSecure.patch("/users/type/update", userRole);
+        if (res.data.success) {
+          confirmAlert("User Type Change Success!");
+          refetch();
+        } else {
+          failedAlert("Change failed !");
+        }
+      }
+    });
+  };
+
+
+  const handleUserBaned = (e, email) => {
+
+    //TODO : user role check then ban other user 
+
+    const isBaned = e.target.value === 'true';
+    confirmationAlert({
+      detailsText: "Ban this user",
+      confirmButtonText: "Yes! Ban User",
+    }).then(async (res) => {
+      if (res.isConfirmed) {
+        const userAccess = { email: email, isBaned : isBaned  };
+
+        try{
+          const res = await axiosSecure.patch("/users/access/update", userAccess);
+          if (res.data.success) {
+            confirmAlert("This user has been successfully banned!");
+           await refetch();
+          } else {
+            failedAlert("Failed to ban user !");
+          }
+        }
+        catch(err){
+          
+          failedAlert("Failed to ban user !");
+        }
+      }
+    });
   };
 
   const handleUsersDelete = (_id) => {
@@ -83,26 +132,26 @@ const AdminUsers = () => {
                 <td className="capitalize">{admin.name}</td>
                 <td>{admin.email}</td>
                 <td>
-                  <select
+                  <select  onChange={(e)=> handleUserBaned(e, admin.email)}
                     className={`${
                       admin.isBaned ? "text-red-500" : "text-green-500"
                     }`}
                   >
-                    {admin.isBaned ? (
+                    {admin.isBaned  ? (
                       <>
-                        <option value={false} className="text-red-500">
+                        <option value={true} className="text-red-500">
                           Banned
                         </option>
-                        <option value={true} className="text-green-500">
+                        <option value={false} className="text-green-500">
                           Access
                         </option>
                       </>
                     ) : (
                       <>
-                        <option value={true} className="text-green-500">
+                        <option  value={false} className="text-green-500">
                           Access
                         </option>
-                        <option value={false} className="text-red-500">
+                        <option value={true} className="text-red-500">
                           Banned
                         </option>
                       </>
@@ -115,7 +164,7 @@ const AdminUsers = () => {
                   ) : (
                     <select
                       className="capitalize px-2 py-1"
-                      onChange={handleUserRoleChange}
+                      onChange={(e) => handleUserRoleChange(e, admin.email)}
                       default={admin.type}
                     >
                       <option value={admin.type}>{admin.type}</option>
