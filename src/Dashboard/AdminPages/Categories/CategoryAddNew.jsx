@@ -7,6 +7,10 @@ const CategoryAddNew = () => {
   const handleCategoryAdd = async (e) => {
     e.preventDefault();
     const categoryName = e.target.categoryName.value.toLowerCase();
+    const hashNumber = /\d/; 
+    if(hashNumber.test(categoryName)){
+      return failedAlert("Category name shouldn't contain numbers")
+    }
     const res = await axiosSecure.post("/categories/addnew", {
       categoryName: categoryName,
     });
