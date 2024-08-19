@@ -1,50 +1,108 @@
-
 import { useState } from "react";
 import useCategories from "../../../hooks/useCategories";
-import ReactTagInput from "./ReactTagInput";
+import ReactTagInput from "../../../Component/ReactTagInput/ReactTagInput";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import ReactFIleInput from "../../../Component/ReactFileInput/ReactFIleInput";
+import { upoloadImageToCloudinary } from "../../../Component/CloudinaryImageHost/CloudinaryImageHost";
+import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
+import {
+  confirmAlert,
+  failedAlert,
+} from "../../../Component/SweetAlart/SweelAlart";
 
 const AddNewProduct = () => {
-    const axiosSecure = useAxiosSecure(); 
+  const axiosSecure = useAxiosSecure();
 
   const [categories] = useCategories();
-  
-  const [collectProductTags, setCollectProductTags] = useState([]); 
-  
-  
+
+  const [collectProductTags, setCollectProductTags] = useState([]);
+  const [productImages, setProductImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [formReset, setFormReset] = useState(false); 
 
 
-  const handleAddNewProduct = async(e) => {
-    e.preventDefault(); 
-    const form = new FormData(e.target); 
-    const productName = form.get('productName'); 
-    const productCategory = form.get('productCategory').split(',');
-    const productDetails = form.get('productDetails'); 
-    const sellPrice = parseInt(form.get('sellPrice')); 
-    const costPrice = parseInt(form.get('costPrice')); 
-    const discountPrice = parseInt(form.get('discountPrice')); 
-    const stockStatus = form.get('stockStatus') === 'true'; 
-    const stockQuantity = parseInt(form.get('stockQuantity')); 
-    const productBrand = form.get('productBrand'); 
-    const productTags = collectProductTags.map(tag => tag.text); 
+  const handleAddNewProduct = async (e) => {
+    e.preventDefault();
+    if(productImages.length === 0){
+      failedAlert('Image Cannot Emty!')
+      return
+    }
+    setLoading(true);
+    const form = new FormData(e.target);
+    const productName = form.get("productName");
+    const productCategory = form.get("productCategory").split(",");
+    const productDetails = form.get("productDetails");
+    const sellPrice = parseInt(form.get("sellPrice"));
+    const costPrice = parseInt(form.get("costPrice"));
+    const discountPrice = parseInt(form.get("discountPrice"));
+    const stockStatus = form.get("stockStatus") === "true";
+    const stockQuantity = parseInt(form.get("stockQuantity"));
+    const productBrand = form.get("productBrand");
+    const productTags = collectProductTags.map((tag) => tag.text);
 
-    const productInformation = {productName, productCategory , productDetails, sellPrice, costPrice, discountPrice, stockStatus, stockQuantity, productBrand, productTags}; 
-    
+   
+    const uploadedImageUrls = await Promise.all(
+      productImages.map(async (imageFile) => {
+        const res = await upoloadImageToCloudinary(imageFile);
+        if (res) {
+          return { image_id: res.public_id, image_url: res.secure_url };
+        }
 
-    const res = await axiosSecure.post('/products/addnew', productInformation); 
-    console.log(res.data);
+        return null;
+      })
+    );
 
+    // console.log("inside add new product page", uploadedImageUrls);
 
+    if (!uploadedImageUrls.every((image) => image)) {
+      failedAlert("Image upload failed. Please try again.");
+      setLoading(false);
+      return;
+    }
 
-  }
-  
+    const productInformation = {
+      productName,
+      productCategory,
+      productDetails,
+      sellPrice,
+      costPrice,
+      discountPrice,
+      stockStatus,
+      stockQuantity,
+      productBrand,
+      productTags,
+      images: uploadedImageUrls,
+    };
 
-  
-
+    try {
+      const res = await axiosSecure.post(
+        "/products/addnew",
+        productInformation
+      );
+      console.log(res.data);
+      if (res.data.insertedId) {
+      
+        confirmAlert("Product added successfully!");
+        e.target.reset(); 
+        setCollectProductTags([]); 
+        setProductImages([]);
+        setFormReset(true);
+      }
+    } catch (err) {
+      failedAlert("Failed to Add new Product!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="md:max-w-6xl mx-auto p-3 md:p-0 mb-10">
       <h2 className="text-2xl md:text-4xl text-center py-4">Add New Product</h2>
+      {loading && (
+        <div className="text-center z-50 md:p-8 p-4 left-[20%] right-[20%] fixed md:left-[40%] top-1/2 md:right-[40%] bg-gray-300 dark:bg-gray-700">
+          <WaitingLoader></WaitingLoader> Please Wait...
+        </div>
+      )}
       <div>
         <form onSubmit={handleAddNewProduct}>
           <div className="grid md:grid-cols-2 grid-cols-1 md:gap-6 gap-3">
@@ -92,12 +150,9 @@ const AddNewProduct = () => {
               <textarea
                 rows={1}
                 className="w-full py-1 px-2 rounded-sm border"
-                
                 required
                 name="productDetails"
-              > 
-                
-              </textarea>
+              ></textarea>
             </div>
             <div className="space-y-2">
               <label className="text-2xl" htmlFor="sellPrice">
@@ -176,7 +231,6 @@ const AddNewProduct = () => {
                 type="text"
                 className="w-full py-1 px-2 rounded-sm border"
                 placeholder="Product Brand (optional)"
-                
                 name="productBrand"
               />
             </div>
@@ -184,19 +238,33 @@ const AddNewProduct = () => {
               <label className="text-2xl" htmlFor="productTag">
                 Product Tag
               </label>
-              <ReactTagInput setCollectProductTags={setCollectProductTags}></ReactTagInput>
+              <ReactTagInput
+                setCollectProductTags={setCollectProductTags} formReset={formReset}
+              ></ReactTagInput>
             </div>
 
-            <div>
-                <input type="file" />
-            </div>
-            <div className="col-span-2">
-                <div className="w-1/2 mx-auto">
-
-                <button className="w-full bg-[#ff3811] text-white py-2 rounded-sm outline-none">Add Product</button>
-                </div>
+            <div className="md:col-span-2">
+              <ReactFIleInput setProductImages={setProductImages} formReset={formReset} />
             </div>
 
+            <div className="md:col-span-2">
+              <div className="w-1/2 mx-auto">
+                {loading ? (
+                  <button
+                    disabled={loading}
+                    className={`w-full bg-gray-400 text-white py-2 rounded-sm outline-none`}
+                  >
+                    Add Product
+                  </button>
+                ) : (
+                  <button
+                    className={`w-full bg-[#ff3811] text-white py-2 rounded-sm outline-none`}
+                  >
+                    Add Product
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </form>
       </div>

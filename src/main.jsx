@@ -12,14 +12,16 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="font-exo-2 container mx-auto overflow-hidden">
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <AuthProvider>
-          <React.StrictMode>
-            <RouterProvider router={router} />
-          </React.StrictMode>
-        </AuthProvider>
-      </HelmetProvider>
-    </QueryClientProvider>
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <AuthProvider>
+            <React.StrictMode>
+              <RouterProvider router={router} />
+            </React.StrictMode>
+          </AuthProvider>
+        </HelmetProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
   </div>
 );

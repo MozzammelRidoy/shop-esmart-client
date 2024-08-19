@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 
-const ReactTagInput = ({ setCollectProductTags }) => {
+const ReactTagInput = ({ setCollectProductTags, formReset }) => {
   const [tags, setTags] = useState([]);
  
   const handleDelete = (i) => {
@@ -24,6 +24,12 @@ const ReactTagInput = ({ setCollectProductTags }) => {
     setTags(newTags);
     setCollectProductTags(newTags);
   };
+
+  useEffect(()=>{
+    if(formReset){
+      setTags([]);
+    }
+  },[formReset])
   return (
     <div className="w-full  border rounded-sm">
       <ReactTags
