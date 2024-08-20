@@ -9,3 +9,14 @@ export const timeCoverterGMTtoLocal = (GMTtime) => {
     let localTime = new Date(GMTtime).toLocaleString();
     return localTime; 
 }
+ 
+//price and profit calculation 
+export const calculateFinalPriceAndProfit = (costPrice, sellPrice, discountPercent) => {
+
+    const discountAmount = (sellPrice * discountPercent) / 100; 
+    const finalPrice = (sellPrice - discountAmount); 
+    const profit = finalPrice - costPrice; 
+
+    return {finalPrice, profit, discountAmount};
+
+}

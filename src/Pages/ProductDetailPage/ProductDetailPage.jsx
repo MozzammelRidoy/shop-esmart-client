@@ -20,7 +20,7 @@ const ProductDetailPage = () => {
   const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
-    axiosPublic.get(`/product/${id}`).then((res) => setProductDetail(res.data));
+    axiosPublic.get(`/products/${id}`).then((res) => setProductDetail(res.data));
   }, [axiosPublic, id]);
 
   if (!productDetail) {

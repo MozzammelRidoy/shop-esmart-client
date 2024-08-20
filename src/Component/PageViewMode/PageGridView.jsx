@@ -6,7 +6,7 @@ const PageGridView = ({ collections }) => {
     <section className="grid  grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
       {collections.map((item) => (
         <Link
-          to={`product/${item._id}`}
+          to={`/product/${item._id}`}
           key={item._id}
           className="hover:shadow-2xl dark:shadow-gray-600"
         >

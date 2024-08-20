@@ -9,6 +9,7 @@ import {
   confirmAlert,
   failedAlert,
 } from "../../../Component/SweetAlart/SweelAlart";
+import { calculateFinalPriceAndProfit } from "../../../utils/modules";
 
 const AddNewProduct = () => {
   const axiosSecure = useAxiosSecure();
@@ -18,29 +19,37 @@ const AddNewProduct = () => {
   const [collectProductTags, setCollectProductTags] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [formReset, setFormReset] = useState(false); 
-
+  const [formReset, setFormReset] = useState(false);
 
   const handleAddNewProduct = async (e) => {
     e.preventDefault();
-    if(productImages.length === 0){
-      failedAlert('Image Cannot Emty!')
-      return
+    if (productImages.length === 0) {
+      failedAlert("Image Cannot Emty!");
+      return;
     }
-    setLoading(true);
+
     const form = new FormData(e.target);
     const productName = form.get("productName");
     const productCategory = form.get("productCategory").split(",");
     const productDetails = form.get("productDetails");
     const sellPrice = parseInt(form.get("sellPrice"));
     const costPrice = parseInt(form.get("costPrice"));
-    const discountPrice = parseInt(form.get("discountPrice"));
+    const discountPercent = parseInt(form.get("discountPercent"));
     const stockStatus = form.get("stockStatus") === "true";
     const stockQuantity = parseInt(form.get("stockQuantity"));
     const productBrand = form.get("productBrand");
     const productTags = collectProductTags.map((tag) => tag.text);
+    const { finalPrice, profit, discountAmount } = calculateFinalPriceAndProfit(
+      costPrice,
+      sellPrice,
+      discountPercent
+    );
 
-   
+    if (!productCategory) {
+      failedAlert("Category Must be Add");
+      return;
+    }
+    setLoading(true);
     const uploadedImageUrls = await Promise.all(
       productImages.map(async (imageFile) => {
         const res = await upoloadImageToCloudinary(imageFile);
@@ -66,7 +75,10 @@ const AddNewProduct = () => {
       productDetails,
       sellPrice,
       costPrice,
-      discountPrice,
+      discountPercent,
+      finalPrice,
+      profit,
+      discountAmount,
       stockStatus,
       stockQuantity,
       productBrand,
@@ -74,6 +86,7 @@ const AddNewProduct = () => {
       images: uploadedImageUrls,
     };
 
+    console.log(productInformation);
     try {
       const res = await axiosSecure.post(
         "/products/addnew",
@@ -81,10 +94,9 @@ const AddNewProduct = () => {
       );
       console.log(res.data);
       if (res.data.insertedId) {
-      
         confirmAlert("Product added successfully!");
-        e.target.reset(); 
-        setCollectProductTags([]); 
+        e.target.reset();
+        setCollectProductTags([]);
         setProductImages([]);
         setFormReset(true);
       }
@@ -181,8 +193,8 @@ const AddNewProduct = () => {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-2xl" htmlFor="discountPrice">
-                Discount Price
+              <label className="text-2xl" htmlFor="discountPercent">
+                Discount Percent
               </label>
               <input
                 className="w-full py-1 px-2 rounded-sm border"
@@ -190,7 +202,7 @@ const AddNewProduct = () => {
                 defaultValue={0}
                 min={0}
                 placeholder="Discount Price calculate % percentage (provide number)"
-                name="discountPrice"
+                name="discountPercent"
               />
             </div>
             <div className="space-y-2">
@@ -239,12 +251,16 @@ const AddNewProduct = () => {
                 Product Tag
               </label>
               <ReactTagInput
-                setCollectProductTags={setCollectProductTags} formReset={formReset}
+                setCollectProductTags={setCollectProductTags}
+                formReset={formReset}
               ></ReactTagInput>
             </div>
 
             <div className="md:col-span-2">
-              <ReactFIleInput setProductImages={setProductImages} formReset={formReset} />
+              <ReactFIleInput
+                setProductImages={setProductImages}
+                formReset={formReset}
+              />
             </div>
 
             <div className="md:col-span-2">
