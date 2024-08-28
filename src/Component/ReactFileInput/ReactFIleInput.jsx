@@ -72,8 +72,9 @@ const ReactFIleInput = ({ setProductImages, formReset }) => {
     if(formReset){
         setPreviewImages([]);
         setSelectedFiles([]);
+        setProductImages([]);
     }
-  }, [selectedFiles.length, formReset]);
+  }, [selectedFiles.length, formReset, setProductImages]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

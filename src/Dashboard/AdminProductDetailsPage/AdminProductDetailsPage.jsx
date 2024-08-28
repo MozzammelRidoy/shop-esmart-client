@@ -1,7 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
-import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import ImageGallery from "react-image-gallery";
 import { Rating } from "@smastrom/react-rating";
 import {
@@ -10,22 +8,17 @@ import {
   failedAlert,
 } from "../../Component/SweetAlart/SweelAlart";
 import { timeCoverterGMTtoLocal } from "../../utils/modules";
+import useSingleProductReadForAdmin from "../../hooks/useSingleProductReadForAdmin";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AdminProductDetailsPage = () => {
   const { id } = useParams();
-  const [productDetail, setProductDetail] = useState(null);
+  const { productDetails, loading } = useSingleProductReadForAdmin(id);
   const axiosSecure = useAxiosSecure();
+
   const navigate = useNavigate();
 
-  console.log(productDetail);
-
-  useEffect(() => {
-    axiosSecure
-      .get(`/products/admin/${id}`)
-      .then((res) => setProductDetail(res.data));
-  }, [axiosSecure, id]);
-
-  if (!productDetail) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -34,7 +27,6 @@ const AdminProductDetailsPage = () => {
       async (res) => {
         if (res.isConfirmed) {
           const res = await axiosSecure.delete(`/products/delete/${_id}`);
-          console.log(res.data);
           if (res.data.deletedCount > 0) {
             confirmAlert("Delete Success !");
             navigate(-1);
@@ -46,8 +38,10 @@ const AdminProductDetailsPage = () => {
     );
   };
 
-  const images = productDetail.images.map(image => ({original : image.image_url, thumbnail : image.image_url}));
-    
+  const images = productDetails?.images?.map((image) => ({
+    original: image.image_url,
+    thumbnail: image.image_url,
+  }));
 
   return (
     <div className="md:max-w-6xl mx-auto mt-3 ">
@@ -71,23 +65,24 @@ const AdminProductDetailsPage = () => {
           {/* product heading or headline or title  */}
           <div>
             <h2 className="md:text-3xl text-xl capitalize ">
-              {productDetail.productName.toLowerCase()}
+              {productDetails?.productName?.toLowerCase()}
             </h2>
             <div className="flex gap-5 mt-2 font-semibold">
-            <p className="">
-              <span className="text-green-500">Stock : </span>
-              {productDetail.stockStatus && productDetail.stockQuantity ? (
-                <span className="text-green-500">Available</span>
-              ) : (
-                <span className="text-[#ff3811]">Unavailable</span>
-              )}
-            </p>
-            <p className="text-blue-400">
-                Stock Quantiy : <span>{productDetail.stockQuantity}</span>
-            </p>
-            <p className="text-yellow-500 capitalize">
-                Category : {productDetail.productCategory[1]}
-            </p>
+              <p className="">
+                <span className="text-green-500">Stock : </span>
+                {productDetails?.stockStatus &&
+                productDetails?.stockQuantity ? (
+                  <span className="text-green-500">Available</span>
+                ) : (
+                  <span className="text-[#ff3811]">Unavailable</span>
+                )}
+              </p>
+              <p className="text-blue-400">
+                Stock Quantiy : <span>{productDetails?.stockQuantity}</span>
+              </p>
+              <p className="text-yellow-500 capitalize">
+                Category : {productDetails?.productCategory[1]}
+              </p>
             </div>
           </div>
 
@@ -96,14 +91,14 @@ const AdminProductDetailsPage = () => {
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Cost Price :{" "}
               <span className="md:text-xl text-lg">
-                {productDetail.costPrice}
+                {productDetails?.costPrice}
               </span>{" "}
               Tk
             </p>
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Sell Price :{" "}
               <span className="md:text-xl text-lg">
-                {productDetail.sellPrice}
+                {productDetails?.sellPrice}
               </span>{" "}
               Tk
             </p>
@@ -111,7 +106,7 @@ const AdminProductDetailsPage = () => {
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Discount Percent :{" "}
               <span className="md:text-xl text-lg">
-                {productDetail.discountPercent}
+                {productDetails?.discountPercent}
               </span>
               %
             </p>
@@ -119,7 +114,7 @@ const AdminProductDetailsPage = () => {
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Discount Amount :{" "}
               <span className="md:text-xl text-lg">
-                {productDetail.discountAmount}
+                {productDetails?.discountAmount}
               </span>{" "}
               Tk
             </p>
@@ -127,7 +122,14 @@ const AdminProductDetailsPage = () => {
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Final Price :{" "}
               <span className="md:text-xl text-lg">
-                {productDetail.finalPrice}
+                {productDetails?.finalPrice}
+              </span>{" "}
+              Tk
+            </p>
+            <p className="text-sm md:text-lg  text-[#ff3811]">
+              Profit :{" "}
+              <span className="md:text-xl text-lg">
+                {productDetails?.profit}
               </span>{" "}
               Tk
             </p>
@@ -135,24 +137,32 @@ const AdminProductDetailsPage = () => {
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Publish Date :{" "}
               <span className="md:text-xl text-lg">
-                {
-                    timeCoverterGMTtoLocal(productDetail.createdAt)
-                }
+                {timeCoverterGMTtoLocal(productDetails?.createdAt)}
               </span>{" "}
               BD
             </p>
+            <p className="text-sm md:text-lg  text-[#ff3811]">
+              Last Edit : {" "}
+              {productDetails.lastEdit ? (
+                <span className="md:text-xl text-lg">
+                  {timeCoverterGMTtoLocal(productDetails?.lastEdit)} BD
+                </span>
+              ) : (
+                <span className="md:text-xl text-lg"> No Edit</span>
+              )}
+            </p>
 
-            {productDetail?.ratings && (
+            {productDetails?.ratings && (
               <p className="flex items-center gap-1">
                 <span className="text-sm md:text-lg">Ratings : </span>
                 <span className="flex items-center text-xs md:text-lg">
                   <Rating
                     className="md:max-w-20 max-w-16"
-                    value={productDetail.ratings}
+                    value={productDetails?.ratings}
                     readOnly
                   />
                   <span className="text-[9px] md:text-[11px]">
-                    ({productDetail.ratingsCount})
+                    ({productDetails?.ratingsCount})
                   </span>
                 </span>
               </p>
@@ -163,12 +173,15 @@ const AdminProductDetailsPage = () => {
           <div className="flex-grow">
             <p className="text-justify">
               <span className="font-bold">Details : </span>
-              {productDetail.productDetails}
+              {productDetails?.productDetails}
             </p>
             <div>
-                <span className="text-xl">Tags : </span> {
-                productDetail.productTags.map((tag, index) => <p className="inline-block" key={index}>{index+1}. {tag}</p>)
-            }
+              <span className="text-xl">Tags : </span>{" "}
+              {productDetails?.productTags?.map((tag, index) => (
+                <p className="inline-block" key={index}>
+                  {index + 1}. {tag}
+                </p>
+              ))}
             </div>
           </div>
           {/* product action button  */}
@@ -177,14 +190,14 @@ const AdminProductDetailsPage = () => {
 
             <div className="flex gap-2 justify-evenly">
               <button
-                onClick={() => handleDelete(productDetail._id)}
+                onClick={() => handleDelete(productDetails._id)}
                 className={`text-[#ff3811]  hover:bg-[#ff3811] hover:text-white w-1/2 md:py-2 py-1 bg-slate-100 `}
               >
                 Delete it
               </button>
 
               <Link
-                to={`/update/${productDetail._id}`}
+                to={`/dashboard/update/${productDetails._id}`}
                 className={`w-1/2 md:py-2 py-1 text-white bg-[#ff3811] text-center hover:bg-[#c6290a]`}
               >
                 <button className=" ">Update it</button>

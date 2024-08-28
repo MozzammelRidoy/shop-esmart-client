@@ -28,6 +28,7 @@ import CanceledOrders from "../Dashboard/AdminPages/CanceledOrders/CanceledOrder
 import SalesReports from "../Dashboard/AdminPages/SalesReports/SalesReports";
 import SiteSettings from "../Dashboard/AdminPages/SiteSettings/SiteSettings";
 import AdminProductDetailsPage from "../Dashboard/AdminProductDetailsPage/AdminProductDetailsPage";
+import UpdateProduct from "../Dashboard/UpdateProduct/UpdateProduct";
 
 const router = createBrowserRouter([
     {
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
         {
           path : '/dashboard/addNewProduct',
           element : <AddNewProduct></AddNewProduct>
+        },
+        {
+          path : '/dashboard/update/:id',
+          element : <UpdateProduct></UpdateProduct>
         },
         {
           path : '/dashboard/categories',

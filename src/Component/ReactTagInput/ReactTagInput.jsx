@@ -44,7 +44,7 @@ const ReactTagInput = ({ setCollectProductTags, formReset }) => {
           tagInputField: "w-full py-[5px] px-2 outline-none",
           tags: "flex flex-wrap items-center gap-1",
           tagInput: "flex-grow text-nowrap   items-center",
-          tag: "bg-blue-500 text-white ms-1 text-nowrap py-1 ps-2 rounded",
+          tag: "bg-blue-500  text-white ms-1 text-nowrap py-1 ps-2 rounded",
           remove: " p-[10px]  cursor-pointer",
         }}
       />

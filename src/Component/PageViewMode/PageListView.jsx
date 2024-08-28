@@ -17,7 +17,7 @@ const PageListView = ({ collections }) => {
           <div className="col-span-2 flex flex-col justify-around border dark:border-black p-4 border-s-0">
             <div>
               <p className="md:text-lg text-xs font-semibold">
-                {item.name.length > 50
+                {item?.name?.length > 50
                   ? `${item.name.slice(0, 50)}...`
                   : item.name}
               </p>
