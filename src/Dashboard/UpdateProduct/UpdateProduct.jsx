@@ -176,8 +176,8 @@ const UpdateProduct = () => {
         Update a Product
       </h2>
       {(loading || isLoading) && (
-        <div className="text-center z-50 md:p-8 p-4 left-[20%] right-[20%] fixed md:left-[40%] top-1/2 md:right-[40%] bg-gray-300 dark:bg-gray-700">
-          <WaitingLoader></WaitingLoader> Please Wait...
+        <div>
+          <WaitingLoader></WaitingLoader> 
         </div>
       )}
       <div>
@@ -352,7 +352,7 @@ const UpdateProduct = () => {
               </div>
             </div>
 
-            <div className="col-span-2">
+            <div className="md:col-span-2">
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId={droppableId} direction="horizontal">
                   {(provided) => (

@@ -72,7 +72,7 @@ const AdminPageGridView = ({ collections, refetch }) => {
           {isAdmin && (
             <div className="grid grid-cols-2 gap-2">
               <div className="w-full">
-                <Link to={`/update/${item._id}`}>
+                <Link to={`/dashboard/update/${item._id}`}>
                   <button className="py-2 w-full bg-green-500 text-white hover:bg-green-800">
                     Update
                   </button>

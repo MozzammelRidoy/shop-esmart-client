@@ -8,17 +8,12 @@ import 'swiper/css/navigation';
 import './swiper.style.css'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-
-
-//image import
-import slide1 from "../../../assets/slider/slide 1.png";
-import slide2 from "../../../assets/slider/slide 2.png";
-import slide3 from "../../../assets/slider/slide 3.png";
-import slide4 from "../../../assets/slider/slide 4.png";
-import slide5 from "../../../assets/slider/slide 5.png";
 import { useRef } from "react";
+import useBannerLoad from "../../../hooks/useBannerLoad";
 
 const Banner = () => {
+  const [bannersData, isPending] = useBannerLoad(); 
+
     const progressCircle = useRef(null);
   const progressContent = useRef(null);
   const onAutoplayTimeLeft = (s, time, progress) => {
@@ -26,13 +21,7 @@ const Banner = () => {
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
 
-  const sliders = [
-    { id: 1, image: slide1 },
-    { id: 2, image: slide2 },
-    { id: 3, image: slide3 },
-    { id: 4, image: slide4 },
-    { id: 5, image: slide5 },
-  ];
+  
 
   
   
@@ -59,7 +48,7 @@ const Banner = () => {
         className="mySwiper"
       >
         {
-            sliders.map(image => <SwiperSlide  key={image.id}><img className="md:h-[420px] w-full" src={image.image} alt="" /></SwiperSlide>)
+            bannersData[0].banners.map(image => <SwiperSlide  key={image.image_id}><img className="md:h-[420px] w-full" src={image.image_url} alt="" /></SwiperSlide>)
         }
 
         <div className="autoplay-progress w-8 h-8 md:w-12 md:h-12" slot="container-end">

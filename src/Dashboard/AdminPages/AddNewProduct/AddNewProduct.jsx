@@ -111,7 +111,7 @@ const AddNewProduct = () => {
     <div className="md:max-w-6xl mx-auto p-3 md:p-0 mb-10">
       <h2 className="text-2xl md:text-4xl text-center py-4">Add New Product</h2>
       {loading && (
-        <div className="text-center z-50 md:p-8 p-4 left-[20%] right-[20%] fixed md:left-[40%] top-1/2 md:right-[40%] bg-gray-300 dark:bg-gray-700">
+        <div>
           <WaitingLoader></WaitingLoader> Please Wait...
         </div>
       )}

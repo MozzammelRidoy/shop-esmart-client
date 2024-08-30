@@ -1,66 +1,71 @@
-import { confirmAlert, confirmationAlert, failedAlert } from "../../../Component/SweetAlart/SweelAlart";
+import {
+  confirmAlert,
+  confirmationAlert,
+  failedAlert,
+} from "../../../Component/SweetAlart/SweelAlart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCategories from "../../../hooks/useCategories";
 
 const AllCategories = () => {
   const [categories, isLoading, refetch] = useCategories();
-  console.log(categories)
   const axiosSecure = useAxiosSecure();
 
-
-  if(isLoading){
-    return <div className="flex justify-center items-center h-screen">Please Wait...</div>
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Please Wait...
+      </div>
+    );
   }
-  
 
   const handleCategoryNameUpdate = (e, _id, oldCategoryName) => {
     e.preventDefault();
-    
-    const updateCategoryName = e.target.categoryName.value.toLowerCase(); 
+
+    const updateCategoryName = e.target.categoryName.value.toLowerCase();
+    // console.log(oldCategoryName, updateCategoryName);
 
     // console.log("update request",updateCategoryName, _id, oldCategoryName);
-    const hashNumber = /\d/; 
-    if(hashNumber.test(updateCategoryName)){
-      return failedAlert("Category name shouldn't contain numbers")
+    const hashNumber = /\d/;
+    if (hashNumber.test(updateCategoryName)) {
+      return failedAlert("Category name shouldn't contain numbers");
     }
-    
+
     confirmationAlert({
       detailsText: "Do you want to update this category?",
       confirmButtonText: "Yes! Update it",
     }).then(async (res) => {
       if (res.isConfirmed) {
-        const res = await axiosSecure.put(`/categories/update/${_id}`, {updateCategoryName : updateCategoryName, oldCategoryName : oldCategoryName} )
-        
-        if(res. data.matchedCount > 0){
-            await refetch();
-            confirmAlert('Update Success!')
+        const res = await axiosSecure.put(`/categories/update/${_id}`, {
+          updateCategoryName: updateCategoryName,
+          oldCategoryName: oldCategoryName,
+        });
+
+        if (res.data.matchedCount > 0) {
+          await refetch();
+          confirmAlert("Update Success!");
+        } else {
+          failedAlert("Update Failed!");
         }
-        else{
-            failedAlert('Update Failed!')
-        }
-        
       }
     });
   };
 
   const handleCategoryNameDelete = (_id) => {
     confirmationAlert({
-        detailsText: "Do you want to delete this category?",
-        confirmButtonText: "Yes! Delete it",
-      }).then(async (res) => {
-        if (res.isConfirmed) {
-          const res = await axiosSecure.delete(`/categories/delete/${_id}`)
-         
-          if(res.data.deletedCount > 0){
-              await refetch();
-              confirmAlert('Delete Success!')
-          }
-          else{
-              failedAlert('Delete Failed!')
-          }
-          
+      detailsText: "Do you want to delete this category?",
+      confirmButtonText: "Yes! Delete it",
+    }).then(async (res) => {
+      if (res.isConfirmed) {
+        const res = await axiosSecure.delete(`/categories/delete/${_id}`);
+
+        if (res.data.deletedCount > 0) {
+          await refetch();
+          confirmAlert("Delete Success!");
+        } else {
+          failedAlert("Delete Failed!");
         }
-      });
+      }
+    });
   };
   return (
     <div>
@@ -70,8 +75,16 @@ const AllCategories = () => {
             Category {index + 1}
           </label>
           <div className="relative">
-            
-            <form onSubmit={(e)=>handleCategoryNameUpdate(e, category._id, category.categoryName[1])} className="md:w-[85%] w-full grid grid-cols-5 gap-3 my-2">
+            <form
+              onSubmit={(e) =>
+                handleCategoryNameUpdate(
+                  e,
+                  category._id,
+                  category.categoryName[1]
+                )
+              }
+              className="md:w-[85%] w-full grid grid-cols-5 gap-3 my-2"
+            >
               <input
                 defaultValue={category.categoryName[1]}
                 placeholder="Enter Category Name"
