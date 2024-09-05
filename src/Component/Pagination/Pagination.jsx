@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const Pagination = () => {
-  const [count, setCount] = useState(0);
-  const [itemPerPage, setItemPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const numberOfPage = Math.ceil(count / itemPerPage);
-
+const Pagination = ({
+  numberOfPage = 0,
+  currentPage,
+  setCurrentPage,
+  itemPerPage,
+  setItemPerPage,
+}) => {
   const pages = [...Array(numberOfPage).keys()];
-
-  useEffect(() => {
-    fetch("http://localhost:5000/productCount")
-      .then((res) => res.json())
-      .then((data) => setCount(data.count));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `http://localhost:5000/productsPagination?page=${currentPage}&size=${itemPerPage}`
-    )
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, [itemPerPage, currentPage]);
 
   const handlePrevPage = () => {
     if (currentPage > 0) {

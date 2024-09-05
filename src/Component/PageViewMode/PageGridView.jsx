@@ -2,6 +2,7 @@ import { Rating } from "@smastrom/react-rating";
 import { Link } from "react-router-dom";
 
 const PageGridView = ({ collections }) => {
+  
   return (
     <section className="grid  grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
       {collections.map((item) => (
@@ -10,26 +11,27 @@ const PageGridView = ({ collections }) => {
           key={item._id}
           className="hover:shadow-2xl dark:shadow-gray-600"
         >
-          <div className="md:h-80 h-48 overflow-hidden ">
-            {item.img && (
-              <div className="h-3/4">
+          <div className="md:h-[340px] h-48 overflow-hidden pb-1">
+            {item?.images[0]?.image_url && (
+              <div className="h-3/4 relative">
                 <img
                   className="w-full h-full object-cover"
-                  src={item.img}
+                  src={item?.images[0]?.image_url}
                   alt=""
                 />
+                <span className="absolute bottom-0 left-0 bg-[#ff3811] text-white md:px-2 px-1 rounded-tr-full md:text-base text-sm">{item.discountPercent}%</span>
               </div>
             )}
             <div className="px-1 flex flex-col justify-evenly h-1/4">
               <div>
-                <h2 className="md:text-sm text-[10px] font-semibol">
-                  {item?.name?.length > 35
-                    ? `${item.name.slice(0, 35)}...`
-                    : item.name}
+                <h2 className="md:text-lg text-[10px] capitalize text-justify font-semibol">
+                  {item?.productName?.length > 35
+                    ? `${item.productName.slice(0, 35)}....`
+                    : item.productName}
                 </h2>
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-xs md:text-lg">Tk: {item.price}</p>{" "}
+                <p className="text-xs md:text-lg">Tk: {item.finalPrice}</p>{" "}
                 {item?.ratings && (
                   <span className="flex items-center text-xs md:text-lg">
                     <Rating

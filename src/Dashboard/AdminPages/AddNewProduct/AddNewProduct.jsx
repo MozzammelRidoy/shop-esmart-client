@@ -23,6 +23,7 @@ const AddNewProduct = () => {
 
   const handleAddNewProduct = async (e) => {
     e.preventDefault();
+    
     if (productImages.length === 0) {
       failedAlert("Image Cannot Emty!");
       return;
@@ -86,7 +87,7 @@ const AddNewProduct = () => {
       images: uploadedImageUrls,
     };
 
-    console.log(productInformation);
+    // console.log(productInformation);
     try {
       const res = await axiosSecure.post(
         "/products/addnew",
@@ -104,6 +105,7 @@ const AddNewProduct = () => {
       failedAlert("Failed to Add new Product!");
     } finally {
       setLoading(false);
+      
     }
   };
 
@@ -259,6 +261,7 @@ const AddNewProduct = () => {
             <div className="md:col-span-2">
               <ReactFIleInput
                 setProductImages={setProductImages}
+                setFormReset={setFormReset}
                 formReset={formReset}
               />
             </div>

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const RangeMinToMax = () => {
+const RangeMinToMax = ({ setPriceRange }) => {
   const {
     register,
     handleSubmit,
@@ -11,6 +11,7 @@ const RangeMinToMax = () => {
 
   const [range, setRange] = useState({ min: "", max: "" });
   const [error, setError] = useState("");
+  
 
   const handlePriceRange = (data) => {
     let min_value = parseInt(data.min);
@@ -25,12 +26,19 @@ const RangeMinToMax = () => {
     if (min_value > max_value) {
       [min_value, max_value] = [max_value, min_value];
     }
-    console.log(min_value, max_value);
 
     setValue("min", min_value);
     setValue("max", max_value);
     setRange({ min: min_value, max: max_value });
+    
   };
+
+  useEffect(()=>{
+    if(range.min && range.max){
+
+      setPriceRange(range);
+    }
+  },[range, setPriceRange])
 
   return (
     <div className="w-[55%] " data-aos="fade-right" data-aos-duration="1500">

@@ -1,11 +1,11 @@
 import FilterDropdown from "./FilterBy";
 import RangeMinToMax from "./RangeMinToMax";
 
-const RangeAndFilter = () => {
+const RangeAndFilter = ({setPriceRange, setSort}) => {
     return (
-        <div className="flex justify-between items-start gap-1 mx-1 md:mx-2">
-            <RangeMinToMax></RangeMinToMax>
-            <FilterDropdown></FilterDropdown>
+        <div className="flex justify-between items-start gap-1 ">
+            <RangeMinToMax setPriceRange={setPriceRange}></RangeMinToMax>
+            <FilterDropdown setSort={setSort}></FilterDropdown>
         </div>
     );
 };

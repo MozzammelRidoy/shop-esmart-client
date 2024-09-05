@@ -10,6 +10,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 import { useRef } from "react";
 import useBannerLoad from "../../../hooks/useBannerLoad";
+import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 
 const Banner = () => {
   const [bannersData, isPending] = useBannerLoad(); 
@@ -22,12 +23,15 @@ const Banner = () => {
   };
 
   
-
+if(isPending){
+  return <div><WaitingLoader></WaitingLoader></div>
+}
   
   
 
   return (
     <div data-aos="fade-left" data-aos-duration="1500" className="md:col-span-3 col-span-4 md:order-2 order-1">
+     
        <Swiper
         spaceBetween={30}
         loop={true}
@@ -48,7 +52,7 @@ const Banner = () => {
         className="mySwiper"
       >
         {
-            bannersData[0].banners.map(image => <SwiperSlide  key={image.image_id}><img className="md:h-[420px] w-full" src={image.image_url} alt="" /></SwiperSlide>)
+            bannersData[0]?.banners?.map(image => <SwiperSlide  key={image.image_id}><img className="md:h-[420px] w-full" src={image.image_url} alt="" /></SwiperSlide>)
         }
 
         <div className="autoplay-progress w-8 h-8 md:w-12 md:h-12" slot="container-end">

@@ -34,25 +34,25 @@ const AdminPageGridView = ({ collections, refetch }) => {
             className="hover:shadow-2xl dark:shadow-gray-600"
           >
             <div className="md:h-80 h-48 overflow-hidden ">
-              {item.img && (
+              {item.images[0].image_url && (
                 <div className="h-3/4">
                   <img
                     className="w-full h-full object-cover"
-                    src={item.img}
+                    src={item.images[0].image_url}
                     alt=""
                   />
                 </div>
               )}
               <div className="px-1 flex flex-col justify-evenly h-1/4">
                 <div>
-                  <h2 className="md:text-sm text-[10px] font-semibol">
-                    {item?.name?.length > 35
-                      ? `${item.name.slice(0, 35)}...`
-                      : item.name}
+                  <h2 className="md:text-base text-justify text-[10px] font-semibol">
+                    {item?.productName?.length > 35
+                      ? `${item.productName.slice(0, 35)}...`
+                      : item.productName}
                   </h2>
                 </div>
                 <div className="flex justify-between items-center">
-                  <p className="text-xs md:text-lg">Tk: {item.price}</p>{" "}
+                  <p className="text-xs md:text-lg">Tk: {item.finalPrice}</p>{" "}
                   {item?.ratings && (
                     <span className="flex items-center text-xs md:text-lg">
                       <Rating

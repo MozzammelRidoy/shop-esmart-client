@@ -1,13 +1,12 @@
-import {  useState } from "react";
 import PageViewMode from "./../../../Component/PageViewMode/PageViewMode";
 import PageGridView from "./../../../Component/PageViewMode/PageGridView";
 import PageListView from "../../../Component/PageViewMode/PageListView";
 import useReadAllProducts from "../../../hooks/useReadAllProducts";
+import usePageViewMode from "../../../hooks/usePageViewMode";
 const ForYouProduct = () => {
-  const [collections, isLoading] = useReadAllProducts('/products'); 
+  const [collections =[], isLoading] = useReadAllProducts('/products'); 
   
-  const pageViewFromLS = localStorage.getItem("pageView") || "grid";
-  const [viewMode, setViewMode] = useState(pageViewFromLS);
+  const {viewMode, setViewMode} = usePageViewMode();
   
 
   

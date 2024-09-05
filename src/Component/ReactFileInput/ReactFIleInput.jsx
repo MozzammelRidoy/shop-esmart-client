@@ -3,7 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDropzone } from "react-dropzone";
 import { MdCancel, MdCloudUpload } from "react-icons/md";
 
-const ReactFIleInput = ({ setProductImages, formReset }) => {
+const ReactFIleInput = ({ setProductImages, formReset, setFormReset }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const [droppableId, setDroppableId] = useState("droppableId");
@@ -73,8 +73,9 @@ const ReactFIleInput = ({ setProductImages, formReset }) => {
         setPreviewImages([]);
         setSelectedFiles([]);
         setProductImages([]);
+        setFormReset(false);
     }
-  }, [selectedFiles.length, formReset, setProductImages]);
+  }, [selectedFiles.length, setFormReset, formReset, setProductImages]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

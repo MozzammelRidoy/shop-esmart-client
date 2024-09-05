@@ -16,9 +16,9 @@ const ProductsSlider = ({ collections }) => {
   const axiosPublic = useAxiosPublic();
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    axiosPublic.get(`/${collections}`).then((res) => setProducts(res.data));
-  }, [axiosPublic, collections]);
+  // useEffect(() => {
+  //   axiosPublic.get(`/${collections}`).then((res) => setProducts(res.data));
+  // }, [axiosPublic, collections]);
 
   return (
     <Swiper

@@ -3,16 +3,17 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import "./image.gallary.style.css";
+
 import { Rating } from "@smastrom/react-rating";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import DeliveryInfo from "./DeliveryInfo/DeliveryInfo";
 import ProductsSlider from "../../Component/ProductsSlider/ProductsSlider";
 import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
+import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const [productDetail, setProductDetail] = useState(null);
+  const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
   const stockUpdate = "available";
@@ -20,27 +21,20 @@ const ProductDetailPage = () => {
   const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
-    axiosPublic.get(`/products/${id}`).then((res) => setProductDetail(res.data));
+    axiosPublic.get(`/products/${id}`).then((res) => setProductDetails(res.data));
   }, [axiosPublic, id]);
 
-  if (!productDetail) {
-    return <div>Loading...</div>;
+  if (!productDetails) {
+    return <WaitingLoader></WaitingLoader>
   }
 
   // console.log(productDetail);
-  const images = productDetail.img
-    ? [
-        { original: productDetail.img, thumbnail: productDetail.img },
-        { original: productDetail.img, thumbnail: productDetail.img },
-        { original: productDetail.img, thumbnail: productDetail.img },
-        { original: productDetail.img, thumbnail: productDetail.img },
-        { original: productDetail.img, thumbnail: productDetail.img },
-        { original: productDetail.img, thumbnail: productDetail.img },
-        { original: productDetail.img, thumbnail: productDetail.img },
-      ]
-    : [];
+  const images = productDetails?.images?.map((image) => ({
+    original: image.image_url,
+    thumbnail: image.image_url,
+  }));
 
-  console.log(productDetail);
+  console.log(productDetails);
 
   const handleQuantityMinus = () => {
     if (quantity > 1) {
@@ -50,8 +44,8 @@ const ProductDetailPage = () => {
 
   const handleAddtoCart = () => {
     const cartInfo = {
-      id: productDetail._id,
-      name: productDetail.name,
+      id: productDetails._id,
+      name: productDetails.name,
       quantity: quantity,
     };
     console.log(cartInfo);
@@ -62,7 +56,7 @@ const ProductDetailPage = () => {
       <HomeAndBackButton></HomeAndBackButton>
       <div className="md:flex md:gap-4 gap-2  ">
         {/* for image  */}
-        <div className="md:w-[30%] w-full ">
+        <div className="md:w-[35%] w-full relative">
           <ImageGallery
             items={images}
             showNav={false}
@@ -71,17 +65,36 @@ const ProductDetailPage = () => {
             showPlayButton={false}
             thumbnailPosition="bottom"
             slideOnThumbnailOver={true}
+            renderItem={(item)=> (
+              <div className="w-full h-96 overflow-hidden">
+                <img src={item.original} className="w-full h-full object-cover" alt={item?.originalAlt} />
+              </div>
+            )}
+            renderThumbInner={(item) => (
+              <div className="w-full h-[80px] overflow-hidden">
+                <img
+                  src={item.thumbnail}
+                  alt={item.thumbnailAlt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
           />
+
+          <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm"><span>{productDetails.discountAmount}tk</span><span>save</span></div>
+          <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
+            <span>{productDetails.discountPercent}%</span>
+          </div>
         </div>
 
         {/* for others content or details  */}
-        <div className=" md:w-1/2 w-full p-2 flex flex-col justify-between md:space-y-2 space-y-1 ">
+        <div className=" md:w-[45%] w-full p-2 flex flex-col justify-between md:space-y-2 space-y-1 ">
           {/* product heading or headline or title  */}
           <div>
-            <h2 className="md:text-3xl text-xl capitalize ">{productDetail.name.toLowerCase()}</h2>
+            <h2 className="md:text-3xl text-xl capitalize ">{productDetails?.productName?.toLowerCase()}</h2>
             <p className="font-semibold">
               <span className="text-green-500">Stock : </span>
-              {stockUpdate === "available" ? (
+              {productDetails.stockStatus && productDetails.stockQuantity ? (
                 <span className="text-green-500">Available</span>
               ) : (
                 <span className="text-[#ff3811]">Unavailable</span>
@@ -91,22 +104,27 @@ const ProductDetailPage = () => {
 
           {/* product price and ratings  */}
           <div className="flex justify-between items-center ">
-            <p className="text-sm md:text-lg  text-[#ff3811]">
+            <div className="text-sm md:text-lg flex items-center gap-2 text-[#ff3811]">
+              <p>
               Price :{" "}
-              <span className="md:text-xl text-lg">{productDetail.price}</span>{" "}
+              <span className="md:text-xl text-lg">{productDetails.finalPrice}</span>{" "}
               Tk
-            </p>
-            {productDetail?.ratings && (
+              </p>
+              <p className="text-gray-400">
+                <del>{productDetails.sellPrice}</del>
+              </p>
+            </div>
+            {productDetails?.ratings && (
               <p className="flex items-center gap-1">
                 <span className="text-sm md:text-lg">Ratings : </span>
                 <span className="flex items-center text-xs md:text-lg">
                   <Rating
                     className="md:max-w-20 max-w-16"
-                    value={productDetail.ratings}
+                    value={productDetails.ratings}
                     readOnly
                   />
                   <span className="text-[9px] md:text-[11px]">
-                    ({productDetail.ratingsCount})
+                    ({productDetails.ratingsCount})
                   </span>
                 </span>
               </p>
@@ -115,12 +133,13 @@ const ProductDetailPage = () => {
 
           {/* product details or description  */}
           <div className="flex-grow">
+            {
+              productDetails.productBrand && <p>
+              <span className="font-bold">Brand : </span> {productDetails.productBrand}
+            </p>
+            }
             <p className="text-justify">
-              <span className="font-bold">Details : </span>Lorem ipsum dolor sit
-              amet consectetur adipisicing elit. Nesciunt voluptatem omnis illo
-              quaerat fugit molestias consequatur Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Eos quibusdam labore, magni at quia
-              quos pariatur a fugit deserunt adipisci
+              <span className="font-bold">Details : </span>{productDetails.productDetails}
             </p>
           </div>
           {/* product action button  */}
@@ -156,16 +175,16 @@ const ProductDetailPage = () => {
               <button
                 onClick={handleAddtoCart}
                 className={`${
-                  stockUpdate === "available"
+                  productDetails.stockStatus && productDetails.stockQuantity
                     ? "text-[#ff3811]  hover:bg-[#ff3811] hover:text-white"
                     : "btn-disabled text-gray-300"
                 } w-1/2 md:py-2 py-1 bg-slate-100 `}
               >
                 Add to Cart
               </button>
-              {stockUpdate === "available" ? (
+              {productDetails.stockStatus && productDetails.stockQuantity  ? (
                 <Link
-                  to={`/checkout/${productDetail._id}`}
+                  to={`/checkout/${productDetails._id}`}
                   className={`w-1/2 md:py-2 py-1 text-white bg-[#ff3811] text-center hover:bg-[#c6290a]`}
                 >
                   <button className=" ">Buy Now</button>

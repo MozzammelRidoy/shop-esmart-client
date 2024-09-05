@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-const FilterDropdown = () => {
+const FilterDropdown = ({setSort}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Select Option");
   const dropDownRef = useRef(null);
@@ -9,6 +9,8 @@ const FilterDropdown = () => {
   const options = [
     { value: "price_asc", label: "Price Low To High" },
     { value: "price_desc", label: "Price High To Low" },
+    { value: "date_asc", label: "New to Old" },
+    { value: "date_desc", label: "Old to New" },
     { value: "alpha_asc", label: "A to Z" },
     { value: "alpha_desc", label: "Z to A" },
   ];
@@ -35,12 +37,18 @@ const FilterDropdown = () => {
   const handleOptionSelect = (option) => {
     setSelected(option.label);
     setIsOpen(false);
+    setSort(option.value);
 
-    console.log({ target: { value: option.value } });
+    // console.log({ target: { value: option.value } });
   };
 
   return (
-    <div data-aos='fade-left' data-aos-duration="1500" ref={dropDownRef} className="md:w-52 w-[45%]">
+    <div
+      data-aos="fade-left"
+      data-aos-duration="1500"
+      ref={dropDownRef}
+      className="md:w-52 w-[45%]"
+    >
       <h3 className="text-base md:text-xl">Filter by</h3>
       <div className="relative">
         <button
