@@ -1,29 +1,60 @@
-import { useEffect, useState } from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
 import { RxCross2 } from "react-icons/rx";
 import SubTotal from "./SubTotal/SubTotal";
+import useCarts from "../../hooks/useCarts";
+import {
+  confirmAlert,
+  confirmationAlert,
+} from "../../Component/SweetAlart/SweelAlart";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
+import { useState } from "react";
 
 const Carts = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  const [carts, setCarts] = useState([]);
+  const {carts, isPending, refetch} = useCarts();
+  const [reset, setReset] = useState(false); 
 
-  useEffect(() => {
-    axiosPublic.get("/products").then((res) => setCarts(res.data.slice(0, 3)));
-  }, [axiosPublic]);
 
-  console.log(carts);
+  const handleQuantityChange = async (_id, newQuantity) => {
+    if (newQuantity < 1) return;
 
-  const handleItemDelete = (_id) => {
-    console.log(_id);
+    try {
+      const res = await axiosSecure.patch(`/carts/${_id}`, {
+        quantity: newQuantity,
+      });
+
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        setReset(true); 
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleItemDelete = async (_id) => {
+    confirmationAlert({}).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/carts/${_id}`);
+        if (res.data.deletedCount) {
+          confirmAlert("Deleted Success !");
+          setReset(true);
+          refetch();
+        }
+      }
+    });
   };
 
   return (
     <div className="md:max-w-6xl mx-auto mt-3">
       <HomeAndBackButton></HomeAndBackButton>
+
+      {isPending && <WaitingLoader></WaitingLoader>}
+
       <div className="md:flex gap-3 ">
         {/* carts table  */}
         <div className="overflow-x-auto  md:w-3/4 ">
@@ -37,33 +68,39 @@ const Carts = () => {
               </tr>
             </thead>
             <tbody>
-              {carts.map((cart) => (
+              {carts?.map((cart) => (
                 <tr className="hover relative" key={cart._id}>
-                  <td className="!p-1">
-                    <Link to={`/product/${cart._id}`}>
+                  <td className="!p-1 md:!w-1/2  ">
+                    <Link to={`/product/${cart.product_id}`}>
                       <div className="flex items-center gap-1 md:gap-3">
                         <div className="md:w-32 w-16 h-16 md:h-32 overflow-hidden flex-shrink-0">
                           <img
                             className="w-full h-full object-cover"
-                            src={cart?.img}
+                            src={cart?.productIamge}
                           />{" "}
                         </div>
-                        <div className="text-xs  md:text-lg capitalize">
-                          <p>
-                            {cart?.name.length > 15
-                              ? `${cart?.name.slice(0, 15).toLowerCase()}...`
-                              : cart?.name.toLowerCase()}
+                        <div className="text-[10px]  md:text-lg capitalize">
+                          <p className="text-wrap   bottom-0 ">
+                            {cart?.productName.length > 40
+                              ? `${cart?.productName
+                                  .slice(0, 40)
+                                  .toLowerCase()}...`
+                              : cart?.productName.toLowerCase()}
                           </p>
                         </div>
                       </div>
                     </Link>
                   </td>
                   <td className=" text-nowrap md:text-lg !p-1">
-                    {cart?.price} Tk
+                    {cart?.productPrice} Tk
                   </td>
                   <td className="!p-1">
                     <div className="space-x-3 flex items-center">
                       <button
+                        disabled={cart?.quantity === 1}
+                        onClick={() => {
+                          handleQuantityChange(cart._id, cart.quantity - 1);
+                        }}
                         className={`${
                           cart?.quantity === 1
                             ? "btn-disabled text-gray-300"
@@ -76,6 +113,9 @@ const Carts = () => {
                         {cart?.quantity}
                       </span>
                       <button
+                        onClick={() =>
+                          handleQuantityChange(cart._id, cart.quantity + 1)
+                        }
                         className={`
                      text-[#ff3811] hover:text-[#c6290a] 
                      rounded-full  text-lg md:text-2xl`}
@@ -88,7 +128,7 @@ const Carts = () => {
                     {" "}
                     <div>
                       <p className=" text-nowrap text-sm md:text-lg">
-                        {cart.price * 1} Tk
+                        {cart.quantity * cart.productPrice} Tk
                       </p>{" "}
                       <button
                         onClick={() => handleItemDelete(cart._id)}
@@ -105,7 +145,7 @@ const Carts = () => {
         </div>
 
         {/* Sub total or Summery  */}
-        <SubTotal></SubTotal>
+        <SubTotal reset={reset} setReset={setReset}></SubTotal>
       </div>
     </div>
   );

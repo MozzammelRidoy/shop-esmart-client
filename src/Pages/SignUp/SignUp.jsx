@@ -13,15 +13,18 @@ import {
   failedAlert,
 } from "../../Component/SweetAlart/SweelAlart";
 import GoogleReCaptcha from "../../Component/GoogleReCaptcha/GoogleReCaptcha";
+import WaitingLoader from './../../Component/WaitingLoader/WaitingLoader';
 
 const SignUp = () => {
   const axiosPublic = useAxiosPublic();
-  const { createNewUser, loading, user, userUpdateProfile } = useAuth();
+  const { createNewUser, user, userUpdateProfile } = useAuth();
   const [showPassword, setShowPassword] = useState(true);
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("Oh No! Sign Up Failed");
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isVarified, setIsVarified] = useState(false);
+  const [loading, setLoading] = useState(false); 
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -54,6 +57,7 @@ const SignUp = () => {
       return;
     }
     try {
+      setLoading(true); 
       const result = await createNewUser(data.email, data.password);
       const firebaseInfo = result?.user;
 
@@ -85,6 +89,9 @@ const SignUp = () => {
       }
       failedAlert(errorMessage);
     }
+    finally{
+      setLoading(false)
+    }
   };
 
   return (
@@ -94,7 +101,7 @@ const SignUp = () => {
       className="md:bg-signup-bg bg-cover bg-center  dark:text-white text-black md:text-white"
     >
       <Navbar></Navbar>
-
+     {loading &&  <WaitingLoader></WaitingLoader>}
       <div className="md:min-h-screen md:mb-0 mb-10">
         <h2 className="text-center md:text-4xl text-xl font-semibold my-4 text-white">
           Sing UP
@@ -253,6 +260,7 @@ const SignUp = () => {
             </div>
             <div className="">
               <input
+                disabled={loading}
                 type="submit"
                 value="Sign Up"
                 className="btn-block cursor-pointer text-white py-2 rounded-sm hover:bg-[#d31f0b] bg-[#FF3811]"

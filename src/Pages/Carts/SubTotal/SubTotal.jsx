@@ -2,19 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { IoMdReturnRight } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import useCarts from "../../../hooks/useCarts";
+import { failedAlert } from "../../../Component/SweetAlart/SweelAlart";
 
-const SubTotal = () => {
+const SubTotal = ({ reset, setReset }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Add Shipping Charge");
-  const [currentValue, setCurrentValue] = useState(0); 
+  const [shippingValue, setShippingValue] = useState(0);
+  const {carts, totalQuantity, totalPrice } = useCarts();
+  const [couponsValue, setCouponsValue] = useState(0);
+  const [couponCode, setCouponCode] = useState(''); 
+  const [vatTax, setVatTax] = useState(0); 
   const navigate = useNavigate();
+  const finalTotalAmount  = totalPrice - couponsValue + shippingValue; 
+
 
   const dropDownRef = useRef(null);
 
   const options = [
-    { value: "70",  name: 'insideDhaka', label: "Inside Dhaka 70 tk" },
-    { value: "150", name: 'outsideDhaka', label: "Outside Dhaka 150 tk" },
-    { value: "00",  name: 'officeDelivery', label: "Office Delivery" }
+    { value: 70, name: "insideDhaka", label: "Inside Dhaka 70 tk" },
+    { value: 150, name: "outsideDhaka", label: "Outside Dhaka 150 tk" },
+    { value: 0, name: "officeDelivery", label: "Office Delivery" },
   ];
 
   useEffect(() => {
@@ -40,18 +48,44 @@ const SubTotal = () => {
     setSelected(option.label);
     setIsOpen(false);
 
-    setCurrentValue(option.value);
+    setShippingValue(option.value);
     console.log({ target: { value: option.value } });
   };
 
-  const handleCupponSubmit = (e) => {
+  const handleCouponSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.cuppon.value);
+
+    //TODO : Cuopon Code check from Backend side.
+
+    const couponCode = e.target.coupon.value.toLowerCase();
+    if (couponCode === "discount10") {
+      setCouponsValue(totalPrice * 0.1);
+      setCouponCode(couponCode); 
+    } else {
+      failedAlert("invalid Coupon!");
+      setCouponsValue(0);
+    }
   };
 
   const handleCheckout = () => {
-    navigate('/checkout')
-  }
+    const orderData = {
+      carts, totalQuantity, totalPrice, shippingValue, shippigMethod : selected, discount : couponsValue, finalAmount : finalTotalAmount, couponCode : couponCode, vatTax
+    }
+   
+    navigate("/checkout", {state : {orderData}});
+  };
+
+  useEffect(() => {
+    if (reset) {
+      setCouponsValue(0);
+
+      setReset(false);
+    }
+    if (!totalQuantity) {
+      setShippingValue(0);
+    }
+  }, [reset, setReset, totalQuantity]);
+
   return (
     <div className="md:w-[25%] mt-3 md:mt-0 w-full flex flex-col h-full space-y-3 bg-gray-200 dark:bg-gray-700 p-4 md:p-6">
       <h2 className="text-xl md:text-2xl">Summery</h2>
@@ -90,15 +124,15 @@ const SubTotal = () => {
 
         {/* apply Cuppon  */}
         <div>
-          <form className="relative" onSubmit={handleCupponSubmit}>
-            <label className="" htmlFor="cuppon">
-              Apply Cuppon
+          <form className="relative" onSubmit={handleCouponSubmit}>
+            <label className="" htmlFor="coupon">
+              Apply Coupon
             </label>
             <input
               type="text"
-              name="cuppon"
+              name="coupon"
               className="w-full mt-2 px-2 py-1 outline-none rounded-sm"
-              placeholder="Enter Cuppon Code"
+              placeholder="Enter Coupon Code"
             />
             <button className="absolute text-2xl right-1 font-bold z-10 top-9 text-[#ff3811]">
               <IoMdReturnRight />{" "}
@@ -108,39 +142,52 @@ const SubTotal = () => {
 
         {/* sub total  */}
         <div className="flex-grow">
-            <div className="divider"></div>
-            <div className="flex justify-between items-center">
-                <span>Items</span>
-                <span>1 pcs</span>
-            </div>
-            <div className="flex justify-between items-center">
-                <span>Shipping</span>
-                <span>{currentValue} tk</span>
-            </div>
-            <div className="flex justify-between items-center">
-                <span>Discout</span>
-                <span>00 tk</span>
-            </div>
-            <div className="flex justify-between items-center">
-                <span>VAT+Tax</span>
-                <span>00 tk</span>
-            </div>
-            <div className="flex justify-between items-center">
-                <span>Sub Total</span>
-                <span>1200 tk</span>
-            </div>
-
-
-
+          <div className="divider"></div>
+          <div className="flex justify-between items-center">
+            <span>Items</span>
+            <span>{totalQuantity} pcs</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>Shipping</span>
+            <span>{shippingValue} tk</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>Discout</span>
+            <span>{couponsValue} tk</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>VAT+Tax</span>
+            <span>{vatTax} tk</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>Total Amount</span>
+            <span>{totalPrice} tk</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>Sub Total</span>
+            <span>{finalTotalAmount} tk</span>
+          </div>
         </div>
 
-
-          {/* checkout button  */}
+        {/* checkout button  */}
         <div className="">
-            <div className="divider"></div>
+          <div className="divider"></div>
 
-          <button onClick={handleCheckout} className="btn-block bg-[#ff3811] py-1 text-center text-white hover:bg-red-600 outline-none">Check Out</button>
-
+          {selected === "Add Shipping Charge" ? (
+            <button
+              disabled
+              className="btn-block bg-gray-400 py-1 text-center text-white disabled outline-none"
+            >
+              Check Out
+            </button>
+          ) : (
+            <button
+              onClick={handleCheckout}
+              className="btn-block bg-[#ff3811] py-1 text-center text-white hover:bg-red-600 outline-none"
+            >
+              Check Out
+            </button>
+          )}
         </div>
       </div>
     </div>

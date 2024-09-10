@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
@@ -10,15 +10,26 @@ import DeliveryInfo from "./DeliveryInfo/DeliveryInfo";
 import ProductsSlider from "../../Component/ProductsSlider/ProductsSlider";
 import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
 import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
+import useAuth from './../../hooks/useAuth';
+import { confirmAlert, confirmationAlert } from "../../Component/SweetAlart/SweelAlart";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCarts from "../../hooks/useCarts";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
+  const {user} = useAuth();
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
+  const { refetch } = useCarts(); 
+
 
   const stockUpdate = "available";
 
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure(); 
+
 
   useEffect(() => {
     axiosPublic.get(`/products/${id}`).then((res) => setProductDetails(res.data));
@@ -34,7 +45,7 @@ const ProductDetailPage = () => {
     thumbnail: image.image_url,
   }));
 
-  console.log(productDetails);
+  // console.log(productDetails);
 
   const handleQuantityMinus = () => {
     if (quantity > 1) {
@@ -42,13 +53,41 @@ const ProductDetailPage = () => {
     }
   };
 
-  const handleAddtoCart = () => {
-    const cartInfo = {
-      id: productDetails._id,
-      name: productDetails.name,
-      quantity: quantity,
-    };
-    console.log(cartInfo);
+  const handleAddtoCart = async() => {
+    
+
+    if(!user){
+      confirmationAlert({titleText : 'Log In Required', confirmButtonText : 'Log In Now', detailsText:"You need to be logged in to add items to your cart. Please log in to continue."})
+      .then(result => {
+        if(result.isConfirmed){
+         return navigate('/login', { state : {from : location.pathname}})  
+          
+        }
+        return
+      })
+    }
+
+    if(user){
+      const cartInfo = {
+        email : user?.email,
+        name : user?.displayName,
+        product_id: productDetails._id,
+        productName: productDetails.productName,
+        productIamge : productDetails.images[0].image_url,
+        productPrice : productDetails.finalPrice,
+  
+        quantity: quantity,
+      };
+      console.log(cartInfo);
+
+      const res = await axiosSecure.post('/carts', cartInfo); 
+      if(res.data.insertedId){
+        confirmAlert('Cart Added Success!');
+        refetch();
+      }
+
+    }
+    
   };
 
   return (

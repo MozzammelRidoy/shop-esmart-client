@@ -14,28 +14,27 @@ const GoogleLogin = () => {
   const handleGoogleLogin = () => {
     userGoogleLogin()
       .then(async (result) => {
-        console.log(result.user);
         if (result.user) {
           const user = result.user;
           const googleUser = {
             name: user.displayName,
             email: user.email,
+            photoURL : user.photoURL,
             creationTime: user?.metadata?.creationTime,
             lastSignInTime: user?.metadata?.lastSignInTime,
             type: "user",
             isBaned: false,
             activity : true
           };
-          const res = await axiosPublic.post("/users", googleUser);
-          console.log(res.data)
+          await axiosPublic.post("/users", googleUser);
           confirmAlert("God Job! Login Success");
-          navigate(location?.state ? location.state : '/');
+          navigate(location?.state?.from ? location.state.from : '/');
 
         }
       })
       .catch((err) => {
         if(err){
-          failedAlert('Oh No! Login Failed');
+          return failedAlert('Oh No! Login Failed');
         }
       });
   };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useUsers from "../../../hooks/useUsers";
 import { timeCoverterGMTtoLocal } from "../../../utils/modules";
 import { MdDeleteForever } from "react-icons/md";

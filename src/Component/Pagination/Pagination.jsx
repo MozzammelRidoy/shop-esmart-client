@@ -2,9 +2,9 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Pagination = ({
   numberOfPage = 0,
-  currentPage,
+  currentPage = 0,
   setCurrentPage,
-  itemPerPage,
+  itemPerPage = 10,
   setItemPerPage,
 }) => {
   const pages = [...Array(numberOfPage).keys()];
@@ -27,6 +27,44 @@ const Pagination = ({
     setCurrentPage(0);
   };
 
+  const getDisplayedPages = () => {
+    const totalDisplayed = 8;
+    const middleRange = 3;
+
+    if (numberOfPage <= totalDisplayed) {
+      return pages;
+    }
+
+    const firstPage = 0;
+    const lastPage = numberOfPage - 1;
+
+    const pagesToShow = [];
+
+    pagesToShow.push(firstPage);
+
+    if (currentPage > middleRange) {
+      pagesToShow.push("...");
+    }
+
+    const startPage = Math.max(currentPage - middleRange, 1);
+    const endPage = Math.min(currentPage + middleRange, lastPage);
+  
+
+    for (let i = startPage; i <= endPage; i++) {
+      pagesToShow.push(i);
+    }
+
+    if (currentPage < lastPage - middleRange) {
+      pagesToShow.push("...");
+    }
+
+    if (endPage < lastPage) {
+      pagesToShow.push(lastPage);
+    }
+
+    return pagesToShow;
+  };
+
   return (
     <div className="px-2 grid grid-cols-3 md:grid-cols-1 md:flex justify-center items-center gap-2 ">
       <div className="order-2 md:order-1">
@@ -39,20 +77,26 @@ const Pagination = ({
         </button>
       </div>
       <div className="col-span-3 order-1  md:order-2 flex justify-center  items-center">
-        {pages.map((page) => (
-          <button
-            onClick={() => setCurrentPage(page)}
-            key={page}
-            className={`px-3 py-1 rounded-full 
+        {getDisplayedPages().map((page, index) =>
+          page === "..." ? (
+            <span key={index + page} className="md:px-1">
+              ...
+            </span>
+          ) : (
+            <button
+              onClick={() => setCurrentPage(page)}
+              key={page + index}
+              className={`px-3 py-1 rounded-full 
                  ${
                    currentPage === page
                      ? "bg-[#FF3811] text-white hover:bg-[#c2290b]"
                      : undefined
                  }`}
-          >
-            {page + 1}
-          </button>
-        ))}
+            >
+              {page + 1}
+            </button>
+          )
+        )}
       </div>
       <div className="md:order-3 order-4 flex items-center justify-end">
         <button
