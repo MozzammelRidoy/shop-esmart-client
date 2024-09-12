@@ -134,7 +134,7 @@ const Carts = () => {
                         onClick={() => handleItemDelete(cart._id)}
                         className="absolute top-1 right-1 text-xl rounded-full md:text-3xl text-[#ff3811] hover:text-[#929090]"
                       >
-                        <RxCross2 />{" "}
+                        <RxCross2 />
                       </button>
                     </div>
                   </td>
@@ -144,8 +144,8 @@ const Carts = () => {
           </table>
         </div>
 
-        {/* Sub total or Summery  */}
-        <SubTotal reset={reset} setReset={setReset}></SubTotal>
+       
+       {carts.length > 0 && <SubTotal reset={reset} setReset={setReset}></SubTotal>}
       </div>
     </div>
   );

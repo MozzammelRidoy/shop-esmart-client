@@ -3,10 +3,17 @@ import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButt
 import PaymentMethod from "./CheckoutComponents/PaymentMethod";
 import ReviewOrder from "./CheckoutComponents/ReviewOrder";
 import ShippingAddress from "./CheckoutComponents/ShippingAddress";
+import { useState } from "react";
 
 const Checkout = () => {
   const location = useLocation(); 
   const {orderData} = location.state; 
+  const [shippingInfo, setShippingInfo] = useState({}); 
+
+  // console.log(Object.keys(shippingInfo).length)
+
+
+  
   
   return (
     <div className="md:max-w-6xl mx-auto md:px-0 mt-3 ">
@@ -16,10 +23,10 @@ const Checkout = () => {
           <ReviewOrder orderData={orderData}></ReviewOrder>
         </div>
         <div>
-          <ShippingAddress></ShippingAddress>
+          <ShippingAddress setShippingInfo={setShippingInfo}></ShippingAddress>
         </div>
         <div>
-          <PaymentMethod></PaymentMethod>
+          <PaymentMethod orderData={orderData} shippingInfo={shippingInfo}></PaymentMethod>
         </div>
       </div>
     </div>

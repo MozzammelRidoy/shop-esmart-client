@@ -2,9 +2,11 @@ import { FaHome, FaLocationArrow, FaShoppingCart } from "react-icons/fa";
 import { IoIosChatbubbles } from "react-icons/io";
 import { MdPerson4 } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
+import useCarts from "../../../../hooks/useCarts";
 
 const MobileNavbar = () => {
   const location = useLocation();
+  const {carts} = useCarts(); 
 
   const menus = [
     { name: "Home", icone: <FaHome />, path: "/" },
@@ -27,7 +29,7 @@ const MobileNavbar = () => {
     {
       name: "Profile",
       icone: <MdPerson4 />,
-      path: "/dashboard/profile",
+      path: "/profile",
     },
   ];
 
@@ -41,12 +43,12 @@ const MobileNavbar = () => {
               className={"flex flex-col  items-center pt-3 "}
             >
               <span
-                className={`text-xl cursor-pointer duration-500 ${
+                className={`text-xl cursor-pointer duration-500 relative ${
                   location.pathname === menu.path &&
                   "-mt-2 text-2xl text-[#FF3811] "
                 }`}
               >
-                {menu.icone}
+                {menu.icone} {menu.name === 'Cart' && <span className={`${carts.length || 'hidden'} text-xs text-white absolute -top-1 left-5 bg-blue-500 rounded-full px-1`}>{carts.length}</span> }
               </span>
               <span
                 className={`${

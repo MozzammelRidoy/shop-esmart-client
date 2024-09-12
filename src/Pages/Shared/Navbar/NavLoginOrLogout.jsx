@@ -13,7 +13,7 @@ const NavLoginOrLogout = () => {
       lastSignOutTime: new Date().toISOString(),
     }
     const res = await axiosPublic.patch('/users/logout', logoutInfo );
-    console.log(res.data);
+    
 
     if (res.data.success) {
       userLogout()

@@ -24,6 +24,8 @@ const ProductDetailPage = () => {
   const location = useLocation(); 
   const { refetch } = useCarts(); 
 
+  
+
 
   const stockUpdate = "available";
 
@@ -75,10 +77,11 @@ const ProductDetailPage = () => {
         productName: productDetails.productName,
         productIamge : productDetails.images[0].image_url,
         productPrice : productDetails.finalPrice,
+        productCategory : productDetails.productCategory[1],
   
         quantity: quantity,
       };
-      console.log(cartInfo);
+      // console.log(cartInfo);
 
       const res = await axiosSecure.post('/carts', cartInfo); 
       if(res.data.insertedId){
@@ -222,8 +225,8 @@ const ProductDetailPage = () => {
                 Add to Cart
               </button>
               {productDetails.stockStatus && productDetails.stockQuantity  ? (
-                <Link
-                  to={`/checkout/${productDetails._id}`}
+                <Link onClick={handleAddtoCart}
+                  to={`/carts`}
                   className={`w-1/2 md:py-2 py-1 text-white bg-[#ff3811] text-center hover:bg-[#c6290a]`}
                 >
                   <button className=" ">Buy Now</button>

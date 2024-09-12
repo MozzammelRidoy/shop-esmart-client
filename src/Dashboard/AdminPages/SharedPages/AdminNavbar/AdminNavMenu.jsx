@@ -179,7 +179,7 @@ const AdminNavMenu = () => {
     <>
       <li>
         <Link to={"/"}>Home Page</Link>
-        <Link to={"/dashboard/profile"}>My Profile</Link>
+        <Link to={"/profile"}>My Profile</Link>
       </li>
     </>
   );

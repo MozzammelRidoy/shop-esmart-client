@@ -60,22 +60,23 @@ const ProfilePicture = () => {
   };
   return (
     <div className="bg-gray-100 dark:bg-gray-700 w-full h-96 relative flex flex-col justify-center  items-center gap-3">
-      {isPending || (loading && <WaitingLoader></WaitingLoader>)}
+      {(isPending || loading) && <WaitingLoader></WaitingLoader>}
       <div className="h-24 w-full bg-gray-300 dark:bg-gray-500 absolute top-0 rounded-b-[100%]"></div>
       <div className="w-44  z-10">
         <img 
-          className="rounded-full w-44  object-cover h-44"
+          className="rounded-full w-44 object-cover h-44"
           src={usersInfo?.imageUrl ? usersInfo.imageUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s"}
         />
       </div>
-      <div className="flex flex-col items-center gap-1">
-        <h2 className="font-bold text-2xl">
+      <div className="flex flex-col items-center gap-1 w-[90%]">
+        <h2 className="font-bold text-2xl text-center w-full">
           {usersInfo?.name ? usersInfo.name : "Your Name"}
         </h2>
-        <p>ID : #{usersInfo?._id?.slice(-8)}</p>
-        <button
+        <p>Profile ID : #{usersInfo?._id?.slice(-8)}</p>
+        <button 
+        disabled={isPending || loading}
           onClick={handleImageInput}
-          className="text-white py-1 w-full outline-none rounded-sm  bg-[#ff3811] hover:bg-red-800"
+          className="text-white py-1 px-5 w-[70%] outline-none rounded-sm  bg-[#ff3811] hover:bg-red-800"
         >
           Change Image
         </button>

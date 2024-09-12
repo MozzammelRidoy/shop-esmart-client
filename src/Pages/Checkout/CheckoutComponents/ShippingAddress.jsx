@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useUserInfo from "../../../hooks/useUserInfo";
-import useDistrictsFetch from "./useDistrictsFetch";
+import useDistrictsFetch from "../../../hooks/useDistrictsFetch";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
@@ -10,13 +10,13 @@ import {
 } from "../../../Component/SweetAlart/SweelAlart";
 import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 
-const ShippingAddress = () => {
+const ShippingAddress = ({setShippingInfo}) => {
   const districts = useDistrictsFetch();
   const [usersInfo, isPending, refetch] = useUserInfo();
   const { user, userUpdateProfile } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const [shippingInfo, setShippingInfo] = useState({});
+  
 
   const {
     register,
@@ -69,7 +69,7 @@ const ShippingAddress = () => {
       country,
       shippingAddress,
     };
-    console.log(typeof phone);
+  
     try {
       const res = await axiosSecure.put(
         `/usersInfo?email=${user.email}`,
@@ -251,7 +251,7 @@ const ShippingAddress = () => {
           </div>
           <div className="">
             <button className="w-full bg-[#ff3811] py-2 text-white hover:bg-red-700">
-              Add Shipping Info
+             Confirm Shipping Info
             </button>
           </div>
         </form>

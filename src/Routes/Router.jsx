@@ -29,6 +29,10 @@ import SalesReports from "../Dashboard/AdminPages/SalesReports/SalesReports";
 import SiteSettings from "../Dashboard/AdminPages/SiteSettings/SiteSettings";
 import AdminProductDetailsPage from "../Dashboard/AdminProductDetailsPage/AdminProductDetailsPage";
 import UpdateProduct from "../Dashboard/UpdateProduct/UpdateProduct";
+import PaymentSuccess from "../Pages/Checkout/PaymentStatus/PaymentSuccess";
+import PaymentCancel from "../Pages/Checkout/PaymentStatus/PaymentCancel";
+import PaymentFailed from "../Pages/Checkout/PaymentStatus/PaymentFailed";
+import MyOrders from "../Pages/MyOrders/MyOrders";
 
 const router = createBrowserRouter([
     {
@@ -61,13 +65,29 @@ const router = createBrowserRouter([
           element : <Checkout></Checkout>
         },
         {
-          path : 'dashboard/profile',
+          path : '/profile',
           element : <Profile></Profile>
         },
         {
           path : '/product/:id',
           element : <ProductDetailPage></ProductDetailPage>,
           
+        },
+        {
+          path : '/payment-success',
+          element : <PaymentSuccess></PaymentSuccess>
+        },
+        {
+          path : '/payment-cancel',
+          element : <PaymentCancel></PaymentCancel>
+        },
+        {
+          path : '/payment-failed',
+          element : <PaymentFailed></PaymentFailed>
+        },
+        {
+          path : '/profile/myOrders',
+          element : <MyOrders></MyOrders>
         }
       ]
     },

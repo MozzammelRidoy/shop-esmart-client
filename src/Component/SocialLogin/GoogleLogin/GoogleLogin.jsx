@@ -19,7 +19,8 @@ const GoogleLogin = () => {
           const googleUser = {
             name: user.displayName,
             email: user.email,
-            photoURL : user.photoURL,
+            imageUrl : user.photoURL,
+            imageId : null,
             creationTime: user?.metadata?.creationTime,
             lastSignInTime: user?.metadata?.lastSignInTime,
             type: "user",

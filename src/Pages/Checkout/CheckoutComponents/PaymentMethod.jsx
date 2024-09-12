@@ -2,16 +2,54 @@ import { useState } from "react";
 import { AiFillBank } from "react-icons/ai";
 import { FaRegCreditCard } from "react-icons/fa";
 import { GiBanknote } from "react-icons/gi";
+import useSSLcommerz from "../../../hooks/useSSLcommerz";
+import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 
-const PaymentMethod = () => {
+const PaymentMethod = ({ orderData, shippingInfo }) => {
   const [payment, setPayment] = useState("");
+  const [loading, setLoading] = useState(false);
+  const {sslCommerzPayment} = useSSLcommerz({setLoading});
+
+  const isCashNowPay = orderData.shippingValue;
+  const isCashDue = orderData.finalAmount - isCashNowPay;
+
+  const isCardNowPay = orderData.finalAmount;
+  const isCardDue = orderData.finalAmount - isCardNowPay;
+
+  const isMobileNowPay = orderData.finalAmount;
+  const isMobileDue = orderData.finalAmount - isMobileNowPay;
 
   const handlePaymentMethod = (e) => {
     setPayment(e.target.value);
   };
-  console.log(payment);
+  // console.log(payment);
+
+  const handleOrderPlace = async () => {
+    if (Object.keys(shippingInfo).length === 0) {
+      return alert("Shiipind Addess Add korun");
+    }
+    if(payment === 'cash'){
+      const newOrder = { ...orderData, ...shippingInfo, paid : isCashNowPay, due : isCashDue , paymentMethod : payment };
+      
+       sslCommerzPayment(newOrder)
+      
+
+      
+    }
+    else if(payment === 'card'){
+
+      const newOrder = { ...orderData, ...shippingInfo, paid : isCardNowPay, due : isCardDue, paymentMethod : payment };
+
+    }
+   
+    else if(payment === 'mobileBanking'){
+
+      const newOrder = { ...orderData, ...shippingInfo, paid : isMobileNowPay, due : isMobileDue, paymentMethod : payment };
+    }
+  };
   return (
     <div className="px-2 md:px-0">
+      {loading && <WaitingLoader></WaitingLoader>}
       <h2 className="md:text-2xl text-lg mb-3">Payment Method</h2>
       <div>
         <form
@@ -62,38 +100,38 @@ const PaymentMethod = () => {
       <div>
         <div className="divider"></div>
         {payment === "cash" && (
-          <div>
+          <div className="text-xl">
             <div className="flex justify-between items-center">
               <span>Shipping Charge Pay Now</span>
-              <span>150 tk</span>
+              <span>{isCashNowPay} tk</span>
             </div>
             <div className="flex justify-between items-center">
               <span>Due Amount</span>
-              <span>1200 tk</span>
+              <span>{isCashDue} tk</span>
             </div>
           </div>
         )}
         {payment === "card" && (
-          <div>
+          <div className="text-xl">
             <div className="flex justify-between items-center">
               <span>Total Pay Now</span>
-              <span>1350 tk</span>
+              <span>{isCardNowPay} tk</span>
             </div>
             <div className="flex justify-between items-center">
               <span>Due Amount</span>
-              <span>00 tk</span>
+              <span>{isCardDue} tk</span>
             </div>
           </div>
         )}
         {payment === "mobileBanking" && (
-          <div>
+          <div className="text-xl">
             <div className="flex justify-between items-center">
               <span>Total Pay Now</span>
-              <span>1350 tk</span>
+              <span>{isMobileNowPay} tk</span>
             </div>
             <div className="flex justify-between items-center">
               <span>Due Amount</span>
-              <span>00 tk</span>
+              <span>{isMobileDue} tk</span>
             </div>
           </div>
         )}
@@ -102,11 +140,17 @@ const PaymentMethod = () => {
 
       <div>
         {payment ? (
-          <button className="btn-block bg-[#ff3811] hover:bg-red-800 text-white py-2">
+          <button
+            onClick={handleOrderPlace}
+            className="btn-block bg-[#ff3811] hover:bg-red-800 text-white py-2"
+          >
             Order Place
           </button>
         ) : (
-          <button className="btn-block bg-gray-300 btn-disabled text-white py-2">
+          <button
+            disabled
+            className="btn-block bg-gray-300 btn-disabled text-white py-2"
+          >
             Order Place
           </button>
         )}

@@ -19,13 +19,13 @@ const ProfileMenu = () => {
           </li>
         </Link>
       )}
-      <Link to={"/profile/myOrder"}>
+      <Link to={"/profile/myOrders"}>
         {" "}
         <li className="border-b py-1 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
           <span>
             <RiShoppingBasketLine />
           </span>{" "}
-          My Order
+          My Orders
         </li>
       </Link>
       <Link to={"/profile/myFavorite"}>
@@ -56,14 +56,14 @@ const ProfileMenu = () => {
           Order Tracking
         </li>
       </Link>
-      <Link to={"/profile/OrderHistory"}>
+      <Link to={"/profile/OrdersHistory"}>
         {" "}
         <li className="border-b py-1  border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2  justify-center ">
           {" "}
           <span>
             <ImHistory />{" "}
           </span>
-          Order History
+          Orders History
         </li>
       </Link>
     </>

@@ -10,7 +10,7 @@ const ReviewOrder = ({ orderData }) => {
     discount,
     vatTax,
   } = orderData;
-  console.log(carts);
+  
   return (
     <div className="px-2 md:px-0">
       <h2 className="md:text-2xl text-lg mb-2">Review Your Order</h2>
@@ -61,7 +61,7 @@ const ReviewOrder = ({ orderData }) => {
             <span>VAT+Tax</span>
             <span>{vatTax} tk</span>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center text-xl">
             <span>Sub Total</span>
             <span>{finalAmount} tk</span>
           </div>

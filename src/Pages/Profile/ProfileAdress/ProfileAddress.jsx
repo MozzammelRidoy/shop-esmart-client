@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
-import useDistrictsFetch from "../../Checkout/CheckoutComponents/useDistrictsFetch";
+import useDistrictsFetch from "../../../hooks/useDistrictsFetch";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -11,9 +11,9 @@ const ProfileAddress = () => {
   
   const districts = useDistrictsFetch();
   const {user, userUpdateProfile} = useAuth(); 
-  console.log(user)
-
+  
   const [usersInfo, isPending, refetch] = useUserInfo(); 
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure(); 
 
 
@@ -59,7 +59,7 @@ const ProfileAddress = () => {
     const city = data.city;
     const country = data.country;
     const shippingAddress = data.shippingAddress;
-   
+    
     const userInfo = {
       name,
       phone,
@@ -69,6 +69,8 @@ const ProfileAddress = () => {
     };
     
     try {
+      
+      setLoading(true)
       const res = await axiosSecure.put(
         `/usersInfo?email=${user.email}`,
         userInfo
@@ -79,16 +81,21 @@ const ProfileAddress = () => {
 
         refetch();
       }
+      
     } catch (err) {
       if (err) {
         return failedAlert("Information Update Failed!");
       }
     }
+    finally{
+      setLoading(false)
+    }
+    
   };
 
   return (
     <div>
-      {isPending && <WaitingLoader></WaitingLoader>}
+      {(isPending || loading) && <WaitingLoader></WaitingLoader>}
       <form onSubmit={handleSubmit(onSubmit)} className="md:p-4 p-2 space-y-4">
         <div className="grid grid-cols-3 items-center">
           <label className="col-span-1 text-lg font-semibold" htmlFor="name">
@@ -196,7 +203,7 @@ const ProfileAddress = () => {
         </div>
 
         <div className="flex justify-end">
-          <button className="text-white bg-[#ff3811] hover:bg-orange-800 py-1 w-2/5">
+          <button disabled={loading || isPending} className="text-white bg-[#ff3811] hover:bg-orange-800 py-1 w-2/5">
             Update
           </button>
         </div>

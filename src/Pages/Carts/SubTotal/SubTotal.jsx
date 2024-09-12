@@ -49,7 +49,7 @@ const SubTotal = ({ reset, setReset }) => {
     setIsOpen(false);
 
     setShippingValue(option.value);
-    console.log({ target: { value: option.value } });
+    // console.log({ target: { value: option.value } });
   };
 
   const handleCouponSubmit = (e) => {

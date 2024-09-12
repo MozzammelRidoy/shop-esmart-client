@@ -18,7 +18,7 @@ const Navbar = () => {
       </div>
 
       {/* div for logout button and dark mode */}
-      <div className="col-span-2 md:col-span-2  order-2 md:order-3  items-center flex justify-end gap-x-3">
+      <div className="col-span-2 md:col-span-2  order-2 md:order-3  items-center flex justify-end gap-x-4">
         <NavProfileCart></NavProfileCart>
         <NavDarkMode></NavDarkMode>
         <NavLoginOrLogout></NavLoginOrLogout>
