@@ -2,19 +2,19 @@ import { useEffect } from "react";
 import { MdOutlineDoneOutline } from "react-icons/md";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
-const PaymentSuccess = () => {
+const OrderSubmited = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const paidAmount = searchParams.get("paid-amount");
-  const transactionID = searchParams.get("TxID");
-
+  const status = searchParams.get("status");
+  const order_id = searchParams.get("order_id");
  
+
   useEffect(() => {
-    if (!paidAmount || !transactionID) {
+    if (!status || !order_id) {
       return navigate("/");
     }
-  }, [navigate, paidAmount, transactionID]);
+  }, [navigate, status, order_id]);
 
   return (
     <div className="min-h-96 flex flex-col justify-center items-center gap-4">
@@ -25,16 +25,16 @@ const PaymentSuccess = () => {
     </p>
     
     <p className="text-center text-4xl  font-bold text-green-500">
-      Payment Success!
+     Order Submited!
     </p>
     <p className="text-3xl text-red-500">
         Thank You!
     </p>
     <p className="md:text-xl text-lg">
-        Your Paid Amount : {paidAmount} Tk
+       Collect Your Order
     </p>
     <p className="md:text-xl text-lg">
-        Transaction ID : {transactionID}
+        Order ID : {order_id}
     </p>
     <button className="text-center py-2 w-1/2 md:w-[20%] mx-auto bg-green-500 text-white hover:bg-green-700">
       <Link to={'/profile/myOrders'}>
@@ -45,4 +45,4 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess;
+export default OrderSubmited;

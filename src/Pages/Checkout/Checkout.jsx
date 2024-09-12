@@ -9,9 +9,10 @@ const Checkout = () => {
   const location = useLocation(); 
   const {orderData} = location.state; 
   const [shippingInfo, setShippingInfo] = useState({}); 
+ 
 
-  // console.log(Object.keys(shippingInfo).length)
 
+  
 
   
   

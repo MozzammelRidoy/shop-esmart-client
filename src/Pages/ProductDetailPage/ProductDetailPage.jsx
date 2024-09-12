@@ -10,35 +10,47 @@ import DeliveryInfo from "./DeliveryInfo/DeliveryInfo";
 import ProductsSlider from "../../Component/ProductsSlider/ProductsSlider";
 import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
 import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
-import useAuth from './../../hooks/useAuth';
-import { confirmAlert, confirmationAlert } from "../../Component/SweetAlart/SweelAlart";
+import useAuth from "./../../hooks/useAuth";
+import { confirmationAlert } from "../../Component/SweetAlart/SweelAlart";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useCarts from "../../hooks/useCarts";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const navigate = useNavigate(); 
-  const location = useLocation(); 
-  const { refetch } = useCarts(); 
-
-  
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { refetch } = useCarts();
 
   const stockUpdate = "available";
 
   const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure(); 
-
+  const axiosSecure = useAxiosSecure();
+  const notify = () =>
+    toast.success("Cart Added Success!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
 
   useEffect(() => {
-    axiosPublic.get(`/products/${id}`).then((res) => setProductDetails(res.data));
+    axiosPublic
+      .get(`/products/${id}`)
+      .then((res) => setProductDetails(res.data));
   }, [axiosPublic, id]);
 
   if (!productDetails) {
-    return <WaitingLoader></WaitingLoader>
+    return <WaitingLoader></WaitingLoader>;
   }
 
   // console.log(productDetail);
@@ -55,42 +67,41 @@ const ProductDetailPage = () => {
     }
   };
 
-  const handleAddtoCart = async() => {
-    
-
-    if(!user){
-      confirmationAlert({titleText : 'Log In Required', confirmButtonText : 'Log In Now', detailsText:"You need to be logged in to add items to your cart. Please log in to continue."})
-      .then(result => {
-        if(result.isConfirmed){
-         return navigate('/login', { state : {from : location.pathname}})  
-          
+  const handleAddtoCart = async () => {
+    if (!user) {
+      confirmationAlert({
+        titleText: "Log In Required",
+        confirmButtonText: "Log In Now",
+        detailsText:
+          "You need to be logged in to add items to your cart. Please log in to continue.",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          return navigate("/login", { state: { from: location.pathname } });
         }
-        return
-      })
+        return;
+      });
     }
 
-    if(user){
+    if (user) {
       const cartInfo = {
-        email : user?.email,
-        name : user?.displayName,
+        email: user?.email,
+        name: user?.displayName,
         product_id: productDetails._id,
         productName: productDetails.productName,
-        productIamge : productDetails.images[0].image_url,
-        productPrice : productDetails.finalPrice,
-        productCategory : productDetails.productCategory[1],
-  
+        productIamge: productDetails.images[0].image_url,
+        productPrice: productDetails.finalPrice,
+        productCategory: productDetails.productCategory[1],
+
         quantity: quantity,
       };
       // console.log(cartInfo);
 
-      const res = await axiosSecure.post('/carts', cartInfo); 
-      if(res.data.insertedId){
-        confirmAlert('Cart Added Success!');
+      const res = await axiosSecure.post("/carts", cartInfo);
+      if (res.data.insertedId) {
+        notify();
         refetch();
       }
-
     }
-    
   };
 
   return (
@@ -107,9 +118,13 @@ const ProductDetailPage = () => {
             showPlayButton={false}
             thumbnailPosition="bottom"
             slideOnThumbnailOver={true}
-            renderItem={(item)=> (
+            renderItem={(item) => (
               <div className="w-full h-96 overflow-hidden">
-                <img src={item.original} className="w-full h-full object-cover" alt={item?.originalAlt} />
+                <img
+                  src={item.original}
+                  className="w-full h-full object-cover"
+                  alt={item?.originalAlt}
+                />
               </div>
             )}
             renderThumbInner={(item) => (
@@ -123,7 +138,10 @@ const ProductDetailPage = () => {
             )}
           />
 
-          <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm"><span>{productDetails.discountAmount}tk</span><span>save</span></div>
+          <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm">
+            <span>{productDetails.discountAmount}tk</span>
+            <span>save</span>
+          </div>
           <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
             <span>{productDetails.discountPercent}%</span>
           </div>
@@ -133,7 +151,9 @@ const ProductDetailPage = () => {
         <div className=" md:w-[45%] w-full p-2 flex flex-col justify-between md:space-y-2 space-y-1 ">
           {/* product heading or headline or title  */}
           <div>
-            <h2 className="md:text-3xl text-xl capitalize ">{productDetails?.productName?.toLowerCase()}</h2>
+            <h2 className="md:text-3xl text-xl capitalize ">
+              {productDetails?.productName?.toLowerCase()}
+            </h2>
             <p className="font-semibold">
               <span className="text-green-500">Stock : </span>
               {productDetails.stockStatus && productDetails.stockQuantity ? (
@@ -148,9 +168,11 @@ const ProductDetailPage = () => {
           <div className="flex justify-between items-center ">
             <div className="text-sm md:text-lg flex items-center gap-2 text-[#ff3811]">
               <p>
-              Price :{" "}
-              <span className="md:text-xl text-lg">{productDetails.finalPrice}</span>{" "}
-              Tk
+                Price :{" "}
+                <span className="md:text-xl text-lg">
+                  {productDetails.finalPrice}
+                </span>{" "}
+                Tk
               </p>
               <p className="text-gray-400">
                 <del>{productDetails.sellPrice}</del>
@@ -175,13 +197,15 @@ const ProductDetailPage = () => {
 
           {/* product details or description  */}
           <div className="flex-grow">
-            {
-              productDetails.productBrand && <p>
-              <span className="font-bold">Brand : </span> {productDetails.productBrand}
-            </p>
-            }
+            {productDetails.productBrand && (
+              <p>
+                <span className="font-bold">Brand : </span>{" "}
+                {productDetails.productBrand}
+              </p>
+            )}
             <p className="text-justify">
-              <span className="font-bold">Details : </span>{productDetails.productDetails}
+              <span className="font-bold">Details : </span>
+              {productDetails.productDetails}
             </p>
           </div>
           {/* product action button  */}
@@ -224,8 +248,9 @@ const ProductDetailPage = () => {
               >
                 Add to Cart
               </button>
-              {productDetails.stockStatus && productDetails.stockQuantity  ? (
-                <Link onClick={handleAddtoCart}
+              {productDetails.stockStatus && productDetails.stockQuantity ? (
+                <Link
+                  onClick={handleAddtoCart}
                   to={`/carts`}
                   className={`w-1/2 md:py-2 py-1 text-white bg-[#ff3811] text-center hover:bg-[#c6290a]`}
                 >
@@ -253,6 +278,7 @@ const ProductDetailPage = () => {
         {/* TODO:  <ProductsSlider collections={productDetail.category}/> */}
         <ProductsSlider collections={"products"} />
       </div>
+      <ToastContainer />
     </div>
   );
 };

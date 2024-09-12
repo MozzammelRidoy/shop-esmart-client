@@ -33,6 +33,7 @@ import PaymentSuccess from "../Pages/Checkout/PaymentStatus/PaymentSuccess";
 import PaymentCancel from "../Pages/Checkout/PaymentStatus/PaymentCancel";
 import PaymentFailed from "../Pages/Checkout/PaymentStatus/PaymentFailed";
 import MyOrders from "../Pages/MyOrders/MyOrders";
+import OrderSubmited from "../Pages/Checkout/PaymentStatus/OrderSubmited";
 
 const router = createBrowserRouter([
     {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
         {
           path : '/payment-failed',
           element : <PaymentFailed></PaymentFailed>
+        },
+        { 
+          path : '/order-submited',
+          element : <OrderSubmited></OrderSubmited>
         },
         {
           path : '/profile/myOrders',
