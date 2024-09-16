@@ -13,7 +13,7 @@ const AdminPageGridView = ({ collections, refetch }) => {
       async (res) => {
         if (res.isConfirmed) {
           const res = await axiosSecure.delete(`/products/delete/${_id}`);
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.deletedCount > 0) {
             confirmAlert("Delete Success !");
             refetch();
@@ -34,11 +34,11 @@ const AdminPageGridView = ({ collections, refetch }) => {
             className="hover:shadow-2xl dark:shadow-gray-600"
           >
             <div className="md:h-80 h-48 overflow-hidden ">
-              {item.images[0].image_url && (
+              {item?.images[0].image_url && (
                 <div className="h-3/4">
                   <img
                     className="w-full h-full object-cover"
-                    src={item.images[0].image_url}
+                    src={item?.images[0].image_url}
                     alt=""
                   />
                 </div>
@@ -47,8 +47,8 @@ const AdminPageGridView = ({ collections, refetch }) => {
                 <div>
                   <h2 className="md:text-base text-justify text-[10px] font-semibol">
                     {item?.productName?.length > 35
-                      ? `${item.productName.slice(0, 35)}...`
-                      : item.productName}
+                      ? `${item?.productName.slice(0, 35)}...`
+                      : item?.productName}
                   </h2>
                 </div>
                 <div className="flex justify-between items-center">

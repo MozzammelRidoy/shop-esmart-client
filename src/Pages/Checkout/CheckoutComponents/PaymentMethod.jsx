@@ -34,7 +34,7 @@ const PaymentMethod = ({ orderData, shippingInfo }) => {
   // const isMobileNowPay = orderData.finalAmount;
   // const isMobileDue = orderData.finalAmount - isMobileNowPay;
 
-  const notify = () => toast("Please Confirm Your Shipping Info");
+  const notify = () => toast("⚠ Please Confirm Your Shipping Info");
 
   const handlePaymentMethod = (e) => {
     setPayment(e.target.value);

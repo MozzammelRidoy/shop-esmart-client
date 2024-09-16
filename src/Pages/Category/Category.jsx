@@ -16,28 +16,24 @@ const Category = () => {
   const capitalizedCategory = fristLetterCapitalize(category);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemPerPage, setItemPerPage] = useState(10);
-  const [priceRange, setPriceRange] = useState({}); 
-  const [sort, setSort ] = useState(''); 
+  const [priceRange, setPriceRange] = useState({});
+  const [sort, setSort] = useState("");
 
   // console.log(sort)
-
- 
 
   const {
     collections = [],
     isLoading,
     numberOfPage = 0,
-    totalResults = 0
+    totalResults = 0,
   } = useCategoryReletedProductsFatch({
     category,
     itemPerPage,
     currentPage,
     priceRange,
-    sort
-    
+    sort,
   });
   const { viewMode, setViewMode } = usePageViewMode();
- 
 
   // console.log(collections)
 
@@ -46,9 +42,7 @@ const Category = () => {
       <Helmet>
         <title>Shop Esmart | {capitalizedCategory}</title>
       </Helmet>
-      {
-        isLoading && <WaitingLoader></WaitingLoader>
-      }
+      {isLoading && <WaitingLoader></WaitingLoader>}
       <div className="flex justify-between items-center ">
         <div>
           <h2 className="md:text-3xl text-xl font-bold capitalize  gap-2">
@@ -64,7 +58,10 @@ const Category = () => {
       </div>
 
       <div className="my-4">
-        <RangeAndFilter setPriceRange={setPriceRange} setSort={setSort}></RangeAndFilter>
+        <RangeAndFilter
+          setPriceRange={setPriceRange}
+          setSort={setSort}
+        ></RangeAndFilter>
       </div>
 
       <div>
@@ -74,18 +71,19 @@ const Category = () => {
         ) : (
           <PageListView collections={collections} />
         )}
-             </div>
+      </div>
 
-             {totalResults > 10 && <div className="my-4">
-             <Pagination
-          numberOfPage={numberOfPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          itemPerPage={itemPerPage}
-          setItemPerPage={setItemPerPage}
-        ></Pagination>
-
-             </div>}
+      {totalResults > 10 && (
+        <div className="my-4">
+          <Pagination
+            numberOfPage={numberOfPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            itemPerPage={itemPerPage}
+            setItemPerPage={setItemPerPage}
+          ></Pagination>
+        </div>
+      )}
     </div>
   );
 };

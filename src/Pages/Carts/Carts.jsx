@@ -11,6 +11,7 @@ import {
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
 import { useState } from "react";
+import EmptyPage from "../../Component/EmptyPage/EmptyPage";
 
 const Carts = () => {
   const axiosSecure = useAxiosSecure();
@@ -54,6 +55,8 @@ const Carts = () => {
       <HomeAndBackButton></HomeAndBackButton>
 
       {isPending && <WaitingLoader></WaitingLoader>}
+
+      {carts.length > 0 ?
 
       <div className="md:flex gap-3 ">
         {/* carts table  */}
@@ -146,7 +149,7 @@ const Carts = () => {
 
        
        {carts.length > 0 && <SubTotal reset={reset} setReset={setReset}></SubTotal>}
-      </div>
+      </div> :  <EmptyPage></EmptyPage> }
     </div>
   );
 };

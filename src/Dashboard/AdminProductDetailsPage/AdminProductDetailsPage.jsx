@@ -10,17 +10,15 @@ import {
 import { timeCoverterGMTtoLocal } from "../../utils/modules";
 import useSingleProductReadForAdmin from "../../hooks/useSingleProductReadForAdmin";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
 
 const AdminProductDetailsPage = () => {
   const { id } = useParams();
   const { productDetails, loading } = useSingleProductReadForAdmin(id);
   const axiosSecure = useAxiosSecure();
-
   const navigate = useNavigate();
+  if(loading){ return <WaitingLoader></WaitingLoader>}
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   const handleDelete = (_id) => {
     confirmationAlert({ detailsText: "Do you want to delete it ?" }).then(
@@ -46,6 +44,7 @@ const AdminProductDetailsPage = () => {
   return (
     <div className="md:max-w-6xl mx-auto mt-3 ">
       <HomeAndBackButton></HomeAndBackButton>
+     
       <div className="md:flex md:gap-4 gap-2  ">
         {/* for image  */}
         <div className="md:w-[30%] w-full ">
@@ -88,6 +87,12 @@ const AdminProductDetailsPage = () => {
 
           {/* product price and ratings  */}
           <div className="  ">
+            <p className="text-sm md:text-lg  text-[#ff3811]">
+             Product Code :{" "}
+              <span className="md:text-xl text-lg">
+                {productDetails?.code}
+              </span>{" "}
+            </p>
             <p className="text-sm md:text-lg  text-[#ff3811]">
               Cost Price :{" "}
               <span className="md:text-xl text-lg">

@@ -34,6 +34,7 @@ import PaymentCancel from "../Pages/Checkout/PaymentStatus/PaymentCancel";
 import PaymentFailed from "../Pages/Checkout/PaymentStatus/PaymentFailed";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import OrderSubmited from "../Pages/Checkout/PaymentStatus/OrderSubmited";
+import MyCoupons from "../Pages/MyCoupons/MyCoupons";
 
 const router = createBrowserRouter([
     {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
         {
           path : '/profile/myOrders',
           element : <MyOrders></MyOrders>
+        },
+        {
+          path : '/profile/myCoupons',
+          element : <MyCoupons></MyCoupons>
         }
       ]
     },

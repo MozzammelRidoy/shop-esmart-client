@@ -400,6 +400,7 @@ const UpdateProduct = () => {
             <div className="md:col-span-2">
               <ReactFIleInput
                 formReset={formReset}
+                setFormReset={setFormReset}
                 setProductImages={setProductImages}
               />
             </div>

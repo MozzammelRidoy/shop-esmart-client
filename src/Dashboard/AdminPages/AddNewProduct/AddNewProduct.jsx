@@ -23,7 +23,7 @@ const AddNewProduct = () => {
 
   const handleAddNewProduct = async (e) => {
     e.preventDefault();
-    
+
     if (productImages.length === 0) {
       failedAlert("Image Cannot Emty!");
       return;
@@ -33,6 +33,7 @@ const AddNewProduct = () => {
     const productName = form.get("productName");
     const productCategory = form.get("productCategory").split(",");
     const productDetails = form.get("productDetails");
+    const code = form.get("code");
     const sellPrice = parseInt(form.get("sellPrice"));
     const costPrice = parseInt(form.get("costPrice"));
     const discountPercent = parseInt(form.get("discountPercent"));
@@ -74,6 +75,7 @@ const AddNewProduct = () => {
       productName,
       productCategory,
       productDetails,
+      code,
       sellPrice,
       costPrice,
       discountPercent,
@@ -93,7 +95,7 @@ const AddNewProduct = () => {
         "/products/addnew",
         productInformation
       );
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.insertedId) {
         confirmAlert("Product added successfully!");
         e.target.reset();
@@ -105,18 +107,13 @@ const AddNewProduct = () => {
       failedAlert("Failed to Add new Product!");
     } finally {
       setLoading(false);
-      
     }
   };
 
   return (
     <div className="md:max-w-6xl mx-auto p-3 md:p-0 mb-10">
       <h2 className="text-2xl md:text-4xl text-center py-4">Add New Product</h2>
-      {loading && (
-        <div>
-          <WaitingLoader></WaitingLoader> Please Wait...
-        </div>
-      )}
+      {loading && <WaitingLoader></WaitingLoader>}
       <div>
         <form onSubmit={handleAddNewProduct}>
           <div className="grid md:grid-cols-2 grid-cols-1 md:gap-6 gap-3">
@@ -157,7 +154,7 @@ const AddNewProduct = () => {
               </select>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 md:col-span-2">
               <label className="text-2xl" htmlFor="productDetails">
                 Product Description
               </label>
@@ -167,6 +164,18 @@ const AddNewProduct = () => {
                 required
                 name="productDetails"
               ></textarea>
+            </div>
+            <div className="space-y-2">
+              <label className="text-2xl" htmlFor="code">
+                Product Code
+              </label>
+              <input
+                className="w-full py-1 px-2 rounded-sm border"
+                type="text"
+                placeholder="Product Code ( any )"
+                required
+                name="code"
+              />
             </div>
             <div className="space-y-2">
               <label className="text-2xl" htmlFor="sellPrice">

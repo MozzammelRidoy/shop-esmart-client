@@ -4,18 +4,40 @@ import { IoMdReturnRight } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import useCarts from "../../../hooks/useCarts";
 import { failedAlert } from "../../../Component/SweetAlart/SweelAlart";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const SubTotal = ({ reset, setReset }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Add Shipping Charge");
   const [shippingValue, setShippingValue] = useState(0);
-  const {carts, totalQuantity, totalPrice } = useCarts();
+  const { carts, totalQuantity, totalPrice } = useCarts();
   const [couponsValue, setCouponsValue] = useState(0);
-  const [couponCode, setCouponCode] = useState(''); 
-  const [vatTax, setVatTax] = useState(0); 
-  const navigate = useNavigate();
-  const finalTotalAmount  = totalPrice - couponsValue + shippingValue; 
+  const [couponCode, setCouponCode] = useState("");
+  const [vatTax, setVatTax] = useState(0);
+  const [finalTotalAmount, setFinalTotalAmount] = useState(
+    totalPrice + shippingValue
+  );
+  const axiosSecure = useAxiosSecure();
+  const [couponSubmit, setCouponSubmit] = useState(false);
+  const [couponErrorMessage, setCouponErrorMessage] = useState("");
 
+  const notify = () =>
+    toast.error(couponErrorMessage, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const navigate = useNavigate();
+  const couponRef = useRef(null);
 
   const dropDownRef = useRef(null);
 
@@ -47,35 +69,102 @@ const SubTotal = ({ reset, setReset }) => {
   const handleOptionSelect = (option) => {
     setSelected(option.label);
     setIsOpen(false);
-
     setShippingValue(option.value);
-    console.log({ target: { value: option.value } });
+    setCouponsValue(0);
+    setCouponCode("");
+    if (couponRef.current) {
+      couponRef.current.value = "";
+    }
+    setFinalTotalAmount(totalPrice + option.value);
+    // console.log({ target: { value: option.value } });
   };
 
-  const handleCouponSubmit = (e) => {
+  const handleCouponSubmit = async (e) => {
     e.preventDefault();
+
+    if (!(selected === "Office Delivery") && !shippingValue) {
+      return toast.warn("Add Your Shipping Charge!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+
+    const couponCode = e.target.coupon.value.toLowerCase();
+    if (!couponCode) {
+      return toast.warn("Please Enter Valid Coupon Code", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
 
     //TODO : Cuopon Code check from Backend side.
 
-    const couponCode = e.target.coupon.value.toLowerCase();
-    if (couponCode === "discount10") {
-      setCouponsValue(totalPrice * 0.1);
-      setCouponCode(couponCode); 
-    } else {
-      failedAlert("invalid Coupon!");
-      setCouponsValue(0);
+    try {
+      setCouponSubmit(true);
+      const res = await axiosSecure.post(`/coupons-apply`, {
+        couponCode,
+        totalPrice,
+        shippingValue,
+      });
+
+      if (res.data.success) {
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setCouponCode(couponCode);
+        setCouponsValue(res.data.discountAmount);
+        setFinalTotalAmount(res.data.finalAmount);
+      }
+    } catch (err) {
+      setCouponErrorMessage(err.response.data.message);
+     
+       
+      
+    } finally {
+      setCouponSubmit(false);
     }
   };
 
   const handleCheckout = () => {
     const orderData = {
-      carts, totalQuantity, totalPrice, shippingValue, shippigMethod : selected, discount : couponsValue, finalAmount : finalTotalAmount, couponCode : couponCode, vatTax
-    }
-   
-    navigate("/checkout", {state : {orderData}});
+      carts,
+      totalQuantity,
+      totalPrice,
+      shippingValue,
+      shippigMethod: selected,
+      discount: couponsValue,
+      finalAmount: finalTotalAmount,
+      couponCode: couponCode,
+      vatTax,
+    };
+
+    navigate("/checkout", { state: { orderData } });
   };
 
   useEffect(() => {
+    if(couponErrorMessage){
+      notify();
+      setCouponErrorMessage('')
+    }
     if (reset) {
       setCouponsValue(0);
 
@@ -84,7 +173,7 @@ const SubTotal = ({ reset, setReset }) => {
     if (!totalQuantity) {
       setShippingValue(0);
     }
-  }, [reset, setReset, totalQuantity]);
+  }, [reset, setReset, totalQuantity, couponErrorMessage]);
 
   return (
     <div className="md:w-[25%] mt-3 md:mt-0 w-full flex flex-col h-full space-y-3 bg-gray-200 dark:bg-gray-700 p-4 md:p-6">
@@ -124,19 +213,24 @@ const SubTotal = ({ reset, setReset }) => {
 
         {/* apply Cuppon  */}
         <div>
-          <form className="relative" onSubmit={handleCouponSubmit}>
+          <form className="relative pb-2" onSubmit={handleCouponSubmit}>
             <label className="" htmlFor="coupon">
               Apply Coupon
             </label>
             <input
+              ref={couponRef}
               type="text"
               name="coupon"
-              className="w-full mt-2 px-2 py-1 outline-none rounded-sm"
-              placeholder="Enter Coupon Code"
+              className="w-full mt-2 px-2 py-1 uppercase outline-none rounded-sm"
+              placeholder="Coupon Code Type here"
             />
-            <button className="absolute text-2xl right-1 font-bold z-10 top-9 text-[#ff3811]">
-              <IoMdReturnRight />{" "}
-            </button>
+            {couponSubmit ? (
+              <span className="loading loading-spinner absolute text-2xl right-1 font-bold z-10 top-9 text-[#ff3811]"></span>
+            ) : (
+              <button className="absolute text-2xl right-1 font-bold z-10 top-9 text-[#ff3811]">
+                <IoMdReturnRight />{" "}
+              </button>
+            )}
           </form>
         </div>
 
@@ -190,6 +284,7 @@ const SubTotal = ({ reset, setReset }) => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

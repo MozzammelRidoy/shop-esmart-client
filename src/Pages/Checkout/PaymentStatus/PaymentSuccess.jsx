@@ -14,6 +14,7 @@ const PaymentSuccess = () => {
     if (!paidAmount || !transactionID) {
       return navigate("/");
     }
+  
   }, [navigate, paidAmount, transactionID]);
 
   return (
