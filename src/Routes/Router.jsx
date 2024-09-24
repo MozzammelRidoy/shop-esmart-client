@@ -35,6 +35,9 @@ import PaymentFailed from "../Pages/Checkout/PaymentStatus/PaymentFailed";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import OrderSubmited from "../Pages/Checkout/PaymentStatus/OrderSubmited";
 import MyCoupons from "../Pages/MyCoupons/MyCoupons";
+import OrdersHistory from "../Pages/OrdersHistory/OrdersHistory";
+import OrderTracking from "../Pages/OrderTracking/OrderTracking";
+import MyFavorite from "../Pages/MyFavorite/MyFavorite";
 
 const router = createBrowserRouter([
     {
@@ -96,8 +99,20 @@ const router = createBrowserRouter([
           element : <MyOrders></MyOrders>
         },
         {
+          path : '/profile/OrdersHistory',
+          element : <OrdersHistory></OrdersHistory>
+        },
+        {
+          path : '/profile/OrderTraking',
+          element : <OrderTracking></OrderTracking>
+        },
+        {
           path : '/profile/myCoupons',
           element : <MyCoupons></MyCoupons>
+        },
+        {
+          path : '/profile/myFavorite',
+          element : <MyFavorite></MyFavorite>
         }
       ]
     },
@@ -162,6 +177,10 @@ const router = createBrowserRouter([
         },
         {
           path : '/dashboard/transactions',
+          element : <Transactions></Transactions>
+        },
+        {
+          path : '/dashboard/transactions/:TxID',
           element : <Transactions></Transactions>
         },
         {

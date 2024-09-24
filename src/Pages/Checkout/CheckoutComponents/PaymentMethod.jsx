@@ -51,7 +51,7 @@ const PaymentMethod = ({ orderData, shippingInfo }) => {
         ...shippingInfo,
         paid: isCashNowPay,
         due: isCashDue,
-        paymentMethod: payment,
+        paymentMethod: 'Cash On Delivery',
       };
 
       try {
@@ -85,7 +85,7 @@ const PaymentMethod = ({ orderData, shippingInfo }) => {
         ...shippingInfo,
         paid: isFullPayNow,
         due: isFullPayDue,
-        paymentMethod: payment,
+        paymentMethod: 'Full Paid',
       };
 
       sslCommerzPayment(newOrder);

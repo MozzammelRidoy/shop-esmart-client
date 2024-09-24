@@ -112,6 +112,7 @@ const UpdateProduct = () => {
     const productName = form.get("productName");
     const productCategory = form.get("productCategory").split(",");
     const productDetails = form.get("productDetails");
+    const productCode = form.get("productCode");
     const sellPrice = parseInt(form.get("sellPrice"));
     const costPrice = parseInt(form.get("costPrice"));
     const discountPercent = parseInt(form.get("discountPercent"));
@@ -138,6 +139,7 @@ const UpdateProduct = () => {
       productName,
       productCategory,
       productDetails,
+      productCode,
       sellPrice,
       costPrice,
       discountPercent,
@@ -224,7 +226,7 @@ const UpdateProduct = () => {
               </select>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 md:col-span-2">
               <label className="text-2xl" htmlFor="productDetails">
                 Product Description
               </label>
@@ -235,6 +237,19 @@ const UpdateProduct = () => {
                 name="productDetails"
                 defaultValue={productDetails.productDetails}
               ></textarea>
+            </div>
+            <div className="space-y-2">
+              <label className="text-2xl" htmlFor="productCode">
+                Product Code
+              </label>
+              <input
+                className="w-full py-1 px-2 rounded-sm border"
+                type="text"
+                defaultValue={productDetails.productCode}
+                placeholder="Product Code ( any )"
+                required
+                name="productCode"
+              />
             </div>
             <div className="space-y-2">
               <label className="text-2xl" htmlFor="sellPrice">

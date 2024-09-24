@@ -33,7 +33,7 @@ const AddNewProduct = () => {
     const productName = form.get("productName");
     const productCategory = form.get("productCategory").split(",");
     const productDetails = form.get("productDetails");
-    const code = form.get("code");
+    const productCode = form.get("productCode");
     const sellPrice = parseInt(form.get("sellPrice"));
     const costPrice = parseInt(form.get("costPrice"));
     const discountPercent = parseInt(form.get("discountPercent"));
@@ -75,7 +75,7 @@ const AddNewProduct = () => {
       productName,
       productCategory,
       productDetails,
-      code,
+      productCode,
       sellPrice,
       costPrice,
       discountPercent,
@@ -166,7 +166,7 @@ const AddNewProduct = () => {
               ></textarea>
             </div>
             <div className="space-y-2">
-              <label className="text-2xl" htmlFor="code">
+              <label className="text-2xl" htmlFor="productCode">
                 Product Code
               </label>
               <input
@@ -174,7 +174,7 @@ const AddNewProduct = () => {
                 type="text"
                 placeholder="Product Code ( any )"
                 required
-                name="code"
+                name="productCode"
               />
             </div>
             <div className="space-y-2">

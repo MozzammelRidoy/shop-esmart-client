@@ -47,7 +47,7 @@ const AdminProductDetailsPage = () => {
      
       <div className="md:flex md:gap-4 gap-2  ">
         {/* for image  */}
-        <div className="md:w-[30%] w-full ">
+        <div className="md:w-[35%] w-full relative">
           <ImageGallery
             items={images}
             showNav={false}
@@ -56,7 +56,33 @@ const AdminProductDetailsPage = () => {
             showPlayButton={false}
             thumbnailPosition="bottom"
             slideOnThumbnailOver={true}
+            renderItem={(item) => (
+              <div className="w-full h-96 overflow-hidden">
+                <img
+                  src={item.original}
+                  className="w-full h-full object-cover"
+                  alt={item?.originalAlt}
+                />
+              </div>
+            )}
+            renderThumbInner={(item) => (
+              <div className="w-full h-[80px] overflow-hidden">
+                <img
+                  src={item.thumbnail}
+                  alt={item.thumbnailAlt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
           />
+
+          <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm">
+            <span>{productDetails.discountAmount}tk</span>
+            <span>save</span>
+          </div>
+          <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
+            <span>{productDetails.discountPercent}%</span>
+          </div>
         </div>
 
         {/* for others content or details  */}
@@ -89,8 +115,8 @@ const AdminProductDetailsPage = () => {
           <div className="  ">
             <p className="text-sm md:text-lg  text-[#ff3811]">
              Product Code :{" "}
-              <span className="md:text-xl text-lg">
-                {productDetails?.code}
+              <span className="md:text-xl text-lg uppercase">
+                {productDetails?.productCode}
               </span>{" "}
             </p>
             <p className="text-sm md:text-lg  text-[#ff3811]">

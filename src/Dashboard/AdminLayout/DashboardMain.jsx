@@ -7,6 +7,7 @@ const DashboardMain = () => {
   return (
     <div className="">
       <AdminNavbar></AdminNavbar>
+      
       <Outlet></Outlet>
 
       <ScrollToTop
