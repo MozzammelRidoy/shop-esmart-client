@@ -11,6 +11,7 @@ import Pagination from "../../Component/Pagination/Pagination";
 import RangeAndFilter from "../../Component/RangeAndFilter/RangeAndFilter";
 import { useState } from "react";
 import { animated } from "@react-spring/web";
+import EmptyPage from "../../Component/EmptyPage/EmptyPage";
 
 const Category = () => {
   const { category } = useParams();
@@ -36,7 +37,7 @@ const Category = () => {
   });
   const { viewMode, setViewMode } = usePageViewMode();
 
-  // console.log(collections)
+  // console.log(collections);
 
   return (
     <div className="md:mt-6  md:max-w-6xl md:mx-auto mx-1">
@@ -47,7 +48,8 @@ const Category = () => {
       <div className="flex justify-between items-center ">
         <div>
           <h2 className="md:text-3xl text-xl font-bold capitalize  gap-2">
-            {category} Category Result <animated.span>
+            {category} Category Result{" "}
+            <animated.span>
               {animatedProps(totalResults).number.to((n) => n.toFixed(0))}
             </animated.span>
           </h2>
@@ -59,33 +61,38 @@ const Category = () => {
           ></PageViewMode>
         </div>
       </div>
+      {totalResults > 0 ? (
+        <div>
+          <div className="my-4">
+            <RangeAndFilter
+              setPriceRange={setPriceRange}
+              setSort={setSort}
+            ></RangeAndFilter>
+          </div>
 
-      <div className="my-4">
-        <RangeAndFilter
-          setPriceRange={setPriceRange}
-          setSort={setSort}
-        ></RangeAndFilter>
-      </div>
+          <div>
+            {/* show all category releted item  */}
+            {viewMode === "grid" ? (
+              <PageGridView collections={collections} />
+            ) : (
+              <PageListView collections={collections} />
+            )}
+          </div>
 
-      <div>
-        {/* show all category releted item  */}
-        {viewMode === "grid" ? (
-          <PageGridView collections={collections} />
-        ) : (
-          <PageListView collections={collections} />
-        )}
-      </div>
-
-      {totalResults > 10 && (
-        <div className="my-4">
-          <Pagination
-            numberOfPage={numberOfPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            itemPerPage={itemPerPage}
-            setItemPerPage={setItemPerPage}
-          ></Pagination>
+          {totalResults > 10 && (
+            <div className="my-4">
+              <Pagination
+                numberOfPage={numberOfPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemPerPage={itemPerPage}
+                setItemPerPage={setItemPerPage}
+              ></Pagination>
+            </div>
+          )}
         </div>
+      ) : (
+        <EmptyPage></EmptyPage>
       )}
     </div>
   );

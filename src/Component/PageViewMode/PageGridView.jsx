@@ -5,7 +5,7 @@ import AddFavoriteProduct from "../AddFavoriteProduct/AddFavoriteProduct";
 const PageGridView = ({ collections }) => {
   return (
     <section className="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
-      {collections.map((item) => (
+      {collections?.map((item) => (
         <div className="relative z-10" key={item._id}>
           <Link
             to={`/product/${item._id}`}
@@ -19,10 +19,10 @@ const PageGridView = ({ collections }) => {
                     src={item?.images[0]?.image_url}
                     alt=""
                   />
-                  <span className="absolute bottom-0 left-0 bg-[#ff3811] text-white md:px-2 px-1 rounded-tr-full md:text-base text-sm">
-                    {item.discountPercent}%
-                  </span>
-                </div>
+                {item?.discountPercent !== 0 && <span className="absolute bottom-0 left-0 bg-[#ff3811] text-white md:px-2 px-1 rounded-tr-full md:text-base text-sm">
+                  {item?.discountPercent}%
+                </span>}
+                </div> 
               )}
               <div className="px-1 flex flex-col justify-evenly h-1/4">
                 <div>

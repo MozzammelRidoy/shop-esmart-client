@@ -5,6 +5,8 @@ import SearchTextButton from "../../../Component/SearchTextButton/SearchTextButt
 import PendingOrderView from "./PendingOrderView";
 import EmptyPage from "../../../Component/EmptyPage/EmptyPage";
 import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
+import { animatedProps } from "../../../utils/modules";
+import { animated } from "@react-spring/web";
 
 const PendingOrders = () => {
   const route = "orders-pending";
@@ -17,31 +19,38 @@ const PendingOrders = () => {
     dataLoad,
   });
 
-  
-  
-
   useEffect(() => {
     refetch();
   }, [searchText, dataLoad, refetch]);
-  if(isPending){
-    return <WaitingLoader></WaitingLoader>
+  if (isPending) {
+    return <WaitingLoader></WaitingLoader>;
   }
   return (
     <div>
-      <h2 className="text-2xl md:text-4xl text-center py-4">Pending Orders {totalResult}</h2>
+      <h2 className="text-2xl md:text-4xl text-center py-4">
+        Pending Orders{" "}
+        <animated.span>
+          {animatedProps(totalResult).number.to((n) => n.toFixed(0))}
+        </animated.span>
+      </h2>
 
       <SearchTextButton setSearchText={setSearchText}></SearchTextButton>
-     
 
-      {
-        totalResult > 0 ? <div>
-        {orders.map((order) => (
-          <PendingOrderView key={order._id} refetch={refetch} order={order}></PendingOrderView>
-        ))}
-      </div> : <EmptyPage></EmptyPage>
-      }
+      {totalResult > 0 ? (
+        <div>
+          {orders?.map((order) => (
+            <PendingOrderView
+              key={order._id}
+              refetch={refetch}
+              order={order}
+            ></PendingOrderView>
+          ))}
+        </div>
+      ) : (
+        <EmptyPage></EmptyPage>
+      )}
 
-      {(totalResult > 10 && orders.length !== totalResult) && (
+      {totalResult > 10 && orders.length !== totalResult && (
         <LoadMoreButton
           setDataLoad={setDataLoad}
           isPending={isPending}

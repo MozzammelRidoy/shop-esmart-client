@@ -19,9 +19,9 @@ const PageListView = ({ collections }) => {
                     src={item?.images[0]?.image_url}
                     alt=""
                   />
-                  <span className="absolute bg-[#ff3811] text-sm md:text-base px-1 md:px-2 bottom-0 left-0 rounded-tr-full text-white">
+                  {item.discountPercent && <span className="absolute bg-[#ff3811] text-sm md:text-base px-1 md:px-2 bottom-0 left-0 rounded-tr-full text-white">
                     {item.discountPercent}%
-                  </span>
+                  </span>}
                 </div>
               )}
               <div className="col-span-2 flex flex-col justify-around border dark:border-black p-4 border-s-0">

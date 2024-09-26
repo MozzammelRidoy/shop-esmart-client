@@ -38,6 +38,7 @@ import MyCoupons from "../Pages/MyCoupons/MyCoupons";
 import OrdersHistory from "../Pages/OrdersHistory/OrdersHistory";
 import OrderTracking from "../Pages/OrderTracking/OrderTracking";
 import MyFavorite from "../Pages/MyFavorite/MyFavorite";
+import SearchResultPage from "../Pages/SearchResultPage/SearchResultPage";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         {
           path : '/',
           element : <Home></Home>
+        }, 
+        {
+          path : '/search',
+          element :<SearchResultPage></SearchResultPage>
         }, 
         {
           path : '/category/:category',

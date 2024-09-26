@@ -1,7 +1,10 @@
 
 const SearchTextButton = ({setSearchText}) => {
     const handleSearchText = (e) => {
+
         e.preventDefault();
+
+        
         setSearchText(e.target.searchText.value);
       };
     return (

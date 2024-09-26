@@ -17,6 +17,7 @@ import useCarts from "../../hooks/useCarts";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import AddFavoriteProduct from "../../Component/AddFavoriteProduct/AddFavoriteProduct";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -26,8 +27,6 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { refetch } = useCarts();
-
-  const stockUpdate = "available";
 
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -94,7 +93,6 @@ const ProductDetailPage = () => {
 
         quantity: quantity,
       };
-      // console.log(cartInfo);
 
       const res = await axiosSecure.post("/carts", cartInfo);
       if (res.data.insertedId) {
@@ -138,14 +136,17 @@ const ProductDetailPage = () => {
             )}
           />
 
-          <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm">
-            <span>{productDetails.discountAmount}tk</span>
-            <span>save</span>
-          </div>
-          <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
-            <span>{productDetails.discountPercent}%</span>
-          </div>
-          
+          {productDetails.discountAmount && (
+            <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm">
+              <span>{productDetails.discountAmount}tk</span>
+              <span>save</span>
+            </div>
+          )}
+          {productDetails.discountPercent && (
+            <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
+              <span>{productDetails.discountPercent}%</span>
+            </div>
+          )}
         </div>
 
         {/* for others content or details  */}
@@ -175,9 +176,11 @@ const ProductDetailPage = () => {
                 </span>{" "}
                 Tk
               </p>
-              <p className="text-gray-400">
-                <del>{productDetails.sellPrice}</del>
-              </p>
+              {productDetails.discountAmount !== 0 && (
+                <p className="text-gray-400">
+                  <del>{productDetails.sellPrice}</del>
+                </p>
+              )}
             </div>
             {productDetails?.ratings && (
               <p className="flex items-center gap-1">
@@ -198,12 +201,20 @@ const ProductDetailPage = () => {
 
           {/* product details or description  */}
           <div className="flex-grow">
-            {productDetails.productBrand && (
+           <div className="flex justify-between items-center">
+           {productDetails?.productBrand && (
               <p>
                 <span className="font-bold">Brand : </span>{" "}
-                {productDetails.productBrand}
+                {productDetails?.productBrand}
               </p>
             )}
+            {productDetails?.productCode && (
+              <p className="uppercase">
+                <span className="font-bold">Code : </span>{" "}
+                {productDetails?.productCode}
+              </p>
+            )}
+           </div>
             <p className="text-justify">
               <span className="font-bold">Details : </span>
               {productDetails.productDetails}
@@ -212,36 +223,45 @@ const ProductDetailPage = () => {
           {/* product action button  */}
           <div className="space-y-3">
             <hr className="w-full" />
-            <div className="flex items-center space-x-3">
-              <p>Quantity :</p>
-              <button
-                onClick={handleQuantityMinus}
-                className={`${
-                  quantity === 1
-                    ? "btn-disabled text-gray-300"
-                    : "text-[#ff3811]  hover:text-[#c6290a]"
-                }  rounded-full text-xl md:text-2xl`}
-              >
-                <FaMinusCircle></FaMinusCircle>
-              </button>
-              <span className=" text-base w-6 text-center md:text-xl -mt-1">
-                {quantity}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <p>Quantity :</p>
+                <button
+                  onClick={handleQuantityMinus}
+                  className={`${
+                    quantity === 1
+                      ? "btn-disabled text-gray-300"
+                      : "text-[#ff3811]  hover:text-[#c6290a]"
+                  }  rounded-full text-xl md:text-2xl`}
+                >
+                  <FaMinusCircle></FaMinusCircle>
+                </button>
+                <span className=" text-base w-6 text-center md:text-xl -mt-1">
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className={`${
+                    productDetails.stockStatus
+                      ? "text-[#ff3811] hover:text-[#c6290a] "
+                      : "btn-disabled text-gray-300"
+                  }  rounded-full  text-xl md:text-2xl`}
+                >
+                  <FaPlusCircle></FaPlusCircle>
+                </button>
+              </div>
+              <span className="">
+                <AddFavoriteProduct
+                  product_id={productDetails._id}
+                ></AddFavoriteProduct>
               </span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className={`${
-                  stockUpdate === "available"
-                    ? "text-[#ff3811] hover:text-[#c6290a] "
-                    : "btn-disabled text-gray-300"
-                }  rounded-full  text-xl md:text-2xl`}
-              >
-                <FaPlusCircle></FaPlusCircle>
-              </button>
             </div>
             <div className="flex gap-2 justify-evenly">
               <button
                 onClick={handleAddtoCart}
-                disabled={!productDetails.stockStatus && !productDetails.stockQuantity}
+                disabled={
+                  !productDetails.stockStatus && !productDetails.stockQuantity
+                }
                 className={`${
                   productDetails.stockStatus && productDetails.stockQuantity
                     ? "text-[#ff3811]  hover:bg-[#ff3811] hover:text-white"

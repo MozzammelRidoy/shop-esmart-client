@@ -12,7 +12,7 @@ const AddFavoriteProduct = ({ product_id }) => {
   const location = useLocation(); 
   const navigate = useNavigate(); 
 
-  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const {refetch} = useFavoriteProduct({}); 
 
   useEffect(() => {
