@@ -7,7 +7,6 @@ import {
   FaCheckCircle,
   FaTruck,
   FaClipboardList,
-  FaUserAlt,
   FaUndo,
   FaTimesCircle,
   FaUsers,

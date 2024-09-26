@@ -1,7 +1,7 @@
 import ReviewTake from "../ReviewTake/ReviewTake";
 import { ImCross } from "react-icons/im";
 
-const ReviewModal = ({ onClose, product }) => {
+const ReviewModal = ({ onClose, product, refetch }) => {
   return (
     <div className="modal  overflow-y-hidden modal-open modal-middle">
       <div className="modal-box">
@@ -10,7 +10,7 @@ const ReviewModal = ({ onClose, product }) => {
           src={product.productIamge}
           alt=""
         />
-        <ReviewTake onClose={onClose} _id={product.product_id}></ReviewTake>
+        <ReviewTake refetch={refetch} onClose={onClose} _id={product.product_id}></ReviewTake>
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProductCard from "./ProductCard ";
 import ReviewModal from "../../Component/ReviewModal/ReviewModal";
 
-const OrderDetailsPage = ({ order }) => {
+const OrderDetailsPage = ({ order, refetch }) => {
   const {
     _id,
     TxID,
@@ -44,7 +44,7 @@ const OrderDetailsPage = ({ order }) => {
   
 
   return (
-    <div className="my-6 rounded-lg md:max-w-6xl md:mx-auto mx-2 border border-orange-500">
+    <div className={`my-6 rounded-lg md:max-w-6xl md:mx-auto mx-2 border ${order_status === 'Delivered' ? 'border-green-500' : 'border-orange-600' } `}>
       {/* Order Header */}
       <div className="dark:bg-gray-800 bg-gray-100 md:px-12  p-4 shadow-lg rounded-t-lg">
         <h1 className="text-xl font-bold mb-2">Order Details</h1>
@@ -86,7 +86,7 @@ const OrderDetailsPage = ({ order }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {carts?.map((product, index) => (
             <div key={index}>
-              <ProductCard order_status={order_status} setIsModalOpen={setIsModalOpen} setSelectedProduct={setSelectedProduct} product={product} />
+              <ProductCard refetch={refetch} order_status={order_status} setIsModalOpen={setIsModalOpen} setSelectedProduct={setSelectedProduct} product={product} />
               
             </div>
           ))}
@@ -95,7 +95,7 @@ const OrderDetailsPage = ({ order }) => {
 
       {/* Review modal  */}
           {
-            isModalOpen && <ReviewModal onClose={handleCloseModal} product={selectedProduct}/>
+            isModalOpen && <ReviewModal refetch={refetch} onClose={handleCloseModal} product={selectedProduct}/>
           }
       {/* Shipping Information */}
       <div className="dark:bg-gray-900 bg-gray-100 p-3 md:px-12 shadow-lg ">

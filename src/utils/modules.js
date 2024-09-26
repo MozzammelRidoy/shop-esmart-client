@@ -1,3 +1,5 @@
+import { useSpring } from "@react-spring/web";
+
 //for any string frist Letter Capitalize
 export const fristLetterCapitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -20,3 +22,11 @@ export const calculateFinalPriceAndProfit = (costPrice, sellPrice, discountPerce
     return {finalPrice, profit, discountAmount};
 
 }
+
+
+export const animatedProps = (value) =>
+    useSpring({
+      number: value,
+      from: { number: 0 },
+      config: { duration: 1500 },
+    });

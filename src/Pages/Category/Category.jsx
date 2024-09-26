@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { fristLetterCapitalize } from "../../utils/modules";
+import { animatedProps, fristLetterCapitalize } from "../../utils/modules";
 import useCategoryReletedProductsFatch from "../../hooks/useCategoryReletedProductsFatch";
 import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
 import usePageViewMode from "../../hooks/usePageViewMode";
@@ -10,6 +10,7 @@ import PageListView from "../../Component/PageViewMode/PageListView";
 import Pagination from "../../Component/Pagination/Pagination";
 import RangeAndFilter from "../../Component/RangeAndFilter/RangeAndFilter";
 import { useState } from "react";
+import { animated } from "@react-spring/web";
 
 const Category = () => {
   const { category } = useParams();
@@ -46,7 +47,9 @@ const Category = () => {
       <div className="flex justify-between items-center ">
         <div>
           <h2 className="md:text-3xl text-xl font-bold capitalize  gap-2">
-            {category} Category Result {totalResults}
+            {category} Category Result <animated.span>
+              {animatedProps(totalResults).number.to((n) => n.toFixed(0))}
+            </animated.span>
           </h2>
         </div>
         <div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import MySingleCoupons from "./MySingleCoupons";
+import { animated } from "@react-spring/web";
+import { animatedProps } from "../../utils/modules";
 
 const MyCoupons = () => {
     const [myCoupons, setMyCoupons] = useState([]); 
@@ -30,7 +32,9 @@ const MyCoupons = () => {
 
     return (
         <div className="min-h-96 md:max-w-6xl md:mx-auto mx-2">
-            <h2 className="text-center text-2xl md:text-4xl font-semibold md:my-6 my-3">{myCoupons?.length}-Coupons For Me</h2>
+            <h2 className="text-center text-2xl md:text-4xl font-semibold md:my-6 my-3"><animated.span>
+              {animatedProps(myCoupons?.length).number.to((n) => n.toFixed(0))}
+            </animated.span>-Coupons For Me</h2>
 
             <div className="grid md:grid-cols-1 grid-cols-1 gap-3">
                 {

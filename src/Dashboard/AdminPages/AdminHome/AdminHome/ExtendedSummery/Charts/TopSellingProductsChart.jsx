@@ -30,7 +30,7 @@ const TriangleBar = (props) => {
 
 const TopSellingProductsChart = ({ data }) => {
   const chartData = data?.map((product) => ({
-    productCode: product.productCode,
+    productCode: product?.productCode?.toUpperCase(),
     totalSold: product.totalSold,
     finalPrice: product.finalPrice,
     image: product.images[0]?.image_url, // প্রথম ইমেজ

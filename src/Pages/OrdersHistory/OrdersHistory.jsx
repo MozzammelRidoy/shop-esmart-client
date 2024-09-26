@@ -1,11 +1,18 @@
+import { useEffect } from "react";
 import EmptyPage from "../../Component/EmptyPage/EmptyPage";
 import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
 import useMyOrders from "../../hooks/useMyOrders";
 import OrderDetailsPage from "../MyOrders/OrderDetailsPage";
+import { animated } from "@react-spring/web";
+import { animatedProps } from "../../utils/modules";
 
 const OrdersHistory = () => {
     const order_status = "history";
-  const { orders, loading } = useMyOrders({ order_status });
+  const { orders, loading, refetch } = useMyOrders({ order_status });
+
+  useEffect(()=>{
+      refetch(); 
+  }, [refetch])
 
     return (
         <div className="min-h-96">
@@ -13,14 +20,16 @@ const OrdersHistory = () => {
         My Orders History!
       </h2>
       <h2 className="md:text-xl text-lg text-center mb-3  md:mt-2 md:mb-5">
-        Total Orders {orders.length}
+        Total Orders <animated.span>
+              {animatedProps(orders.length).number.to((n) => n.toFixed(0))}
+            </animated.span>
       </h2>
       {loading && <WaitingLoader></WaitingLoader>}
 
       {orders.length > 0 ? (
         <div>
           {orders.map((order) => (
-            <OrderDetailsPage order={order} key={order._id}></OrderDetailsPage>
+            <OrderDetailsPage refetch={refetch} order={order} key={order._id}></OrderDetailsPage>
           ))}
         </div>
       ) : (

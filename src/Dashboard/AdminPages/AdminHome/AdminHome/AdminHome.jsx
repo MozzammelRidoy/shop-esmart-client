@@ -3,6 +3,7 @@ import DatePicker from "../../../../Component/DatePicker/DatePicker";
 import OrderSummery from "../OrderSummery/OrderSummery";
 import RevenueSummery from "../RevenueSummery/RevenueSummery";
 import ExtendedSummery from "./ExtendedSummery/ExtendedSummery";
+import OrdersAnalysis from "../OrdersAnalysis/OrdersAnalysis";
 
 const AdminHome = () => {
     
@@ -21,6 +22,11 @@ const AdminHome = () => {
       </h2>
 
       <div className="space-y-4">
+        
+        <div>
+         
+          <OrdersAnalysis startDate={startDate} endDate={endDate} />
+        </div>
         <div>
          
           <OrderSummery startDate={startDate} endDate={endDate} />

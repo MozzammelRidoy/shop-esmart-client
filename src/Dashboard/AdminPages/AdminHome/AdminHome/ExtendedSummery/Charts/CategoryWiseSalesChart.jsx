@@ -44,9 +44,9 @@ const CategoryWiseSalesChart = ({data}) => {
     
 
     return ( 
-        <div className=' mb-10 md:mb-0' style={{ width: 600, height: 300 }}>  {/* Chart height increase */}
+        <div className=' mb-10 md:mb-0' style={{ width: 600, height: 380 }}>  
         <h3 className="text-xl font-semibold mb-4 text-center">Category Wise Sales</h3>
-            <ResponsiveContainer width="100%" height={300} className={"hidden md:block"}>
+            <ResponsiveContainer width="100%" height={380} className={"hidden md:block"}>
                 <PieChart >
                     <Pie
                         data={chartData}

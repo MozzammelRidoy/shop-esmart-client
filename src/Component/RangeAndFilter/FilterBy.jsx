@@ -47,7 +47,7 @@ const FilterDropdown = ({setSort}) => {
       data-aos="fade-left"
       data-aos-duration="1500"
       ref={dropDownRef}
-      className="md:w-52 w-[45%]"
+      className="md:w-52 z-50 w-[45%]"
     >
       <h3 className="text-base md:text-xl">Filter by</h3>
       <div className="relative">

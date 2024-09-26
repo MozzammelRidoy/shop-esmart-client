@@ -145,6 +145,7 @@ const ProductDetailPage = () => {
           <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
             <span>{productDetails.discountPercent}%</span>
           </div>
+          
         </div>
 
         {/* for others content or details  */}
@@ -184,11 +185,11 @@ const ProductDetailPage = () => {
                 <span className="flex items-center text-xs md:text-lg">
                   <Rating
                     className="md:max-w-20 max-w-16"
-                    value={productDetails.ratings}
+                    value={productDetails.averageRating}
                     readOnly
                   />
-                  <span className="text-[9px] md:text-[11px]">
-                    ({productDetails.ratingsCount})
+                  <span className="text-[12px] md:text-[14px]">
+                    ({productDetails.totalRatingsCount})
                   </span>
                 </span>
               </p>
@@ -240,6 +241,7 @@ const ProductDetailPage = () => {
             <div className="flex gap-2 justify-evenly">
               <button
                 onClick={handleAddtoCart}
+                disabled={!productDetails.stockStatus && !productDetails.stockQuantity}
                 className={`${
                   productDetails.stockStatus && productDetails.stockQuantity
                     ? "text-[#ff3811]  hover:bg-[#ff3811] hover:text-white"

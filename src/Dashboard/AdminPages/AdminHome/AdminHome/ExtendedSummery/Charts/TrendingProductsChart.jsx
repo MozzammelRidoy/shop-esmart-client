@@ -13,12 +13,15 @@ import {
 const colors = ["#00C49F", "#0088FE",  "#FFBB28", "#FF8042", "red", "pink"];
 
 const TrendingProductsChart = ({ data }) => {
+  
   const chartData = data?.map((product) => ({
     productCode: product.productCode?.toUpperCase(),
     totalSold: product.totalSold,
     finalPrice: product.finalPrice,
     image: product.images[0]?.image_url,
     id: product._id,
+    Total_Ratings : product.totalRatingsCount,
+    averageRating : product.averageRating
   }));
 
   return (
@@ -34,9 +37,9 @@ const TrendingProductsChart = ({ data }) => {
         >
           <CartesianGrid />
           <XAxis dataKey="productCode" />
-          <YAxis />
+          <YAxis dataKey={'Total_Ratings'}/>
           <Tooltip />
-          <Bar dataKey="totalSold" fill="#8884d8">
+          <Bar dataKey="Total_Ratings" fill="#8884d8">
             {chartData?.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
@@ -60,9 +63,9 @@ const TrendingProductsChart = ({ data }) => {
               />
             </Link>
             <div className="text-center text-sm">
-              <p>Price: {product.finalPrice} Tk</p>
-              <p>Total Sold: {product.totalSold}</p>
               <p className="font-bold uppercase">{product.productCode}</p>
+              <p>Total Sold: {product.totalSold}</p>
+              <p>Rating: {product?.averageRating?.toFixed(1)}</p>
             </div>
           </div>
         ))}

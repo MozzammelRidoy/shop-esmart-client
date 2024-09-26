@@ -4,11 +4,9 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { confirmAlert } from "./../SweetAlart/SweelAlart";
 import { useState } from "react";
 import useAuth from "./../../hooks/useAuth";
-import useMyOrders from "../../hooks/useMyOrders";
 
-const ReviewTake = ({ onClose, _id }) => {
+const ReviewTake = ({ onClose, _id, refetch }) => {
     
-    const {refetch} = useMyOrders({});
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();

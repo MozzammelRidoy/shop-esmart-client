@@ -23,7 +23,7 @@ const ExtendedSummery = ({ startDate, endDate }) => {
   
 
   return (
-    <div className="md:p-6 p-2 rounded-lg shadow-md">
+    <div className="md:p-6 p-2 mb-10 rounded-lg shadow-md">
       {loading && <WaitingLoader></WaitingLoader>}
       <h2 className="text-2xl font-semibold mb-4">Extended Summary</h2>
 
@@ -51,7 +51,7 @@ const ExtendedSummery = ({ startDate, endDate }) => {
                   />
                  
                   <span className="text-lg md:text-2xl">
-                    {ratings?.siteAverageRatings.toFixed(2)} - 
+                    {ratings?.siteAverageRatings.toFixed(1)} - 
                     ({ratings?.totalRatingsCount})
                   </span>
                 </span>
