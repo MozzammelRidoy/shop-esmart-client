@@ -25,7 +25,6 @@ import Transactions from "../Dashboard/AdminPages/Transactions/Transactions";
 import AdminUsers from "../Dashboard/AdminPages/AdminUsers/AdminUsers";
 import CompleteOrders from "../Dashboard/AdminPages/CompleteOrders/CompleteOrders";
 import CanceledOrders from "../Dashboard/AdminPages/CanceledOrders/CanceledOrders";
-import SalesReports from "../Dashboard/AdminPages/SalesReports/SalesReports";
 import SiteSettings from "../Dashboard/AdminPages/SiteSettings/SiteSettings";
 import AdminProductDetailsPage from "../Dashboard/AdminProductDetailsPage/AdminProductDetailsPage";
 import UpdateProduct from "../Dashboard/UpdateProduct/UpdateProduct";
@@ -204,10 +203,6 @@ const router = createBrowserRouter([
         {
           path : '/dashboard/canceledOrders',
           element : <CanceledOrders></CanceledOrders>
-        },
-        {
-          path : '/dashboard/salesReports',
-          element : <SalesReports></SalesReports>
         },
         {
           path : '/dashboard/siteSettings',

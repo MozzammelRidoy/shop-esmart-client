@@ -35,7 +35,7 @@ const AllOrders = () => {
       <SearchTextButton setSearchText={setSearchText}></SearchTextButton>
       {isPending && <WaitingLoader></WaitingLoader>}
 
-      {totalResult ? (
+      {totalResult > 0 ? (
         <div>
           {orders?.map((order) => (
             <AllOrderView

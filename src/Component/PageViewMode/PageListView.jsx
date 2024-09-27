@@ -6,7 +6,7 @@ const PageListView = ({ collections }) => {
   return (
     <section className="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-2">
       {collections.map((item) => (
-        <div className="z-10 relative" key={item._id}>
+        <div className="z-10 relative transform transition duration-500 hover:scale-105" key={item._id}>
           <Link
             to={`/product/${item._id}`}
             className="hover:shadow-2xl dark:shadow-gray-600"
@@ -19,9 +19,15 @@ const PageListView = ({ collections }) => {
                     src={item?.images[0]?.image_url}
                     alt=""
                   />
-                  {item.discountPercent && <span className="absolute bg-[#ff3811] text-sm md:text-base px-1 md:px-2 bottom-0 left-0 rounded-tr-full text-white">
+                  {item.discountPercent > 0 && <span className="absolute bg-[#ff3811] text-sm md:text-base px-1 md:px-2 bottom-0 left-0 rounded-tr-full text-white">
                     {item.discountPercent}%
                   </span>}
+                  {item?.discountAmount > 0 && (
+                    <div className="absolute rounded-b-full top-0 right-0 md:h-11 h-6 w-6 flex flex-col  md:w-11 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 md:text-sm text-[8px]">
+                      <span>{item?.discountAmount}tk</span>
+                      <span>save</span>
+                    </div>
+                  )}
                 </div>
               )}
               <div className="col-span-2 flex flex-col justify-around border dark:border-black p-4 border-s-0">

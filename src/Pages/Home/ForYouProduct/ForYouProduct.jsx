@@ -3,20 +3,27 @@ import PageGridView from "./../../../Component/PageViewMode/PageGridView";
 import PageListView from "../../../Component/PageViewMode/PageListView";
 import useReadAllProducts from "../../../hooks/useReadAllProducts";
 import usePageViewMode from "../../../hooks/usePageViewMode";
+import { useEffect, useState } from "react";
+import LoadMoreButton from "../../../Component/LoadMoreButton/LoadMoreButton";
+import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 const ForYouProduct = () => {
-  const [collections =[], isLoading] = useReadAllProducts('/products'); 
-  
-  const {viewMode, setViewMode} = usePageViewMode();
-  
+  const [dataLoad, setDataLoad] = useState(10);
 
-  
+  const [collections, totalResults, isLoading, refetch] = useReadAllProducts(
+    `/products-foryou?dataLoad=${dataLoad}`
+  );
 
-  const handleLoadmore = () => {
-    
-  };
+  const { viewMode, setViewMode } = usePageViewMode();
+
+  useEffect(() => {
+    if (!isLoading) {
+      refetch();
+    }
+  }, [dataLoad, isLoading, refetch]);
 
   return (
-    <section>
+    <section className="mb-6">
+      {isLoading && <WaitingLoader></WaitingLoader>}
       <div className="flex justify-between mb-3 md:mb-5">
         <h2 className="md:text-3xl text-xl font-bold  gap-2">For you</h2>
         <PageViewMode
@@ -31,15 +38,11 @@ const ForYouProduct = () => {
         <PageListView collections={collections} />
       )}
 
-      <div className="w-1/3 mx-auto mt-4">
-        <button
-          onClick={handleLoadmore}
-          disabled={isLoading}
-          className="bg-[#FF3811] py-1 text-white rounded text-base hover:bg-[#da2e0c] text-center md:py-2 w-full "
-        >
-          {isLoading ? "Loading.." : "Load More"}
-        </button>
-      </div>
+      {totalResults > 10 && collections.length !== totalResults && (
+        <div className="my-6">
+          <LoadMoreButton setDataLoad={setDataLoad}></LoadMoreButton>
+        </div>
+      )}
     </section>
   );
 };

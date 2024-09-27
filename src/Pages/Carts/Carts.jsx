@@ -56,7 +56,7 @@ const Carts = () => {
 
       {isPending && <WaitingLoader></WaitingLoader>}
 
-      {carts.length > 0 ?
+      {carts?.length > 0 ?
 
       <div className="md:flex gap-3 ">
         {/* carts table  */}
@@ -72,7 +72,7 @@ const Carts = () => {
             </thead>
             <tbody>
               {carts?.map((cart) => (
-                <tr className="hover relative" key={cart._id}>
+                <tr className="hover relative " key={cart._id}>
                   <td className="!p-1 md:!w-1/2  ">
                     <Link to={`/product/${cart.product_id}`}>
                       <div className="flex items-center gap-1 md:gap-3">

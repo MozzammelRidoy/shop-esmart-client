@@ -5,14 +5,18 @@ const AdminNavMenu = () => {
   const userRole = "manager";
 
   const handleCloseDrawer = () => {
-    document.getElementById('my-drawer').checked = false;
-  }
+    document.getElementById("my-drawer").checked = false;
+  };
 
   const commonNavMenus = (
     <>
       <li>
-        <NavLink className="flex items-center w-full" to={"/dashboard"} end>
-          <span className="text-xl"> 
+        <NavLink
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
+          to={"/dashboard"}
+          end
+        >
+          <span className="text-xl">
             <RiMenuLine />{" "}
           </span>
           Dashboard
@@ -20,7 +24,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/allProducts"}
         >
           <span className="text-xl">
@@ -31,7 +35,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/addNewProduct"}
         >
           <span className="text-xl">
@@ -42,7 +46,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/categories"}
         >
           <span className="text-xl">
@@ -53,7 +57,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/allOrders"}
         >
           <span className="text-xl">
@@ -64,7 +68,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/pendingOrders"}
         >
           <span className="text-xl">
@@ -76,7 +80,7 @@ const AdminNavMenu = () => {
 
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/allUsers"}
         >
           <span className="text-xl">
@@ -86,7 +90,10 @@ const AdminNavMenu = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink className="flex items-center w-full" to={"/dashboard/coupons"}>
+        <NavLink
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
+          to={"/dashboard/coupons"}
+        >
           <span className="text-xl">
             <RiMenuLine />{" "}
           </span>
@@ -94,7 +101,10 @@ const AdminNavMenu = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink className="flex items-center w-full" to={"/dashboard/message"}>
+        <NavLink
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
+          to={"/dashboard/message"}
+        >
           <span className="text-xl">
             <RiMenuLine />{" "}
           </span>
@@ -103,7 +113,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/transactions"}
         >
           <span className="text-xl">
@@ -119,7 +129,7 @@ const AdminNavMenu = () => {
     <>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/adminUsers"}
         >
           <span className="text-xl">
@@ -130,7 +140,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/completeOrders"}
         >
           <span className="text-xl">
@@ -141,7 +151,7 @@ const AdminNavMenu = () => {
       </li>
       <li>
         <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/canceledOrders"}
         >
           <span className="text-xl">
@@ -150,20 +160,10 @@ const AdminNavMenu = () => {
           Canceled Orders
         </NavLink>
       </li>
+      
       <li>
         <NavLink
-          className="flex items-center w-full"
-          to={"/dashboard/salesReports"}
-        >
-          <span className="text-xl">
-            <RiMenuLine />{" "}
-          </span>
-          Sales Reports
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className="flex items-center w-full"
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/siteSettings"}
         >
           <span className="text-xl">
@@ -191,7 +191,10 @@ const AdminNavMenu = () => {
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
-      <ul onClick={handleCloseDrawer} className="menu bg-base-200 gap-1 md:text-base text-sm min-h-full w-48 md:w-60 p-2 pb-10">
+      <ul
+        onClick={handleCloseDrawer}
+        className="menu bg-base-200 gap-1 md:text-base text-sm min-h-full w-48 md:w-60 p-2 pb-10"
+      >
         {commonNavMenus}
         {(userRole === "admin" || userRole == "manager") && adminNavMenus}
         <div className="divider"></div>

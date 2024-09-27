@@ -24,7 +24,7 @@ const Home = () => {
 
       {/* For You  */}
       <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto">
-        {/* <ForYouProduct></ForYouProduct> */}
+        <ForYouProduct></ForYouProduct>
       </div>
     </section>
   );

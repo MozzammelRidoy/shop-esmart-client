@@ -6,7 +6,7 @@ const PageGridView = ({ collections }) => {
   return (
     <section className="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
       {collections?.map((item) => (
-        <div className="relative z-10" key={item._id}>
+        <div className="relative z-10 transform transition duration-500 hover:scale-105" key={item._id}>
           <Link
             to={`/product/${item._id}`}
             className="hover:shadow-2xl dark:shadow-gray-600"
@@ -19,10 +19,18 @@ const PageGridView = ({ collections }) => {
                     src={item?.images[0]?.image_url}
                     alt=""
                   />
-                {item?.discountPercent !== 0 && <span className="absolute bottom-0 left-0 bg-[#ff3811] text-white md:px-2 px-1 rounded-tr-full md:text-base text-sm">
-                  {item?.discountPercent}%
-                </span>}
-                </div> 
+                  {item?.discountPercent > 0  && (
+                    <span className="absolute bottom-0 left-0 bg-[#ff3811] text-white md:px-2 px-1 rounded-tr-full md:text-base text-sm">
+                      {item?.discountPercent}%
+                    </span>
+                  )}
+                  {item?.discountAmount > 0 && (
+                    <div className="absolute rounded-b-full -top-1 right-0 md:h-12 h-7 w-7 flex flex-col  md:w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 md:text-sm text-[8px]">
+                      <span>{item?.discountAmount}tk</span>
+                      <span>save</span>
+                    </div>
+                  )}
+                </div>
               )}
               <div className="px-1 flex flex-col justify-evenly h-1/4">
                 <div>

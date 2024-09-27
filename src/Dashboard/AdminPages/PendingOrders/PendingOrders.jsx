@@ -20,13 +20,14 @@ const PendingOrders = () => {
   });
 
   useEffect(() => {
-    refetch();
-  }, [searchText, dataLoad, refetch]);
-  if (isPending) {
-    return <WaitingLoader></WaitingLoader>;
-  }
+    if (!isPending) {
+      refetch();
+    }
+  }, [searchText, dataLoad, isPending, refetch]);
+  
   return (
     <div>
+      {isPending && <WaitingLoader></WaitingLoader>}
       <h2 className="text-2xl md:text-4xl text-center py-4">
         Pending Orders{" "}
         <animated.span>

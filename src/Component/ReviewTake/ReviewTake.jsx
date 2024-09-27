@@ -4,8 +4,10 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { confirmAlert } from "./../SweetAlart/SweelAlart";
 import { useState } from "react";
 import useAuth from "./../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const ReviewTake = ({ onClose, _id, refetch }) => {
+  const navigate = useNavigate(); 
     
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
@@ -38,6 +40,7 @@ const ReviewTake = ({ onClose, _id, refetch }) => {
         confirmAlert("Thanks For Your Ratings!");
         onClose();
         refetch();
+        navigate('/');
       }
     } finally {
       setLoading(false);

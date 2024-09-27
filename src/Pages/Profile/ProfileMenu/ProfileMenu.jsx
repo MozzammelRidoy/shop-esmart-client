@@ -11,7 +11,7 @@ const ProfileMenu = () => {
     <>
       {isAdmin && (
         <Link to={"/dashboard"}>
-          <li className="border-b py-1 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
+          <li className="border-b py-1 transform transition duration-500 hover:scale-105 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
             <span>
               <MdDashboardCustomize />
             </span>
@@ -21,7 +21,7 @@ const ProfileMenu = () => {
       )}
       <Link to={"/profile/myOrders"}>
         {" "}
-        <li className="border-b py-1 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
+        <li className="border-b py-1 transform transition duration-500 hover:scale-105 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
           <span>
             <RiShoppingBasketLine />
           </span>{" "}
@@ -30,7 +30,7 @@ const ProfileMenu = () => {
       </Link>
       <Link to={"/profile/myFavorite"}>
         {" "}
-        <li className="border-b py-1 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
+        <li className="border-b py-1 transform transition duration-500 hover:scale-105 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
           <span>
             <MdFavorite />{" "}
           </span>{" "}
@@ -39,7 +39,7 @@ const ProfileMenu = () => {
       </Link>
       <Link to={"/profile/myCoupons"}>
         {" "}
-        <li className="border-b py-1 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
+        <li className="border-b py-1 transform transition duration-500 hover:scale-105 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
           {" "}
           <span>
             <BiSolidDiscount />{" "}
@@ -49,7 +49,7 @@ const ProfileMenu = () => {
       </Link>
       <Link to={"/profile/OrderTraking"}>
         {" "}
-        <li className="border-b py-1 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
+        <li className="border-b py-1 transform transition duration-500 hover:scale-105 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
           <span>
             <IoAnalyticsOutline />
           </span>{" "}
@@ -58,7 +58,7 @@ const ProfileMenu = () => {
       </Link>
       <Link to={"/profile/OrdersHistory"}>
         {" "}
-        <li className="border-b py-1  border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2  justify-center ">
+        <li className="border-b py-1 transform transition duration-500 hover:scale-105  border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2  justify-center ">
           {" "}
           <span>
             <ImHistory />{" "}

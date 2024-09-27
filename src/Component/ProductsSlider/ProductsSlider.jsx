@@ -41,10 +41,10 @@ const ProductsSlider = ({ path, collections = [], totalResult = 10 }) => {
       modules={[FreeMode]}
       className="mySwiper"
     >
-      {collections.length > 0 &&
+      {collections?.length > 0 &&
         collections?.map((item) => (
           <SwiperSlide
-            className="relative bg-gray-100 dark:bg-gray-900 "
+            className="relative bg-gray-100 dark:bg-gray-900 transform transition duration-500 hover:scale-105"
             key={item._id}
           >
             <Link to={`/product/${item._id}`}>
@@ -96,7 +96,7 @@ const ProductsSlider = ({ path, collections = [], totalResult = 10 }) => {
           </SwiperSlide>
         ))}
       {totalResult > 10 && collections.length !== totalResult && (
-        <SwiperSlide className="">
+        <SwiperSlide className="transform transition duration-500 hover:scale-105">
           <Link to={`/products/${path}`}>
             <div className="min-h-48 md:min-h-[340px] flex justify-center items-center">
               <button className="md:text-xl text-base flex items-center gap-x-2">
