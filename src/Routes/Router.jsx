@@ -39,6 +39,7 @@ import OrdersHistory from "../Pages/OrdersHistory/OrdersHistory";
 import OrderTracking from "../Pages/OrderTracking/OrderTracking";
 import MyFavorite from "../Pages/MyFavorite/MyFavorite";
 import SearchResultPage from "../Pages/SearchResultPage/SearchResultPage";
+import SeeAllProducts from "../Component/SeeAllPrroducts/SeeAllProducts";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         {
           path : '/category/:category',
           element : <Category></Category>
+        },
+        {
+          path : '/products/:path',
+          element : <SeeAllProducts></SeeAllProducts>
         },
         {
           path : '/chat',

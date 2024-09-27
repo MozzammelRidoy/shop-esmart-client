@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import useUsers from "../../../hooks/useUsers";
-import { timeCoverterGMTtoLocal } from "./../../../utils/modules";
+import {
+  animatedProps,
+  timeCoverterGMTtoLocal,
+} from "./../../../utils/modules";
 
 import {
   confirmAlert,
@@ -9,9 +12,21 @@ import {
 } from "../../../Component/SweetAlart/SweelAlart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { MdDeleteForever } from "react-icons/md";
+import { animated } from "@react-spring/web";
+import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
+import LoadMoreButton from "../../../Component/LoadMoreButton/LoadMoreButton";
+import SearchTextButton from "../../../Component/SearchTextButton/SearchTextButton";
+import EmptyPage from "../../../Component/EmptyPage/EmptyPage";
 
 const AdminUsers = () => {
-  const [users, isLoading, refetch] = useUsers("/users/admin");
+  const [dataLoad, setDataLoad] = useState(10);
+  const path = "/users/admin";
+  const [searchText, setSearchText] = useState(''); 
+  const [users, isLoading, totalResults, refetch] = useUsers({
+    path,
+    dataLoad,
+    searchText
+  });
   const axiosSecure = useAxiosSecure();
 
   const isMod = true;
@@ -24,19 +39,12 @@ const AdminUsers = () => {
   ];
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
-
-  if (isLoading) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        Please Wait...
-      </div>
-    );
-  }
+    if (!isLoading) {
+      refetch();
+    }
+  }, [refetch, dataLoad, isLoading, searchText]);
 
   const handleUserRoleChange = (e, email) => {
-
     //TODO : user role check thek access change other user role check
 
     const type = e.target.value;
@@ -59,30 +67,29 @@ const AdminUsers = () => {
     });
   };
 
-
   const handleUserBaned = (e, email) => {
+    //TODO : user role check then ban other user
 
-    //TODO : user role check then ban other user 
-
-    const isBaned = e.target.value === 'true';
+    const isBaned = e.target.value === "true";
     confirmationAlert({
       detailsText: "Ban this user",
       confirmButtonText: "Yes! Ban User",
     }).then(async (res) => {
       if (res.isConfirmed) {
-        const userAccess = { email: email, isBaned : isBaned  };
+        const userAccess = { email: email, isBaned: isBaned };
 
-        try{
-          const res = await axiosSecure.patch("/users/access/update", userAccess);
+        try {
+          const res = await axiosSecure.patch(
+            "/users/access/update",
+            userAccess
+          );
           if (res.data.success) {
             confirmAlert("This user has been successfully banned!");
-           await refetch();
+            await refetch();
           } else {
             failedAlert("Failed to ban user !");
           }
-        }
-        catch(err){
-          
+        } catch (err) {
           failedAlert("Failed to ban user !");
         }
       }
@@ -105,11 +112,20 @@ const AdminUsers = () => {
   };
   return (
     <div className="mb-10">
+      {isLoading && <WaitingLoader></WaitingLoader>}
       <h2 className="text-2xl md:text-4xl text-center py-4">
-        Admin Users {users?.length}
+        Admin Users{" "}
+        <animated.span>
+          {animatedProps(totalResults).number.to((n) => n.toFixed(0))}
+        </animated.span>
       </h2>
 
-      <div className="overflow-x-auto pb-10">
+      <div>
+        <SearchTextButton setSearchText={setSearchText} placeholder="Search By Email Phone or User_id"></SearchTextButton>
+      </div>
+
+      {
+        totalResults > 0 ? <div className="overflow-x-auto pb-10">
         <table className="table">
           <thead>
             <tr className="md:text-2xl text-lg bg-gray-200 dark:bg-gray-700">
@@ -132,12 +148,13 @@ const AdminUsers = () => {
                 <td className="capitalize">{admin.name}</td>
                 <td>{admin.email}</td>
                 <td>
-                  <select  onChange={(e)=> handleUserBaned(e, admin.email)}
+                  <select
+                    onChange={(e) => handleUserBaned(e, admin.email)}
                     className={`${
                       admin.isBaned ? "text-red-500" : "text-green-500"
                     }`}
                   >
-                    {admin.isBaned  ? (
+                    {admin.isBaned ? (
                       <>
                         <option value={true} className="text-red-500">
                           Banned
@@ -148,7 +165,7 @@ const AdminUsers = () => {
                       </>
                     ) : (
                       <>
-                        <option  value={false} className="text-green-500">
+                        <option value={false} className="text-green-500">
                           Access
                         </option>
                         <option value={true} className="text-red-500">
@@ -210,7 +227,11 @@ const AdminUsers = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div>  : <EmptyPage></EmptyPage>
+      }
+      {totalResults > 10 && totalResults !== users.length && (
+        <LoadMoreButton setDataLoad={setDataLoad} />
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 
-const SearchTextButton = ({setSearchText}) => {
+const SearchTextButton = ({setSearchText, placeholder = 'Search by Phone, Email, Transaction ID, Order ID'}) => {
     const handleSearchText = (e) => {
 
         e.preventDefault();
@@ -14,7 +14,7 @@ const SearchTextButton = ({setSearchText}) => {
             type="text"
             className="w-full px-2 py-1 border border-e-0 outline-none"
             name="searchText"
-            placeholder="Search by Phone, Email, Transaction ID, Order ID"
+            placeholder={placeholder}
           />
           <input
             type="submit"

@@ -19,7 +19,7 @@ const Home = () => {
 
       {/* Hot Picks */}
       <div className="mt-4 md:max-w-6xl px-3 md:px-0 mx-auto">
-        {/* <HotPicks></HotPicks> */}
+        <HotPicks></HotPicks>
       </div>
 
       {/* For You  */}

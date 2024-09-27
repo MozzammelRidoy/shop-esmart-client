@@ -39,3 +39,7 @@
 .total-users {
     background: linear-gradient(to right, #d1d5db, #9ca3af);
 }
+/* Total Users Gradient */
+.total-transaction {
+    background: linear-gradient(to right,#f373f3 , #e806f4 );
+}

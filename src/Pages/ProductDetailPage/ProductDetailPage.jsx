@@ -7,7 +7,6 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { Rating } from "@smastrom/react-rating";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import DeliveryInfo from "./DeliveryInfo/DeliveryInfo";
-import ProductsSlider from "../../Component/ProductsSlider/ProductsSlider";
 import HomeAndBackButton from "../../Component/HomeAndBackButton/HomeAndBackButton";
 import WaitingLoader from "../../Component/WaitingLoader/WaitingLoader";
 import useAuth from "./../../hooks/useAuth";
@@ -18,6 +17,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import AddFavoriteProduct from "../../Component/AddFavoriteProduct/AddFavoriteProduct";
+import ProductsSlider from "../../Component/ProductsSlider/ProductsSlider";
+
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -27,6 +28,8 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { refetch } = useCarts();
+  const [isLoading, setIsLoading] = useState(true);
+  // console.log(productDetails);
 
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -43,14 +46,44 @@ const ProductDetailPage = () => {
     });
 
   useEffect(() => {
-    axiosPublic
-      .get(`/products/${id}`)
-      .then((res) => setProductDetails(res.data));
+    const fetchProductDetails = async () => {
+      setIsLoading(true);
+      try {
+        const res = await axiosPublic.get(`/products/${id}`);
+        setProductDetails(res.data);
+      } catch (err) {
+        console.error("Error fetching product details");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProductDetails();
   }, [axiosPublic, id]);
 
-  if (!productDetails) {
-    return <WaitingLoader></WaitingLoader>;
-  }
+  const [path, setPath] = useState("");
+  const [collections, setCollections] = useState([]);
+  const [totalResult, setTotalResult] = useState(0); 
+  
+
+  useEffect(() => {
+    const fetchReletedProduct = async () => {
+      if (productDetails) {
+        const route = `products-releted?_id=${productDetails._id}&category=${productDetails.productCategory[1]}&tags=${productDetails.productTags}`;
+        setIsLoading(true);
+        try {
+          const res = await axiosPublic.get(`/${route}`);
+          setCollections(res.data.productResults);
+          setTotalResult(res.data.totalResult);
+          setPath(route);
+        } catch (err) {
+          console.error("Error fetching releted product");
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchReletedProduct();
+  }, [productDetails, axiosPublic]);
 
   // console.log(productDetail);
   const images = productDetails?.images?.map((image) => ({
@@ -101,11 +134,14 @@ const ProductDetailPage = () => {
       }
     }
   };
-
+  if (!productDetails) {
+    return <WaitingLoader></WaitingLoader>;
+  }
   return (
     <div className="md:max-w-6xl mx-auto mt-3 ">
       <HomeAndBackButton></HomeAndBackButton>
-      <div className="md:flex md:gap-4 gap-2  ">
+      {isLoading && <WaitingLoader></WaitingLoader>}
+      <div className="md:flex md:gap-4 gap-2 ">
         {/* for image  */}
         <div className="md:w-[35%] w-full relative">
           <ImageGallery
@@ -136,15 +172,15 @@ const ProductDetailPage = () => {
             )}
           />
 
-          {productDetails.discountAmount && (
+          {productDetails?.discountAmount && (
             <div className="absolute rounded-full top-1 left-1 h-12 flex flex-col  w-12 bg-[#ff3811]  justify-center -space-y-[5px] items-center text-white p-1 text-sm">
-              <span>{productDetails.discountAmount}tk</span>
+              <span>{productDetails?.discountAmount}tk</span>
               <span>save</span>
             </div>
           )}
-          {productDetails.discountPercent && (
+          {productDetails?.discountPercent && (
             <div className="absolute top-3 right-0 md:px-3 px-2 text-lg rounded-tl-full rounded-br-full bg-[#ff3811] text-white">
-              <span>{productDetails.discountPercent}%</span>
+              <span>{productDetails?.discountPercent}%</span>
             </div>
           )}
         </div>
@@ -158,7 +194,7 @@ const ProductDetailPage = () => {
             </h2>
             <p className="font-semibold">
               <span className="text-green-500">Stock : </span>
-              {productDetails.stockStatus && productDetails.stockQuantity ? (
+              {productDetails?.stockStatus && productDetails?.stockQuantity ? (
                 <span className="text-green-500">Available</span>
               ) : (
                 <span className="text-[#ff3811]">Unavailable</span>
@@ -172,27 +208,27 @@ const ProductDetailPage = () => {
               <p>
                 Price :{" "}
                 <span className="md:text-xl text-lg">
-                  {productDetails.finalPrice}
+                  {productDetails?.finalPrice}
                 </span>{" "}
                 Tk
               </p>
-              {productDetails.discountAmount !== 0 && (
+              {productDetails?.discountAmount !== 0 && (
                 <p className="text-gray-400">
-                  <del>{productDetails.sellPrice}</del>
+                  <del>{productDetails?.sellPrice}</del>
                 </p>
               )}
             </div>
-            {productDetails?.ratings && (
+            {(productDetails?.ratings || productDetails?.totalRatingsCount) && (
               <p className="flex items-center gap-1">
                 <span className="text-sm md:text-lg">Ratings : </span>
                 <span className="flex items-center text-xs md:text-lg">
                   <Rating
                     className="md:max-w-20 max-w-16"
-                    value={productDetails.averageRating}
+                    value={productDetails?.averageRating}
                     readOnly
                   />
                   <span className="text-[12px] md:text-[14px]">
-                    ({productDetails.totalRatingsCount})
+                    ({productDetails?.totalRatingsCount})
                   </span>
                 </span>
               </p>
@@ -201,23 +237,23 @@ const ProductDetailPage = () => {
 
           {/* product details or description  */}
           <div className="flex-grow">
-           <div className="flex justify-between items-center">
-           {productDetails?.productBrand && (
-              <p>
-                <span className="font-bold">Brand : </span>{" "}
-                {productDetails?.productBrand}
-              </p>
-            )}
-            {productDetails?.productCode && (
-              <p className="uppercase">
-                <span className="font-bold">Code : </span>{" "}
-                {productDetails?.productCode}
-              </p>
-            )}
-           </div>
+            <div className="flex justify-between items-center">
+              {productDetails?.productBrand && (
+                <p>
+                  <span className="font-bold">Brand : </span>{" "}
+                  {productDetails?.productBrand}
+                </p>
+              )}
+              {productDetails?.productCode && (
+                <p className="uppercase">
+                  <span className="font-bold">Code : </span>{" "}
+                  {productDetails?.productCode}
+                </p>
+              )}
+            </div>
             <p className="text-justify">
               <span className="font-bold">Details : </span>
-              {productDetails.productDetails}
+              {productDetails?.productDetails}
             </p>
           </div>
           {/* product action button  */}
@@ -242,7 +278,7 @@ const ProductDetailPage = () => {
                 <button
                   onClick={() => setQuantity(quantity + 1)}
                   className={`${
-                    productDetails.stockStatus
+                    productDetails?.stockStatus
                       ? "text-[#ff3811] hover:text-[#c6290a] "
                       : "btn-disabled text-gray-300"
                   }  rounded-full  text-xl md:text-2xl`}
@@ -252,7 +288,7 @@ const ProductDetailPage = () => {
               </div>
               <span className="">
                 <AddFavoriteProduct
-                  product_id={productDetails._id}
+                  product_id={productDetails?._id}
                 ></AddFavoriteProduct>
               </span>
             </div>
@@ -260,17 +296,17 @@ const ProductDetailPage = () => {
               <button
                 onClick={handleAddtoCart}
                 disabled={
-                  !productDetails.stockStatus && !productDetails.stockQuantity
+                  !productDetails?.stockStatus && !productDetails?.stockQuantity
                 }
                 className={`${
-                  productDetails.stockStatus && productDetails.stockQuantity
+                  productDetails?.stockStatus && productDetails?.stockQuantity
                     ? "text-[#ff3811]  hover:bg-[#ff3811] hover:text-white"
                     : "btn-disabled text-gray-300"
                 } w-1/2 md:py-2 py-1 bg-slate-100 `}
               >
                 Add to Cart
               </button>
-              {productDetails.stockStatus && productDetails.stockQuantity ? (
+              {productDetails?.stockStatus && productDetails?.stockQuantity ? (
                 <Link
                   onClick={handleAddtoCart}
                   to={`/carts`}
@@ -297,8 +333,10 @@ const ProductDetailPage = () => {
         <h2 className="md:text-3xl text-xl font-bold flex items-center gap-2">
           Releted Products{" "}
         </h2>
-        {/* TODO:  <ProductsSlider collections={productDetail.category}/> */}
-        <ProductsSlider collections={"products"} />
+       
+       <div>
+       <ProductsSlider path={path} collections={collections} totalResult={totalResult}/>
+       </div>
       </div>
       <ToastContainer />
     </div>

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useUsers from "../../../hooks/useUsers";
-import { timeCoverterGMTtoLocal } from "../../../utils/modules";
+import { animatedProps, timeCoverterGMTtoLocal } from "../../../utils/modules";
 import { MdDeleteForever } from "react-icons/md";
 import {
   confirmAlert,
@@ -8,9 +8,22 @@ import {
   failedAlert,
 } from "../../../Component/SweetAlart/SweelAlart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { animated } from "@react-spring/web";
+import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
+import LoadMoreButton from "../../../Component/LoadMoreButton/LoadMoreButton";
+import SearchTextButton from "../../../Component/SearchTextButton/SearchTextButton";
+import EmptyPage from "../../../Component/EmptyPage/EmptyPage";
 
 const AllUsers = () => {
-  const [users, isLoading, refetch] = useUsers("/users");
+  const [dataLoad, setDataLoad] = useState(10);
+  const path = "/users";
+  const [searchText, setSearchText] = useState(''); 
+
+  const [users, isLoading, totalResults, refetch] = useUsers({
+    path,
+    dataLoad,
+    searchText
+  });
 
   const axiosSecure = useAxiosSecure();
   const isMod = true;
@@ -23,16 +36,13 @@ const AllUsers = () => {
   ];
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    if(!isLoading){
+      refetch();
+    }   
+ 
+  }, [refetch, dataLoad, isLoading, searchText]);
 
-  if (isLoading) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        Please Wait...
-      </div>
-    );
-  }
+  
 
   const handleUserRoleChange = (e, email) => {
     //TODO : user role check thek access change other user role check
@@ -100,14 +110,24 @@ const AllUsers = () => {
       }
     });
   };
+ 
 
   return (
     <div className="mb-10">
+      {isLoading && <WaitingLoader></WaitingLoader>}
       <h2 className="text-2xl md:text-4xl text-center py-4">
-        All Users {users?.length}
+        All Users{" "}
+        <animated.span>
+          {animatedProps(totalResults).number.to((n) => n.toFixed(0))}
+        </animated.span>
       </h2>
 
-      <div className="overflow-x-auto pb-10">
+      <div>
+        <SearchTextButton placeholder="Search by Email Phone or User_id" setSearchText={setSearchText}></SearchTextButton>
+      </div>
+
+      {
+        totalResults > 0 ? <div className="overflow-x-auto pb-10">
         <table className="table">
           <thead>
             <tr className="md:text-2xl text-lg bg-gray-200 dark:bg-gray-700">
@@ -209,7 +229,11 @@ const AllUsers = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> : <EmptyPage></EmptyPage>
+      }
+      {totalResults > 10 && totalResults !== users?.length && (
+        <LoadMoreButton setDataLoad={setDataLoad} />
+      )}
     </div>
   );
 };

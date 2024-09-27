@@ -36,15 +36,15 @@ const PageListView = ({ collections }) => {
                   <p className="font-semibold md:text-lg">
                     Tk : {item.finalPrice}
                   </p>
-                  {item?.ratings && (
+                  {(item?.ratings || item?.totalRatingsCount) && (
                     <span className="flex items-center text-xs md:text-lg">
                       <Rating
                         className="md:max-w-20 max-w-14"
-                        value={item.ratings}
+                        value={item.averageRating}
                         readOnly
                       />
                       <span className="text-[8px] md:text-[12px]">
-                        ({item.ratingsCount})
+                        ({item.totalRatingsCount})
                       </span>
                     </span>
                   )}

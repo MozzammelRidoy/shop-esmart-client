@@ -6,15 +6,17 @@ import TransactionView from "./TransactionView";
 import useOrdersFetch from "../../../hooks/useOrdersFetch";
 import { useParams } from "react-router-dom";
 import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
+import { animated } from "@react-spring/web";
+import { animatedProps } from "../../../utils/modules";
 
 const Transactions = () => {
     const {TxID} = useParams(); 
     const route = "orders-transaction";
-    console.log(TxID);
+   
     const [searchText, setSearchText] = useState('');
     const [dataLoad, setDataLoad] = useState(10);
-  
-    const { orders, isPending,totalResult, refetch } = useOrdersFetch({
+    
+    const { orders, isPending, totalResult, refetch } = useOrdersFetch({
       route,
       searchText,
       dataLoad,
@@ -26,22 +28,24 @@ const Transactions = () => {
         if(TxID){
             setSearchText(TxID)
         }
-        else{
-            setSearchText('')
-        }
-      refetch();
-    }, [searchText, dataLoad, refetch, TxID]);
+        
+      if(!isPending){
+        refetch();
+      }
+    }, [searchText, isPending, dataLoad, refetch, TxID]);
 
     return (
         <div>
-      <h2 className="text-2xl md:text-4xl text-center py-4">All Transaction {totalResult}</h2>
+      <h2 className="text-2xl md:text-4xl text-center py-4">All Transaction <animated.span>
+          {animatedProps(totalResult).number.to((n) => n.toFixed(0))}
+        </animated.span></h2>
 
-      <SearchTextButton setSearchText={setSearchText}></SearchTextButton>
       {isPending && <WaitingLoader></WaitingLoader>}
+      <SearchTextButton  setSearchText={setSearchText}></SearchTextButton>
 
       {
-        totalResult ? <div>
-        {orders.map((transaction) => (
+        totalResult > 0 ? <div>
+        {orders?.map((transaction) => (
           <TransactionView key={transaction._id}  transaction={transaction}></TransactionView>
         ))}
       </div> : <EmptyPage></EmptyPage>

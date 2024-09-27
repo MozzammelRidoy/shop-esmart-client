@@ -12,6 +12,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import "./order-summery-style.css";
+import { AiOutlineTransaction } from "react-icons/ai";
 
 const OrderSummery = ({ startDate, endDate }) => {
   const path = "orders-summery";
@@ -27,6 +28,7 @@ const OrderSummery = ({ startDate, endDate }) => {
     cancelOrders,
     returnOders,
     totalUsers,
+    totalTransaction,
   } = data;
 
   const animatedProps = (value) =>
@@ -139,15 +141,30 @@ const OrderSummery = ({ startDate, endDate }) => {
 
         {/* Total Users */}
         <div className="total-users p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
-          <Link to={'/dashboard/allUsers'}>
-          <h3 className="text-lg flex items-center font-semibold text-white">
-            <FaUsers className="inline-block mr-2" /> Total Users
-          </h3>
-          <p className="text-3xl font-bold text-white">
-            <animated.span>
-              {animatedProps(totalUsers).number.to((n) => n.toFixed(0))}
-            </animated.span>
-          </p>
+          <Link to={"/dashboard/allUsers"}>
+            <h3 className="text-lg flex items-center font-semibold text-white">
+              <FaUsers className="inline-block mr-2 text-xl" /> Total Users
+            </h3>
+            <p className="text-3xl font-bold text-white">
+              <animated.span>
+                {animatedProps(totalUsers).number.to((n) => n.toFixed(0))}
+              </animated.span>
+            </p>
+          </Link>
+        </div>
+
+        {/* Total Transactions */}
+        <div className="total-transaction p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+          <Link to={"/dashboard/transactions"}>
+            <h3 className="text-lg flex items-center font-semibold text-white">
+              <AiOutlineTransaction className="inline-block text-xl mr-2" />{" "}
+              Total Transaction
+            </h3>
+            <p className="text-3xl font-bold text-white">
+              <animated.span>
+                {animatedProps(totalTransaction).number.to((n) => n.toFixed(0))}
+              </animated.span>
+            </p>
           </Link>
         </div>
       </div>

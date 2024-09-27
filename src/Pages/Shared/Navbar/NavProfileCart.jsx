@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useCarts from "../../../hooks/useCarts";
 
 const NavProfileCart = () => {
-  const { carts } = useCarts();
+    const { carts } = useCarts();
 
   return (
     <div className="hidden md:flex gap-x-4 text-[#FF3811] text-3xl">
@@ -16,9 +16,9 @@ const NavProfileCart = () => {
         <span>
           <FaShoppingCart />{" "}
         </span>
-        {carts.length > 0 && (
+        {carts?.length > 0 && (
           <span className="text-sm font-bold text-white bg-blue-500 px-1 rounded-full -top-3 left-7 absolute">
-            {carts.length}
+            {carts?.length}
           </span>
         )}{" "}
       </Link>

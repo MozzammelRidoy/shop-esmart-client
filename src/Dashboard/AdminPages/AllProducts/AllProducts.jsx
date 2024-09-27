@@ -4,6 +4,8 @@ import AdminPageGridView from "../../../Component/PageViewMode/AdminPageGridView
 import Pagination from "../../../Component/Pagination/Pagination";
 import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 import useReadAllProductsForAdmin from "../../../hooks/useReadAllProductsForAdmin";
+import { animatedProps } from "../../../utils/modules";
+import { animated } from "@react-spring/web";
 
 const AllProducts = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,11 +31,13 @@ const AllProducts = () => {
             
         }
   },[refetch, currentPage, itemPerPage, searchText ])
-  console.log(collections)
+  
   return (
     <div className="md:max-w-6xl md:mx-auto mx-2">
       <h2 className="text-2xl md:text-4xl text-center my-4">
-        All Products Results {totalResults}
+        All Products Results <animated.span>
+              {animatedProps(totalResults).number.to((n) => n.toFixed(0))}
+            </animated.span>
       </h2>
       <form onSubmit={hanldeSearchText} className="md:max-w-96 max-w-80 mx-auto flex mb-6">
         <input
