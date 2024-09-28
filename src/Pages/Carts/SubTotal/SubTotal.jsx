@@ -3,7 +3,6 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { IoMdReturnRight } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import useCarts from "../../../hooks/useCarts";
-import { failedAlert } from "../../../Component/SweetAlart/SweelAlart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -13,7 +12,7 @@ const SubTotal = ({ reset, setReset }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Add Shipping Charge");
   const [shippingValue, setShippingValue] = useState(0);
-  const { carts, totalQuantity, totalPrice } = useCarts();
+  const { carts, totalQuantity, totalPrice , refetch } = useCarts();
   const [couponsValue, setCouponsValue] = useState(0);
   const [couponCode, setCouponCode] = useState("");
   const [vatTax, setVatTax] = useState(0);
@@ -167,13 +166,16 @@ const SubTotal = ({ reset, setReset }) => {
     }
     if (reset) {
       setCouponsValue(0);
-
+       
       setReset(false);
     }
     if (!totalQuantity) {
       setShippingValue(0);
     }
-  }, [reset, setReset, totalQuantity, couponErrorMessage]);
+    if(totalPrice){
+      setFinalTotalAmount(totalPrice + shippingValue)
+    }
+  }, [reset, setReset, totalQuantity, totalPrice, couponErrorMessage]);
 
   return (
     <div className="md:w-[25%] mt-3 md:mt-0 w-full flex flex-col h-full space-y-3 bg-gray-200 dark:bg-gray-700 p-4 md:p-6">

@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
 
   //user profile update
   const userUpdateProfile = (name = null, photoURL = null) => {
-    setLoading(true);
+    
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photoURL,
@@ -54,22 +54,25 @@ const AuthProvider = ({ children }) => {
   };
 
   // user forgot password
-  const forgotPassword = email => {
-    setLoading(true); 
+  const forgotPassword = (email) => {
+    setLoading(true);
     return sendPasswordResetEmail(auth, email);
-  }
+  };
 
   //user observing.
   useEffect(() => {
     const unSubcribe = onAuthStateChanged(auth, async (currentUser) => {
-      setLoading(true)
+      setLoading(true);
 
       setUser(currentUser);
+      if(currentUser){
+        setLoading(false)
+      }
 
       if (!currentUser) {
         await axiosPublic.post("/logout");
       }
-      setLoading(false);
+    
     });
     return () => {
       unSubcribe();

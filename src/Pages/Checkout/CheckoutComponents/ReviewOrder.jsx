@@ -16,7 +16,7 @@ const ReviewOrder = ({ orderData }) => {
       <h2 className="md:text-2xl text-lg mb-2">Review Your Order</h2>
 
       <div>
-        {carts.map((item) => (
+        {carts?.map((item) => (
           <div key={item._id} className="flex items-center  gap-2 mb-2">
             <div className="w-14 h-14 md:w-20 md:h-20 flex-shrink-0 overflow-hidden">
               <img

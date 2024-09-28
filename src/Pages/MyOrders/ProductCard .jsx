@@ -16,7 +16,7 @@ const ProductCard = ({
   const [checkReview, setCheckReview] = useState({});
   const [userReview, setUserRivew] = useState(null);
 
-  console.log(userReview);
+  
 
   // check reviews.
 

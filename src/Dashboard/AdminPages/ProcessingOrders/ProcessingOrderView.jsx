@@ -1,16 +1,12 @@
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
-import {
-  confirmAlert,
-  confirmationAlert,
-  failedAlert,
-} from "../../../Component/SweetAlart/SweelAlart";
+import { confirmAlert, confirmationAlert, failedAlert } from "../../../Component/SweetAlart/SweelAlart";
 import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 import { Link } from "react-router-dom";
 import { timeCoverterGMTtoLocal } from "../../../utils/modules";
 
-const AllOrderView = ({ order, refetch }) => {
+const ProcessingOrderView = ({ order, refetch }) => {
   const {
     TxID,
     card_issuer,
@@ -38,7 +34,7 @@ const AllOrderView = ({ order, refetch }) => {
     shippingAddress,
     order_status,
     orderStatusHistory,
-    finalAmount,
+    finalAmount
   } = order;
 
   const axiosSecure = useAxiosSecure();
@@ -101,12 +97,7 @@ const AllOrderView = ({ order, refetch }) => {
           </h2>
           <div className="text-sm text-gray-600 dark:text-gray-400">
             Order Approved By :{" "}
-            {orderStatusHistory?.map((status) => (
-              <span className="me-3 text-green-400" key={status}>
-                {" "}
-                {status.changedBy}
-              </span>
-            ))}
+            {orderStatusHistory?.map(status => <span className="me-3 text-green-400" key={status}> {status.changedBy}</span>)}
           </div>
           {TxID ? (
             <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -253,23 +244,24 @@ const AllOrderView = ({ order, refetch }) => {
 
       {/* Order Management Controls */}
       <div className="flex justify-between items-center">
-        <select
-          onChange={handleStatusChange}
-          className="select  outline-none text-xl text-center w-full max-w-xs dark:bg-gray-700 dark:text-gray-100"
-        >
-          <option className="text-yellow-500 text-xl" value={order_status}>
-            {order_status}
-          </option>
-
-         
-          <option className="text-green-500 text-xl" value="Processing">
-            Processing
-          </option>
-
-          <option className="text-red-500 text-xl" value="Cancel">
-            Cancel
-          </option>
-        </select>
+          <select
+            onChange={handleStatusChange}
+            className="select  outline-none text-xl text-center w-full max-w-xs dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option className="text-green-500 text-xl" value={order_status}>
+              {order_status}
+            </option>
+            <option className="text-blue-500 text-xl" value="Delivered">
+              Delivered
+            </option>
+            <option className="text-yellow-500 text-xl" value="Return">
+              Return
+            </option>
+            <option className="text-red-500 text-xl" value="Cancel">
+              Cancel
+            </option>
+          </select>
+        
 
         <button
           onClick={handleDeleteOrder}
@@ -282,4 +274,4 @@ const AllOrderView = ({ order, refetch }) => {
   );
 };
 
-export default AllOrderView;
+export default ProcessingOrderView;

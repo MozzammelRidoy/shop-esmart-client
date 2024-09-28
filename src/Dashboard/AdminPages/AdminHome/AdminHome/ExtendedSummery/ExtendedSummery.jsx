@@ -18,6 +18,8 @@ const ExtendedSummery = ({ startDate, endDate }) => {
     ratings,
   } = data;
 
+  console.log(data)
+
   
 
   
@@ -51,7 +53,7 @@ const ExtendedSummery = ({ startDate, endDate }) => {
                   />
                  
                   <span className="text-lg md:text-2xl">
-                    {ratings?.siteAverageRatings.toFixed(1)} - 
+                    {ratings?.siteAverageRatings?.toFixed(1)} - 
                     ({ratings?.totalRatingsCount})
                   </span>
                 </span>

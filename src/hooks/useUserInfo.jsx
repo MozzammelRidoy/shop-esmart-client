@@ -10,7 +10,7 @@ const useUserInfo = () => {
     const {data : usersInfo = [], isPending, refetch} = useQuery({
         queryKey : ['usersInfo'],
         queryFn : async () => {
-            const res = await axiosSecure.get(`/usersInfo?email=${user.email}`)
+            const res = await axiosSecure.get(`/usersInfo?email=${user?.email}`)
             return res.data; 
         }
     })

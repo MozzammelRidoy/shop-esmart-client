@@ -1,19 +1,42 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import WaitingLoader from "../Component/WaitingLoader/WaitingLoader";
+import useUserRoleCheck from "../hooks/useUserRoleCheck";
 
-const PrivateRoute = ({children}) => {
-    const {user, loading} = useAuth();
-    const location = useLocation();
-    
+const PrivateRoute = ({ children, allowedRole }) => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+  const { userType, isBanned, isRoleLoading } = useUserRoleCheck();
+  const isAuthenticated = !!user;
+  console.log(allowedRole);
 
-    if(loading){
-        return <p>Loading...</p>
-    }
-    if(user){
-        return children;
-    }
+  if (loading) {
+    return <WaitingLoader />;
+  }
 
-    return <Navigate to={'/login'} replace state={{from : location.pathname}}/>
+  if (!isAuthenticated) {
+    return (
+      <Navigate to={"/login"} replace state={{ from: location.pathname }} />
+    );
+  }
+
+  if(isRoleLoading){
+    return <WaitingLoader></WaitingLoader>
+  }
+
+  
+
+  if (isBanned) {
+    return <Navigate replace to={"/banned"} />;
+  }
+
+  if (allowedRole && !allowedRole.includes(userType)) {
+    return (
+      <Navigate to={"/"} replace/>
+    );
+  }
+
+  return <>{children}</>
 };
 
 export default PrivateRoute;

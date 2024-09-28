@@ -39,6 +39,9 @@ import OrderTracking from "../Pages/OrderTracking/OrderTracking";
 import MyFavorite from "../Pages/MyFavorite/MyFavorite";
 import SearchResultPage from "../Pages/SearchResultPage/SearchResultPage";
 import SeeAllProducts from "../Component/SeeAllPrroducts/SeeAllProducts";
+import BannedPage from "../Component/BannedPage/BannedPage";
+import PrivateRoute from "./PrivateRoute";
+import ProcessingOrders from "../Dashboard/AdminPages/ProcessingOrders/ProcessingOrders";
 
 const router = createBrowserRouter([
     {
@@ -64,7 +67,7 @@ const router = createBrowserRouter([
         },
         {
           path : '/chat',
-          element : <ChatMessage></ChatMessage>
+          element : <PrivateRoute><ChatMessage></ChatMessage></PrivateRoute>
         },
         {
           path : '/location',
@@ -72,15 +75,15 @@ const router = createBrowserRouter([
         },
         {
           path : '/carts',
-          element : <Carts></Carts>
+          element : <PrivateRoute> <Carts></Carts></PrivateRoute>
         },
         {
           path : '/checkout',
-          element : <Checkout></Checkout>
+          element : <PrivateRoute><Checkout></Checkout></PrivateRoute>
         },
         {
           path : '/profile',
-          element : <Profile></Profile>
+          element : <PrivateRoute> <Profile></Profile></PrivateRoute>
         },
         {
           path : '/product/:id',
@@ -89,39 +92,43 @@ const router = createBrowserRouter([
         },
         {
           path : '/payment-success',
-          element : <PaymentSuccess></PaymentSuccess>
+          element : <PrivateRoute> <PaymentSuccess></PaymentSuccess></PrivateRoute>
         },
         {
           path : '/payment-cancel',
-          element : <PaymentCancel></PaymentCancel>
+          element : <PrivateRoute> <PaymentCancel></PaymentCancel></PrivateRoute>
         },
         {
           path : '/payment-failed',
-          element : <PaymentFailed></PaymentFailed>
+          element : <PrivateRoute><PaymentFailed></PaymentFailed></PrivateRoute>
         },
         { 
           path : '/order-submited',
-          element : <OrderSubmited></OrderSubmited>
+          element : <PrivateRoute><OrderSubmited></OrderSubmited></PrivateRoute>
         },
         {
           path : '/profile/myOrders',
-          element : <MyOrders></MyOrders>
+          element : <PrivateRoute><MyOrders></MyOrders></PrivateRoute>
         },
         {
           path : '/profile/OrdersHistory',
-          element : <OrdersHistory></OrdersHistory>
+          element : <PrivateRoute><OrdersHistory></OrdersHistory></PrivateRoute>
         },
         {
           path : '/profile/OrderTraking',
-          element : <OrderTracking></OrderTracking>
+          element : <PrivateRoute><OrderTracking></OrderTracking></PrivateRoute>
         },
         {
           path : '/profile/myCoupons',
-          element : <MyCoupons></MyCoupons>
+          element : <PrivateRoute> <MyCoupons></MyCoupons></PrivateRoute>
         },
         {
           path : '/profile/myFavorite',
-          element : <MyFavorite></MyFavorite>
+          element : <PrivateRoute><MyFavorite></MyFavorite></PrivateRoute>
+        },
+        {
+          path : '/banned',
+          element : <BannedPage></BannedPage>
         }
       ]
     },
@@ -137,52 +144,56 @@ const router = createBrowserRouter([
     // dashboard
     {
       path: '/dashboard',
-      element : <DashboardMain/>,
+      element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><DashboardMain/></PrivateRoute>,
       errorElement : <ErrorPage/>,
       children : [
         {
           index : true,
-          element : <AdminHome></AdminHome>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><AdminHome></AdminHome></PrivateRoute>
         },
         {
           path : '/dashboard/allProducts',
-          element : <AllProducts></AllProducts>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><AllProducts></AllProducts></PrivateRoute>
         },
         {
           path : '/dashboard/admin/products/:id',
-          element : <AdminProductDetailsPage></AdminProductDetailsPage>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><AdminProductDetailsPage></AdminProductDetailsPage></PrivateRoute>
         },
         {
           path : '/dashboard/addNewProduct',
-          element : <AddNewProduct></AddNewProduct>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><AddNewProduct></AddNewProduct></PrivateRoute>
         },
         {
           path : '/dashboard/update/:id',
-          element : <UpdateProduct></UpdateProduct>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><UpdateProduct></UpdateProduct></PrivateRoute>
         },
         {
           path : '/dashboard/categories',
-          element : <Categories></Categories>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><Categories></Categories></PrivateRoute>
         },
         {
           path : '/dashboard/allOrders',
-          element : <AllOrders></AllOrders>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><AllOrders></AllOrders></PrivateRoute>
         },
         {
           path : '/dashboard/pendingOrders',
-          element : <PendingOrders></PendingOrders>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><PendingOrders></PendingOrders></PrivateRoute>
+        },
+        {
+          path : '/dashboard/processingOrders',
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><ProcessingOrders></ProcessingOrders></PrivateRoute>
         },
         {
           path : '/dashboard/allUsers',
-          element : <AllUsers></AllUsers>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><AllUsers></AllUsers></PrivateRoute>
         },
         {
           path : '/dashboard/coupons',
-          element : <Coupons></Coupons>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><Coupons></Coupons></PrivateRoute>
         },
         {
           path : '/dashboard/message',
-          element : <Messages></Messages>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><Messages></Messages></PrivateRoute>
         },
         {
           path : '/dashboard/transactions',
@@ -190,23 +201,24 @@ const router = createBrowserRouter([
         },
         {
           path : '/dashboard/transactions/:TxID',
-          element : <Transactions></Transactions>
+          element :<PrivateRoute allowedRole={['manager', 'admin', 'moderator']}> <Transactions></Transactions></PrivateRoute>
         },
         {
           path : '/dashboard/adminUsers',
-          element : <AdminUsers></AdminUsers>
+          element : <PrivateRoute allowedRole={['manager', 'admin']}> <AdminUsers></AdminUsers></PrivateRoute>
         },
+        
         {
           path : '/dashboard/completeOrders',
-          element : <CompleteOrders></CompleteOrders>
+          element : <PrivateRoute allowedRole={['manager', 'admin']}><CompleteOrders></CompleteOrders></PrivateRoute>
         },
         {
           path : '/dashboard/canceledOrders',
-          element : <CanceledOrders></CanceledOrders>
+          element : <PrivateRoute allowedRole={['manager', 'admin']}><CanceledOrders></CanceledOrders></PrivateRoute>
         },
         {
           path : '/dashboard/siteSettings',
-          element : <SiteSettings></SiteSettings>
+          element : <PrivateRoute allowedRole={['manager', 'admin']}><SiteSettings></SiteSettings></PrivateRoute>
         },
         
        

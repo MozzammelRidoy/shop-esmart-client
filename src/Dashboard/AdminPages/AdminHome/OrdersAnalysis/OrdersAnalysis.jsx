@@ -15,7 +15,6 @@ const OrdersAnalysis = ({ startDate, endDate }) => {
   const path = "orders-analysis";
   const { data, loading } = useDashboardData({ path, startDate, endDate });
 
-  console.log(data);
   return (
     <div className="">
       {loading && <WaitingLoader></WaitingLoader>}

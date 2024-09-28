@@ -13,15 +13,15 @@ import {
 const colors = ["#00C49F", "#0088FE",  "#FFBB28", "#FF8042", "red", "pink"];
 
 const TrendingProductsChart = ({ data }) => {
-  
+  console.log(data); 
   const chartData = data?.map((product) => ({
     productCode: product.productCode?.toUpperCase(),
     totalSold: product.totalSold,
     finalPrice: product.finalPrice,
     image: product.images[0]?.image_url,
     id: product._id,
-    Total_Ratings : product.totalRatingsCount,
-    averageRating : product.averageRating
+    Total_Ratings : product?.totalRatingsCount,
+    averageRating : product.averageRating > 0 ? Number(product.averageRating).toFixed(1) : 0,
   }));
 
   return (
@@ -65,7 +65,7 @@ const TrendingProductsChart = ({ data }) => {
             <div className="text-center text-sm">
               <p className="font-bold uppercase">{product.productCode}</p>
               <p>Total Sold: {product.totalSold}</p>
-              <p>Rating: {product?.averageRating?.toFixed(1)}</p>
+              <p>Rating: {product.averageRating}</p>
             </div>
           </div>
         ))}

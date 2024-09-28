@@ -58,23 +58,35 @@ const AdminNavMenu = () => {
       <li>
         <NavLink
           className="flex items-center transform transition duration-200 hover:scale-110 w-full"
-          to={"/dashboard/allOrders"}
-        >
-          <span className="text-xl">
-            <RiMenuLine />{" "}
-          </span>
-          All Orders
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
           to={"/dashboard/pendingOrders"}
         >
           <span className="text-xl">
             <RiMenuLine />{" "}
           </span>
           Pending Orders
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
+          to={"/dashboard/allOrders"}
+        >
+          <span className="text-xl">
+            <RiMenuLine />{" "}
+          </span>
+          All Confirm Orders
+        </NavLink>
+      </li>
+     
+      <li>
+        <NavLink
+          className="flex items-center transform transition duration-200 hover:scale-110 w-full"
+          to={"/dashboard/processingOrders"}
+        >
+          <span className="text-xl">
+            <RiMenuLine />{" "}
+          </span>
+          Processing Orders
         </NavLink>
       </li>
 
