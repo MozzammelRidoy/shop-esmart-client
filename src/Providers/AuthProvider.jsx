@@ -33,7 +33,6 @@ const AuthProvider = ({ children }) => {
 
   //user profile update
   const userUpdateProfile = (name = null, photoURL = null) => {
-    
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photoURL,
@@ -62,17 +61,11 @@ const AuthProvider = ({ children }) => {
   //user observing.
   useEffect(() => {
     const unSubcribe = onAuthStateChanged(auth, async (currentUser) => {
-      setLoading(true);
-
       setUser(currentUser);
-      if(currentUser){
-        setLoading(false)
-      }
-
       if (!currentUser) {
         await axiosPublic.post("/logout");
       }
-    
+      setLoading(false);
     });
     return () => {
       unSubcribe();

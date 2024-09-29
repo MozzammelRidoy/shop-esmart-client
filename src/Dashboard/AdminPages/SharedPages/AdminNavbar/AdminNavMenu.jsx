@@ -1,8 +1,9 @@
 import { RiMenuLine } from "react-icons/ri";
 import { Link, NavLink } from "react-router-dom";
+import useUserRoleCheck from "../../../../hooks/useUserRoleCheck";
 
 const AdminNavMenu = () => {
-  const userRole = "manager";
+  const {userType} = useUserRoleCheck(); 
 
   const handleCloseDrawer = () => {
     document.getElementById("my-drawer").checked = false;
@@ -208,7 +209,7 @@ const AdminNavMenu = () => {
         className="menu bg-base-200 gap-1 md:text-base text-sm min-h-full w-48 md:w-60 p-2 pb-10"
       >
         {commonNavMenus}
-        {(userRole === "admin" || userRole == "manager") && adminNavMenus}
+        {(userType === "admin" || userType == "manager") && adminNavMenus}
         <div className="divider"></div>
         {clientNavMenus}
       </ul>

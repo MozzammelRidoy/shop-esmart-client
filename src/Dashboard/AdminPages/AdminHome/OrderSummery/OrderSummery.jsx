@@ -85,7 +85,7 @@ const OrderSummery = ({ startDate, endDate }) => {
 
         {/* On Courier Orders */}
         <div className="on-courier-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
-          <Link className="w-full" to={"/dashboard/allOrders"}>
+          <Link className="w-full" to={"/dashboard/processingOrders"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaTruck className="inline-block mr-2" /> On Courier
             </h3>

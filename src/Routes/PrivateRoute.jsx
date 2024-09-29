@@ -8,7 +8,6 @@ const PrivateRoute = ({ children, allowedRole }) => {
   const location = useLocation();
   const { userType, isBanned, isRoleLoading } = useUserRoleCheck();
   const isAuthenticated = !!user;
-  console.log(allowedRole);
 
   if (loading) {
     return <WaitingLoader />;
@@ -20,23 +19,19 @@ const PrivateRoute = ({ children, allowedRole }) => {
     );
   }
 
-  if(isRoleLoading){
-    return <WaitingLoader></WaitingLoader>
+  if (isRoleLoading) {
+    return <WaitingLoader></WaitingLoader>;
   }
-
-  
 
   if (isBanned) {
     return <Navigate replace to={"/banned"} />;
   }
 
   if (allowedRole && !allowedRole.includes(userType)) {
-    return (
-      <Navigate to={"/"} replace/>
-    );
+    return <Navigate to={"/"} replace />;
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 };
 
 export default PrivateRoute;

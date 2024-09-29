@@ -197,7 +197,7 @@ const router = createBrowserRouter([
         },
         {
           path : '/dashboard/transactions',
-          element : <Transactions></Transactions>
+          element : <PrivateRoute allowedRole={['manager', 'admin', 'moderator']}><Transactions></Transactions></PrivateRoute>
         },
         {
           path : '/dashboard/transactions/:TxID',

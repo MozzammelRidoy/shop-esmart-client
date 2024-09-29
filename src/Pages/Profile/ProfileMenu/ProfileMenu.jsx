@@ -4,12 +4,13 @@ import { IoAnalyticsOutline } from "react-icons/io5";
 import { MdDashboardCustomize, MdFavorite } from "react-icons/md";
 import { RiShoppingBasketLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import useUserRoleCheck from "../../../hooks/useUserRoleCheck";
 
 const ProfileMenu = () => {
-  const isAdmin = true;
+  const {userType} = useUserRoleCheck()
   const menus = (
     <>
-      {isAdmin && (
+      {(userType === 'manager' || userType === 'admin' || userType === 'moderator' || userType !== 'user') && (
         <Link to={"/dashboard"}>
           <li className="border-b py-1 transform transition duration-500 hover:scale-105 border-[#ff3811] hover:dark:bg-gray-900 hover:bg-gray-300 flex items-center gap-2 justify-center">
             <span>
