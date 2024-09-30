@@ -23,15 +23,13 @@ const Banner = () => {
   };
 
   
-if(isPending){
-  return <div><WaitingLoader></WaitingLoader></div>
-}
+
   
   
 
   return (
     <div data-aos="fade-left" data-aos-duration="1500" className="md:col-span-3 col-span-4 md:order-2 order-1">
-     
+      {isPending && <WaitingLoader></WaitingLoader>}
        <Swiper
         spaceBetween={30}
         loop={true}

@@ -13,7 +13,6 @@ import {
 const colors = ["#00C49F", "#0088FE",  "#FFBB28", "#FF8042", "red", "pink"];
 
 const TrendingProductsChart = ({ data }) => {
-  console.log(data); 
   const chartData = data?.map((product) => ({
     productCode: product.productCode?.toUpperCase(),
     totalSold: product.totalSold,

@@ -6,17 +6,25 @@ const useFavoriteProduct = ({ dataLoad }) => {
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
 
+  const fetchFavorite = async () => {
+    if (loading || !user?.email) {
+      return [];
+    }
+
+    return new Promise((resolve) => {
+      setTimeout(async () => {
+        const res = await axiosSecure.get(
+          `/favorites?email=${user.email}&dataLoad=${dataLoad}`
+        );
+        resolve(res.data);
+      }, 700);
+    });
+  };
+
   const { data, isPending, refetch } = useQuery({
     queryKey: ["favorite"],
-    queryFn: async () => {
-      if (loading) {
-       isPending;
-      }
-      const res = await axiosSecure.get(
-        `/favorites?email=${user.email}&dataLoad=${dataLoad}`
-      );
-      return res.data;
-    },
+    enabled: !!user?.email || !loading,
+    queryFn: fetchFavorite,
   });
 
   const favorites = data?.favoriteResults || [];

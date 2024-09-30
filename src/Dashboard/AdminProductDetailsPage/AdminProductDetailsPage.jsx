@@ -17,8 +17,9 @@ const AdminProductDetailsPage = () => {
   const { productDetails, loading } = useSingleProductReadForAdmin(id);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  if(loading){ return <WaitingLoader></WaitingLoader>}
-
+  if (loading) {
+    return <WaitingLoader></WaitingLoader>;
+  }
 
   const handleDelete = (_id) => {
     confirmationAlert({ detailsText: "Do you want to delete it ?" }).then(
@@ -44,7 +45,7 @@ const AdminProductDetailsPage = () => {
   return (
     <div className="md:max-w-6xl mx-auto mt-3 ">
       <HomeAndBackButton></HomeAndBackButton>
-     
+
       <div className="md:flex md:gap-4 gap-2  ">
         {/* for image  */}
         <div className="md:w-[35%] w-full relative">
@@ -114,7 +115,7 @@ const AdminProductDetailsPage = () => {
           {/* product price and ratings  */}
           <div className="  ">
             <p className="text-sm md:text-lg  text-[#ff3811]">
-             Product Code :{" "}
+              Product Code :{" "}
               <span className="md:text-xl text-lg uppercase">
                 {productDetails?.productCode}
               </span>{" "}
@@ -173,7 +174,7 @@ const AdminProductDetailsPage = () => {
               BD
             </p>
             <p className="text-sm md:text-lg  text-[#ff3811]">
-              Last Edit : {" "}
+              Last Edit :{" "}
               {productDetails.lastEdit ? (
                 <span className="md:text-xl text-lg">
                   {timeCoverterGMTtoLocal(productDetails?.lastEdit)} BD
@@ -183,17 +184,21 @@ const AdminProductDetailsPage = () => {
               )}
             </p>
 
-            {productDetails?.ratings && (
+            {productDetails?.totalRatingsCount > 0 && (
               <p className="flex items-center gap-1">
                 <span className="text-sm md:text-lg">Ratings : </span>
                 <span className="flex items-center text-xs md:text-lg">
                   <Rating
-                    className="md:max-w-20 max-w-16"
-                    value={productDetails?.ratings}
+                    className="md:max-w-20 max-w-16 me-1"
+                    value={productDetails?.averageRating}
                     readOnly
-                  />
+                  /> 
+                  <span className="text-[12px] me-2 md:text-[15px]">
+                    {productDetails?.averageRating}
+                  </span>
+
                   <span className="text-[9px] md:text-[11px]">
-                    ({productDetails?.ratingsCount})
+                    ({productDetails?.totalRatingsCount})
                   </span>
                 </span>
               </p>

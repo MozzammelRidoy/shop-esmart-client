@@ -13,7 +13,6 @@ const BannerDisplay = ({ banners, bannerId, isPending, refetch }) => {
   const [droppableId, setDroppableId] = useState("droppableId");
   const axiosSecure = useAxiosSecure();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(existingImages);
 
   useEffect(() => {
     if (banners) {

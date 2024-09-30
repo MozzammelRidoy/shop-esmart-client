@@ -18,7 +18,6 @@ const ExtendedSummery = ({ startDate, endDate }) => {
     ratings,
   } = data;
 
-  console.log(data)
 
   
 

@@ -8,11 +8,10 @@ const NavLoginOrLogout = () => {
   const axiosPublic = useAxiosPublic();
 
   const handleLogout = async () => {
-    const logoutInfo = {
-      email: user?.email,
-      lastSignOutTime: new Date().toISOString(),
-    }
-    const res = await axiosPublic.patch('/users/logout', logoutInfo );
+   
+     
+    
+    const res = await axiosPublic.patch(`/users/logout?email=${user?.email}`);
     
 
     if (res.data.success) {

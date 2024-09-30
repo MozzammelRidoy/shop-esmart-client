@@ -1,32 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
 import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useCarts = () => {
-    const axiosSecure = useAxiosSecure(); 
-    const {user} = useAuth(); 
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
+  const fetchCarts = async () => {
+    if (loading || !user?.email) {
+      return [];
+    }
 
-    const {data, isPending, refetch} = useQuery({
-        
-        queryKey : ['carts', user?.email],
-        queryFn : async() => {
-            if(!user?.email){
-                return null
-            }
-            const res = await axiosSecure.get(`/carts?email=${user?.email}`); 
-           
-            return res.data;
-        },
-        enabled : !!user?.email,
-    })
+    return new Promise((resolve) => {
+      setTimeout(async () => {
+        const res = await axiosSecure.get(`/carts?email=${user?.email}`);
+        resolve(res.data);
+      }, 700);
+    });
+  };
 
-   
-    const carts = data?.carts || []; 
-    const totalQuantity = data?.totalQuantity || 0 ;
-    const totalPrice = data?.totalPrice || 0; 
-    
-    return {carts , totalQuantity, totalPrice, isPending, refetch }
+  const { data, isPending, refetch } = useQuery({
+    queryKey: ["carts"],
+    enabled: !!user?.email || !loading,
+    queryFn: fetchCarts,
+  });
+
+  const carts = data?.carts || [];
+  const totalQuantity = data?.totalQuantity || 0;
+  const totalPrice = data?.totalPrice || 0;
+
+  return { carts, totalQuantity, totalPrice, isPending, refetch };
 };
 
 export default useCarts;

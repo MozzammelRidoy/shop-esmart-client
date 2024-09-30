@@ -13,7 +13,7 @@ const DatePicker = ({ startDate, setStartDate, endDate, setEndDate }) => {
             setStartDate(new Date(new Date().setDate(new Date().getDate() - 28)));
             setEndDate(new Date());
         } else if (range === 'overall') {
-            setStartDate(new Date('2024-01-01')); // Set to your site's start date
+            setStartDate(new Date('2024-01-01')); 
             setEndDate(new Date());
         }
         

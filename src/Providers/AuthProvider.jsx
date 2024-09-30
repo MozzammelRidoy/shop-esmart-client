@@ -61,16 +61,18 @@ const AuthProvider = ({ children }) => {
   //user observing.
   useEffect(() => {
     const unSubcribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (!currentUser) {
-        await axiosPublic.post("/logout");
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null)
+        await axiosPublic.patch(`/users/logout`);
       }
       setLoading(false);
     });
     return () => {
       unSubcribe();
     };
-  }, [axiosPublic]);
+  }, [axiosPublic, user?.email]);
 
   const authInfo = {
     user,
