@@ -9,7 +9,6 @@ const useSSLcommerz = ({ setLoading }) => {
       setLoading(true);
       const res = await axiosSecure.post(`/initiate-payment`, newOrder);
       const paymentUrl = res.data.url;
-      console.log(res.data)
       if (paymentUrl) {
         window.location.replace(paymentUrl);
       }

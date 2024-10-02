@@ -18,11 +18,6 @@ const ExtendedSummery = ({ startDate, endDate }) => {
     ratings,
   } = data;
 
-
-  
-
-  
-
   return (
     <div className="md:p-6 p-2 mb-10 rounded-lg shadow-md">
       {loading && <WaitingLoader></WaitingLoader>}
@@ -41,22 +36,23 @@ const ExtendedSummery = ({ startDate, endDate }) => {
         <div className="mb-6 grid md:grid-cols-2 gap-4  ">
           <CategoryWiseSalesChart data={categoryWiseSales} />
           <div className="">
-          <h3 className="text-xl font-semibold mb-4 text-center">Site Ratings</h3>
-          <p className="flex flex-col justify-center items-center gap-1">
-                
-                <span className="flex flex-col justify-center items-center text-xs md:text-lg min-h-80">
-                  <Rating
-                    className="md:max-w-[300px] max-w-56"
-                    value={ratings?.siteAverageRatings}
-                    readOnly
-                  />
-                 
-                  <span className="text-lg md:text-2xl">
-                    {ratings?.siteAverageRatings?.toFixed(1)} - 
-                    ({ratings?.totalRatingsCount})
-                  </span>
+            <h3 className="text-xl font-semibold mb-4 text-center">
+              Site Ratings
+            </h3>
+            <div className="flex flex-col justify-center items-center gap-1">
+              <span className="flex flex-col justify-center items-center text-xs md:text-lg min-h-80">
+                <Rating
+                  className="md:max-w-[300px] max-w-56"
+                  value={ratings?.siteAverageRatings}
+                  readOnly
+                />
+
+                <span className="text-lg md:text-2xl">
+                  {ratings?.siteAverageRatings?.toFixed(1)} - (
+                  {ratings?.totalRatingsCount})
                 </span>
-              </p>
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -13,11 +13,14 @@ import {
 } from "react-icons/fa";
 import "./order-summery-style.css";
 import { AiOutlineTransaction } from "react-icons/ai";
+import useUserRoleCheck from "../../../../hooks/useUserRoleCheck";
 
 const OrderSummery = ({ startDate, endDate }) => {
   const path = "orders-summery";
 
   const { data, loading } = useDashboardData({ path, startDate, endDate });
+
+  const {userType} = useUserRoleCheck()
 
   const {
     totalOrders,
@@ -98,7 +101,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Delivered Orders */}
-        <div className="delivered-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+       <div className={`delivered-orders ${(userType==='moderator' || userType==='user') ? 'hidden' : 'visible'} p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105`}>
           <Link className="w-full" to={"/dashboard/completeOrders"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaCheckCircle className="inline-block mr-2" /> Delivered Orders
@@ -112,7 +115,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Cancelled Orders */}
-        <div className="canceled-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+       <div className={`canceled-orders p-4 ${(userType==='moderator' || userType==='user') ? 'hidden' : 'visible'} rounded-lg shadow-md transform transition duration-500 hover:scale-105`}>
           <Link className="w-full" to={"/dashboard/canceledOrders"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaTimesCircle className="inline-block mr-2" /> Canceled Orders
@@ -126,7 +129,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Returned Orders */}
-        <div className="returned-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div className={`returned-orders p-4 ${(userType==='moderator' || userType==='user') ? 'hidden' : 'visible'} rounded-lg shadow-md transform transition duration-500 hover:scale-105`}>
           <Link className="w-full" to={"/dashboard/canceledOrders"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaUndo className="inline-block mr-2" /> Returned Orders

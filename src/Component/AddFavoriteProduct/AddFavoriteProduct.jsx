@@ -9,52 +9,54 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AddFavoriteProduct = ({ product_id }) => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [isFavorite, setIsFavorite] = useState(false);
-  const {refetch} = useFavoriteProduct({}); 
+  const { refetch } = useFavoriteProduct({});
 
   useEffect(() => {
+    if (!user || loading) {
+      return;
+    }
     const checkFavorite = async () => {
-      if (!user || loading) {
-        return;
-      }
       const res = await axiosSecure.get(
-        `/favorites-check/?product_id=${product_id}&email=${user?.email}`
+        `/favorites-check/?product_id=${product_id}`
       );
 
       const favorites = res.data.status;
       setIsFavorite(favorites);
     };
 
-    checkFavorite();
-  }, [axiosSecure, product_id, user, loading]);
+    const timeoutId = setTimeout(() => {
+      checkFavorite();
+    }, 700);
 
-  
+    return () => clearTimeout(timeoutId);
+  }, [axiosSecure, product_id, user, loading]);
 
   const toggleFavorite = async (event) => {
     event.stopPropagation();
-    if (!user) {
-        confirmationAlert({
-          titleText: "Log In Required",
-          confirmButtonText: "Log In Now",
-          detailsText:
-            "You need to be logged in to add items to your cart. Please log in to continue.",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            return navigate("/login", { state: { from: location.pathname } });
-          }
-          return;
-        });
-      }
+    if (!user?.email) {
+      confirmationAlert({
+        titleText: "Log In Required",
+        confirmButtonText: "Log In Now",
+        detailsText:
+          "You need to be logged in to add items to your cart. Please log in to continue.",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          return navigate("/login", { state: { from: location.pathname } });
+        }
+      });
+      return;
+    }
     const email = user?.email;
     if (isFavorite) {
       await axiosSecure.delete(`/favorites`, { data: { email, product_id } });
     } else {
-        await axiosSecure.post("/favorites", { email, product_id });
+      await axiosSecure.post("/favorites", { email, product_id });
     }
-    refetch()
+    refetch();
     setIsFavorite(!isFavorite);
   };
 

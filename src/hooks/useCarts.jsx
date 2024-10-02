@@ -13,7 +13,7 @@ const useCarts = () => {
 
     return new Promise((resolve) => {
       setTimeout(async () => {
-        const res = await axiosSecure.get(`/carts?email=${user?.email}`);
+        const res = await axiosSecure.get(`/carts`);
         resolve(res.data);
       }, 700);
     });

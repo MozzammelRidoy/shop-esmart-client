@@ -10,13 +10,11 @@ import {
 } from "../../../Component/SweetAlart/SweelAlart";
 import WaitingLoader from "../../../Component/WaitingLoader/WaitingLoader";
 
-const ShippingAddress = ({setShippingInfo}) => {
+const ShippingAddress = ({ setShippingInfo }) => {
   const districts = useDistrictsFetch();
   const [usersInfo, isPending, refetch] = useUserInfo();
   const { user, userUpdateProfile } = useAuth();
   const axiosSecure = useAxiosSecure();
-
-  
 
   const {
     register,
@@ -69,12 +67,9 @@ const ShippingAddress = ({setShippingInfo}) => {
       country,
       shippingAddress,
     };
-  
+
     try {
-      const res = await axiosSecure.put(
-        `/usersInfo?email=${user.email}`,
-        userInfo
-      );
+      const res = await axiosSecure.put(`/usersInfo`, userInfo);
       if (res.data.matchedCount > 0) {
         await userUpdateProfile(name);
         confirmAlert("Shipping Info Added Success!");
@@ -251,7 +246,7 @@ const ShippingAddress = ({setShippingInfo}) => {
           </div>
           <div className="">
             <button className="w-full bg-[#ff3811] py-2 text-white hover:bg-red-700">
-             Confirm Shipping Info
+              Confirm Shipping Info
             </button>
           </div>
         </form>

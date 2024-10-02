@@ -16,8 +16,6 @@ const ProfilePicture = () => {
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
 
-  
-
   const handleImageInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -42,10 +40,7 @@ const ProfilePicture = () => {
           const userInfo = { imageUrl, imageId };
 
           await userUpdateProfile(user.name, imageUrl);
-          const res = await axiosSecure.put(
-            `/usersInfo?email=${user.email}`,
-            userInfo
-          );
+          const res = await axiosSecure.put(`/usersInfo`, userInfo);
           if (res.data.matchedCount > 0) {
             confirmAlert("Profile Update Success!");
             refetch();
@@ -63,9 +58,13 @@ const ProfilePicture = () => {
       {(isPending || loading) && <WaitingLoader></WaitingLoader>}
       <div className="h-24 w-full bg-gray-300 dark:bg-gray-500 absolute top-0 rounded-b-[100%]"></div>
       <div className="w-44  z-10">
-        <img 
+        <img
           className="rounded-full w-44 object-cover h-44"
-          src={usersInfo?.imageUrl ? usersInfo.imageUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s"}
+          src={
+            usersInfo?.imageUrl
+              ? usersInfo.imageUrl
+              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s"
+          }
         />
       </div>
       <div className="flex flex-col items-center gap-1 w-[90%]">
@@ -73,8 +72,8 @@ const ProfilePicture = () => {
           {usersInfo?.name ? usersInfo.name : "Your Name"}
         </h2>
         <p>Profile ID : #{usersInfo?._id?.slice(-8)}</p>
-        <button 
-        disabled={isPending || loading}
+        <button
+          disabled={isPending || loading}
           onClick={handleImageInput}
           className="text-white py-1 px-5 w-[70%] outline-none rounded-sm  bg-[#ff3811] hover:bg-red-800"
         >

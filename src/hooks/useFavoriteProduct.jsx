@@ -13,9 +13,7 @@ const useFavoriteProduct = ({ dataLoad }) => {
 
     return new Promise((resolve) => {
       setTimeout(async () => {
-        const res = await axiosSecure.get(
-          `/favorites?email=${user.email}&dataLoad=${dataLoad}`
-        );
+        const res = await axiosSecure.get(`/favorites?dataLoad=${dataLoad}`);
         resolve(res.data);
       }, 700);
     });

@@ -187,6 +187,11 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <aside className="text-center md:hidden absolute bottom-0 w-full bg-slate-800 text-xs md:text-sm text-white py-4">
+          <p>
+            Copyright © ${new Date().getFullYear()} - Develop By Mozzammel Ridoy
+          </p>
+        </aside>
     </div>
   );
 };

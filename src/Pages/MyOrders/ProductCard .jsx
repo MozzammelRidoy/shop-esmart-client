@@ -13,8 +13,8 @@ const ProductCard = ({
   const axiosSecure = useAxiosSecure();
   const { productIamge, productPrice, quantity, product_id } = product;
 
-  const [checkReview, setCheckReview] = useState({});
-  const [userReview, setUserRivew] = useState(null);
+  const [checkReview, setCheckReview] = useState(false);
+  const [userReview, setUserRivew] = useState({});
 
   
 
@@ -26,8 +26,15 @@ const ProductCard = ({
         const response = await axiosSecure.get(
           `/products-review-check/${product_id}`
         );
-        setCheckReview(response.data.ratingSubmit);
-        setUserRivew(response.data.userReview || null);
+        if(response.data.ratingSubmit){
+          setCheckReview(response.data?.ratingSubmit);
+          setUserRivew(response.data?.userReview || null);
+        }
+        else{
+          setCheckReview(response.data?.ratingSubmit); 
+          setUserRivew(null)
+        }
+        
       } catch (error) {
         console.error("Error checking review status", error);
       }
@@ -62,7 +69,7 @@ const ProductCard = ({
         </Link>
         {order_status === "Delivered" && (
           <>
-            {checkReview ? (
+            {!checkReview ? (
               <button
                 className="block text-base py-1 px-2  mt-2 bg-[#ff3811] hover:bg-red-700 text-white"
                 onClick={() => handleReviewClick(product)}
@@ -73,10 +80,10 @@ const ProductCard = ({
               <div className="mt-2 w-full">
                 <Rating
                   className="md:max-w-20 max-w-16"
-                  value={userReview.rating}
+                  value={userReview?.rating}
                   readOnly
                 />{" "}
-                <p className="text-xs">{userReview.review}</p>
+                <p className="text-xs">{userReview?.review}</p>
               </div>
             )}{" "}
           </>

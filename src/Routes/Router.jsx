@@ -42,6 +42,7 @@ import SeeAllProducts from "../Component/SeeAllPrroducts/SeeAllProducts";
 import BannedPage from "../Component/BannedPage/BannedPage";
 import PrivateRoute from "./PrivateRoute";
 import ProcessingOrders from "../Dashboard/AdminPages/ProcessingOrders/ProcessingOrders";
+import RealTimeWebChat from "../Component/RealTimeWebChat/RealTimeWebChat";
 
 const router = createBrowserRouter([
     {
@@ -67,7 +68,11 @@ const router = createBrowserRouter([
         },
         {
           path : '/chat',
-          element : <PrivateRoute><ChatMessage></ChatMessage></PrivateRoute>
+          element : <ChatMessage></ChatMessage>
+        },
+        {
+          path : '/webChat',
+          element : <PrivateRoute><RealTimeWebChat></RealTimeWebChat></PrivateRoute>
         },
         {
           path : '/location',

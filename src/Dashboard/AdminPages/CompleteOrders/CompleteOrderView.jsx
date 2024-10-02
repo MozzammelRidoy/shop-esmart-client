@@ -38,8 +38,6 @@ const CompleteOrderView = ({ order, refetch }) => {
         orderProfit
       } = order;
 
-      console.log(order)
-
       const axiosSecure = useAxiosSecure();
  
 

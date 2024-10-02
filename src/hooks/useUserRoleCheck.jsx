@@ -5,28 +5,28 @@ import { useEffect, useState } from "react";
 const useUserRoleCheck = () => {
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState("");
   const [isBanned, setIsBanned] = useState(false);
-  const [isRoleLoading, setIsRoleLoading] = useState(true); 
+  const [isRoleLoading, setIsRoleLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading && user?.email) {  
+    if (!loading && user?.email) {
       setIsRoleLoading(true);
       axiosSecure
-        .post('/users/type', { email: user?.email })
-        .then(res => {
+        .post("/users/type")
+        .then((res) => {
           setUserType(res.data.type);
           setIsBanned(res.data.isBanned);
           setIsRoleLoading(false);
         })
-        .catch(err => {
+        .catch((err) => {
           console.error("Error fetching user role: ", err);
-          setIsRoleLoading(false);  
+          setIsRoleLoading(false);
         });
     }
   }, [axiosSecure, user, loading]);
 
-  return { userType, isBanned, isRoleLoading }; 
+  return { userType, isBanned, isRoleLoading };
 };
 
 export default useUserRoleCheck;

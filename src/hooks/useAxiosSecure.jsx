@@ -8,12 +8,22 @@ const axiosSecure = axios.create({
   withCredentials: true,
 });
 const useAxiosSecure = () => {
-  const { userLogout } = useAuth();
+  const { userLogout, user } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     axiosSecure.interceptors.request.use(
       (config) => {
-        config.withCredentials = true;
+        const userEmail = user?.email;
+        if (userEmail) {
+          if (!config.params) {
+            config.params = {};
+          }
+
+          if (!config.params.email) {
+            config.params.email = userEmail;
+          }
+        }
+
         return config;
       },
       (err) => {
@@ -26,11 +36,12 @@ const useAxiosSecure = () => {
         return response;
       },
       async (err) => {
-        const status = err.response.status;
-
+        const status = err.response?.status;
         if (status === 401 || status === 403) {
           await userLogout();
           navigate("/login");
+        } else if (status === 405 || status === 423) {
+          navigate("/");
         }
 
         return Promise.reject(err);

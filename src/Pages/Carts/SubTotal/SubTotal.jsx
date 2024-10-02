@@ -134,6 +134,7 @@ const SubTotal = ({ reset, setReset }) => {
         setFinalTotalAmount(res.data.finalAmount);
       }
     } catch (err) {
+      console.error(err)
       setCouponErrorMessage(err.response.data.message);
      
        
