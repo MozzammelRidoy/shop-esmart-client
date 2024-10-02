@@ -4,6 +4,11 @@ import CategoryBanner from "../CategoryBanner/CategoryBanner";
 import HotPicks from "../HotPicks/HotPicks";
 import ForYouProduct from "../ForYouProduct/ForYouProduct";
 
+//TODO : Helmet set
+//TODO : Props Validation
+//TODO : Webchat
+
+
 const Home = () => {
   return (
     <section className="md:mt-6 mt-3">

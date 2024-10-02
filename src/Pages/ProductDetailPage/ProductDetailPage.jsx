@@ -143,7 +143,7 @@ const ProductDetailPage = () => {
       {isLoading && <WaitingLoader></WaitingLoader>}
       <div className="md:flex md:gap-4 gap-2 ">
         {/* for image  */}
-        <div className="md:w-[35%] w-full relative">
+        <div data-aos="zoom-in"  className="md:w-[35%] w-full relative">
           <ImageGallery
             items={images}
             showNav={false}

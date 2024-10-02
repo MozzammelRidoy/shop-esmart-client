@@ -15,19 +15,19 @@ const MyCoupons = () => {
 
   const sortedCoupons = myCoupons.sort((a, b) => {
     const currentDate = new Date();
-    const aEndDate = new Date(a.end_date); // End date of coupon 'a'
-    const bEndDate = new Date(b.end_date); // End date of coupon 'b'
+    const aEndDate = new Date(a.end_date); 
+    const bEndDate = new Date(b.end_date); 
 
-    // Check if 'a' is expired
+   
     const isAExpired = currentDate > aEndDate;
-    // Check if 'b' is expired
+   
     const isBExpired = currentDate > bEndDate;
 
-    // If 'a' is valid and 'b' is expired, 'a' should come before 'b'
+    
     if (!isAExpired && isBExpired) return -1;
-    // If 'a' is expired and 'b' is valid, 'a' should come after 'b'
+    
     if (isAExpired && !isBExpired) return 1;
-    // Otherwise, keep the current order
+    
     return 0;
   });
 

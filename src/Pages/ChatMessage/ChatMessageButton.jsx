@@ -19,7 +19,7 @@ const ChatMessageButton = () => {
         </button>
 
         {isOpen && (
-          <div className="absolute left-5  -top-60 flex-col flex space-y-2">
+          <div data-aos="fade-up"  className="absolute left-5  -top-60 flex-col flex space-y-2">
             <Whatsapp />
             <Messanger />
             <Phone />

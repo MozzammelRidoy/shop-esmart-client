@@ -37,7 +37,7 @@ const Main = () => {
         data-aos="fade-up"
         smooth
         component={<BiArrowToTop className="text-white text-3xl" />}
-        className="!z-50 !bg-[#ff3811] shadow-lg !rounded-full flex items-center justify-center !w-10 !h-10 !fixed !right-1 md:!bottom-10 !bottom-[60px]"
+        className="!z-50 hover:!scale-110 !transition-all !duration-300 !bg-[#ff3811] shadow-lg !rounded-full flex items-center justify-center !w-10 !h-10 !fixed !right-1 md:!bottom-8 !bottom-[60px]"
       />
     </div>
   );

@@ -10,7 +10,7 @@ const ChatMessage = () => {
         Contact Us
       </h1>
 
-      <div className="flex flex-col md:flex-row md:gap-6 gap-3">
+      <div data-aos="fade-up" className="flex flex-col md:flex-row md:gap-6 gap-3">
         <Whatsapp />
         <Messanger />
         <Phone />

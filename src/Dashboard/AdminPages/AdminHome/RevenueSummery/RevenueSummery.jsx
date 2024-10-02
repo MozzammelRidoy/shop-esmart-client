@@ -22,7 +22,7 @@ const RevenueSummery = ({startDate, endDate}) => {
             <h2 className="text-2xl font-semibold mb-4">Revenue Summary</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Total Revenue */}
-                <div className="total-revenue p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-green-500">
+                <div data-aos="zoom-in" className="total-revenue p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-green-500">
                     <h3 className="text-lg flex items-center font-semibold text-white">
                         <FaMoneyBillWave className="inline-block mr-2" /> Total Revenue
                     </h3>
@@ -32,7 +32,7 @@ const RevenueSummery = ({startDate, endDate}) => {
                 </div>
 
                 {/* Total Coupon Discount */}
-                <div className="total-coupon-discount p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-blue-500">
+                <div data-aos="zoom-in" className="total-coupon-discount p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-blue-500">
                     <h3 className="text-lg flex items-center font-semibold text-white">
                         <FaTags className="inline-block mr-2" /> Total Coupon Discount
                     </h3>
@@ -42,7 +42,7 @@ const RevenueSummery = ({startDate, endDate}) => {
                 </div>
 
                 {/* Total Profit */}
-                <div className="total-profit p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-yellow-500">
+                <div data-aos="zoom-in" className="total-profit p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-yellow-500">
                     <h3 className="text-lg flex items-center font-semibold text-white">
                         <FaDollarSign className="inline-block mr-2" /> Total Profit
                     </h3>
@@ -52,7 +52,7 @@ const RevenueSummery = ({startDate, endDate}) => {
                 </div>
 
                 {/* Total Products Discount */}
-                <div className="total-products-discount p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-red-500">
+                <div data-aos="zoom-in" className="total-products-discount p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105 bg-red-500">
                     <h3 className="text-lg flex items-center font-semibold text-white">
                         <FaGift className="inline-block mr-2" /> Total Products Discount
                     </h3>

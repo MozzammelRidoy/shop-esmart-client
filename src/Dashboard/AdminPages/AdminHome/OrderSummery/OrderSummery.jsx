@@ -42,12 +42,12 @@ const OrderSummery = ({ startDate, endDate }) => {
     });
 
   return (
-    <div className="md:p-6 p-2 rounded-lg shadow-md">
+    <div  className="md:p-6 p-2 rounded-lg shadow-md">
       {loading && <WaitingLoader />}
       <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Total Orders */}
-        <div className="total-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div data-aos='zoom-in' className="total-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
           <h3 className="text-lg flex items-center font-semibold text-white">
             <FaBox className="inline-block mr-2" /> Total Orders
           </h3>
@@ -59,7 +59,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Pending Orders */}
-        <div className="pending-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div data-aos='zoom-in' className="pending-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
           <Link to={"/dashboard/pendingOrders"} className="w-full">
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaClipboardList className="inline-block mr-2" /> Pending Orders
@@ -73,7 +73,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Confirmed Orders */}
-        <div className="confirmed-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div data-aos='zoom-in' className="confirmed-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
           <Link className="w-full" to={"/dashboard/allOrders"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaCheckCircle className="inline-block mr-2" /> Confirmed Orders
@@ -87,7 +87,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* On Courier Orders */}
-        <div className="on-courier-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div data-aos='zoom-in' className="on-courier-orders p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
           <Link className="w-full" to={"/dashboard/processingOrders"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaTruck className="inline-block mr-2" /> On Courier
@@ -143,7 +143,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Total Users */}
-        <div className="total-users p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div data-aos='zoom-in' className="total-users p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
           <Link to={"/dashboard/allUsers"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <FaUsers className="inline-block mr-2 text-xl" /> Total Users
@@ -157,7 +157,7 @@ const OrderSummery = ({ startDate, endDate }) => {
         </div>
 
         {/* Total Transactions */}
-        <div className="total-transaction p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+        <div data-aos='zoom-in' className="total-transaction p-4 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
           <Link to={"/dashboard/transactions"}>
             <h3 className="text-lg flex items-center font-semibold text-white">
               <AiOutlineTransaction className="inline-block text-xl mr-2" />{" "}

@@ -15,7 +15,7 @@ const useCarts = () => {
       setTimeout(async () => {
         const res = await axiosSecure.get(`/carts`);
         resolve(res.data);
-      }, 700);
+      }, 1000);
     });
   };
 

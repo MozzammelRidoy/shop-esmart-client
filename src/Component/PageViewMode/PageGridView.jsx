@@ -4,9 +4,9 @@ import AddFavoriteProduct from "../AddFavoriteProduct/AddFavoriteProduct";
 
 const PageGridView = ({ collections }) => {
   return (
-    <section className="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
+    <section  className="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
       {collections?.map((item) => (
-        <div className="relative z-10 transform transition duration-500 hover:scale-105" key={item._id}>
+        <div data-aos="zoom-in" className="relative z-10 transform transition duration-500 hover:scale-105" key={item._id}>
           <Link
             to={`/product/${item._id}`}
             className="hover:shadow-2xl dark:shadow-gray-600"

@@ -43,12 +43,12 @@ const ProductsSlider = ({ path, collections = [], totalResult = 10 }) => {
     >
       {collections?.length > 0 &&
         collections?.map((item) => (
-          <SwiperSlide
+          <SwiperSlide 
             className="relative bg-gray-100 dark:bg-gray-900 transform transition duration-500 hover:scale-105"
             key={item._id}
           >
             <Link to={`/product/${item._id}`}>
-              <div className="md:h-[340px] h-48 overflow-hidden pb-1">
+              <div data-aos="fade-left"   data-aos-duration="1000" className="md:h-[340px] h-48 overflow-hidden pb-1">
                 {item?.images[0]?.image_url && (
                   <div className="h-3/4  relative">
                     <img

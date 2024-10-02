@@ -24,16 +24,16 @@ const ExtendedSummery = ({ startDate, endDate }) => {
       <h2 className="text-2xl font-semibold mb-4">Extended Summary</h2>
 
       <div className="flex flex-col items-center">
-        <div className="mb-6">
+        <div data-aos="fade-up" className="mb-6">
           <TopSellingProductsChart data={topSellingProducts} />
         </div>
-        <div className="mb-6">
+        <div data-aos="fade-up" className="mb-6">
           <TrendingProductsChart data={trendingProducts} />
         </div>
-        <div className="mb-6">
+        <div data-aos="fade-up" className="mb-6">
           <LowStockAlertsChart data={lowStockAlerts} />
         </div>
-        <div className="mb-6 grid md:grid-cols-2 gap-4  ">
+        <div data-aos="fade-up" className="mb-6 grid md:grid-cols-2 gap-4  ">
           <CategoryWiseSalesChart data={categoryWiseSales} />
           <div className="">
             <h3 className="text-xl font-semibold mb-4 text-center">

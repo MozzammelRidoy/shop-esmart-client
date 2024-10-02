@@ -6,7 +6,7 @@ const PageListView = ({ collections }) => {
   return (
     <section className="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-2">
       {collections.map((item) => (
-        <div className="z-10 relative transform transition duration-500 hover:scale-105" key={item._id}>
+        <div data-aos="fade-up" className="z-10 relative transform transition duration-500 hover:scale-105" key={item._id}>
           <Link
             to={`/product/${item._id}`}
             className="hover:shadow-2xl dark:shadow-gray-600"

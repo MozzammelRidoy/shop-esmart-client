@@ -24,11 +24,11 @@ const MySingleCoupons = ({ coupon }) => {
   const isValid = currentDate < endDate;
 
   return (
-    <div className="">
+    <div data-aos="fade-up"  className="">
       {/* Coupon Card */}
       <div
         className={`border ${
-          isValid ? "border-green-500" : "border-red-500 bg-gray-100"
+          isValid ? "border-green-500" : "border-red-500 "
         } rounded-lg overflow-hidden shadow-lg transition transform md:hover:scale-110 hover:scale-105 hover:shadow-xl relative`}
       >
         <div

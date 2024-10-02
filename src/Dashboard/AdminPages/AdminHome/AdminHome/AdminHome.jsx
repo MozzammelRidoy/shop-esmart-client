@@ -32,7 +32,7 @@ const AdminHome = () => {
       </h2>
 
       <div className="space-y-4">
-        <div>
+        <div data-aos="fade-up">
           <OrdersAnalysis startDate={startDate} endDate={endDate} />
         </div>
         <div>

@@ -44,7 +44,7 @@ const OrderDetailsPage = ({ order, refetch }) => {
   
 
   return (
-    <div className={`my-6 rounded-lg md:max-w-6xl md:mx-auto mx-2 border ${order_status === 'Delivered' ? 'border-green-500' : 'border-orange-600' } `}>
+    <div data-aos="fade-up" className={`my-6 rounded-lg md:max-w-6xl md:mx-auto mx-2 border ${order_status === 'Delivered' ? 'border-green-500' : 'border-orange-600' } `}>
       {/* Order Header */}
       <div className="dark:bg-gray-800 bg-gray-100 md:px-12  p-4 shadow-lg rounded-t-lg">
         <h1 className="text-xl font-bold mb-2">Order Details</h1>

@@ -15,7 +15,7 @@ const HotPicks = () => {
     
 
     return (
-        <section>
+        <section >
             {loading && <WaitingLoader></WaitingLoader>}
             <div className="flex justify-between mb-3 md:mb-5">
                 <h2 className="md:text-3xl text-xl font-bold flex items-center gap-2">Hot Picks <span className="text-[#FF3811] text-2xl"><FaFire />    </span>            </h2>
