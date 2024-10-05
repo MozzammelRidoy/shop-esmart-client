@@ -59,4 +59,98 @@ User Authentication: Secure login and signup processes featuring password valida
 Forgot Password: Includes a Forgot Password option, allowing users to recover lost passwords, with form management handled via React Hook Form for validation and control.
 
 
+Admin-Side Features
+Dashboard & Analytics:
+Date Filtering: All sections, including Order Analysis, Order Summary, Revenue Summary, and Extended Summary, allow admin users to filter reports by date. Default view shows the last 28 days, with the option to select custom date ranges.
+
+Order Analysis: View date-wise reports including total orders, delivered orders, canceled, and returned orders.
+
+Order Summary Section: Displays key metrics like total orders, pending, confirmed, in courier, completed, canceled, returned orders, users, and transactions.
+
+Revenue Summary: Shows total revenue, profit, coupon discounts, and product-specific discounts.
+
+Extended Summary: Includes top-selling products, trending products, low stock alerts, category-wise sales percentages (via pie charts), and site ratings.
+
+Product Management:
+All Products Menu: View, update, or delete products.
+
+Add New Product: Add new products with react dropZone & beutiful-dnd image upload (Cloudinary) and manage tags by react-tag-input.
+
+Categories Menu: Load, update, delete, or add new categories dynamically.
+
+Order Management:
+Pending Orders: Orders submitted by users are initially categorized as pending. Admin verifies these orders to ensure their validity before confirmation.
+
+Confirmed Orders: Validated orders move to this category after admin confirmation. These orders are prepared for packaging and are ready to be processed.
+
+Processing Orders: Orders in this category are currently being shipped. Admin can track these orders and update their status to either delivered, canceled, or returned.
+
+Completed Orders: This section displays all orders that have been successfully delivered, along with their associated revenue and profit details.
+
+Canceled Orders: Orders that have been either canceled by the admin or returned by the users are displayed here.
+
+Transaction & Coupon Management:
+Transaction Menu: Validate payments, track order payments, and view payment details.
+
+Coupons Menu: Create, update, delete, and view all coupon codes.
+
+User Management:
+Admin Users Menu: Manage admin roles (Admin, Manager, Moderator), update roles, ban/unban users.
+
+All Users Menu: View all users, change roles, ban/unban as needed.
+
+Site Settings:
+Site Settings Menu: Modify key site elements like banners and homepage content.
+Search Features:
+Search by product, user, transaction, or coupon details across all sections.
+Authentication & Role-Based Access:
+Role-based access control (Admin, Manager, Moderator). Routes are protected with private routes, and authentication is handled via PrivateRoute.
+
+
+Future Development Plans:
+Real-time Chat Feature:
+
+Implement a chat feature using Socket.IO, allowing users to engage in real-time conversations with customer support or other users.
+Behavior Tracking:
+
+The application will track user behavior, such as product views, searches, and cart additions. This data will help create personalized experiences by suggesting relevant products.
+Dynamic Product Recommendations:
+
+Based on tracked behaviors, users will receive tailored product suggestions in a section like "For You," enhancing the shopping experience through intelligent recommendations.
+Real-time Data Processing:
+
+Future updates will incorporate real-time data processing capabilities, enabling live updates for products, chat interactions, and instant notifications to users.
+Enhanced User Experience:
+
+Continued improvements to the UI/UX design, ensuring that users have a pleasant and intuitive shopping experience.
+
+
+Links to Deployment and Code:
+Live Link or Client-side hosted on Firebase: https://shopesmart-51ca8.web.app/dashboard
+
+Server-side hosted on Vercel: https://shop-esmart-server.vercel.app/
+
+Client-side GitHub repository: https://github.com/MozzammelRidoy/shop-esmart-client
+
+Server-side GitHub repository: https://github.com/MozzammelRidoy/shop-esmart-server
+
+
+Env Variables Key : 
+VITE_apiKey =
+VITE_authDomain =
+VITE_projectId =
+VITE_storageBucket =
+VITE_messagingSenderId =
+VITE_appId =
+VITE_GOOGLE_RECAPTCHA_SITE_KEY_V2 =
+VITE_GOOGLE_RECAPTCHA_SITE_KEY_V3 =
+VITE_CLOUDINARY_CLOUD_NAME =
+VITE_CLOUDINARY_API_KEY =
+VITE_CLOUDINARY_API_SECRET =
+VITE_GOOGLE_MAP_API_KEY =
+
+
+
+
+
 
