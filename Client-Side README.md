@@ -4,7 +4,7 @@
 - **Client-side GitHub repository:** [Client Repo](https://github.com/MozzammelRidoy/shop-esmart-client)
 - **Server-side GitHub repository:** [Server Repo](https://github.com/MozzammelRidoy/shop-esmart-server)
 
-# E-commerce Project Overview (Shop esmart)
+# E-commerce Project Client Overview (Shop esmart)
 
 Shop esmart is a comprehensive e-commerce platform built using the MERN stack (MongoDB, Express.js, React.js, and Node.js). The platform is designed as a single-page application (SPA), ensuring efficient data handling and a smooth user experience. It offers a user-friendly interface with a focus on security, performance, and responsive design. The site includes both user and admin sections, catering to customers and administrators. It also features flexible product search, filtering, and an order management system.
 
