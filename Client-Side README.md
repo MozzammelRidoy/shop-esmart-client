@@ -1,3 +1,8 @@
+## Links to Deployment and Code
+- **Live Link (Client-side hosted on Firebase):** [Live Link](https://shopesmart-51ca8.web.app/dashboard)
+- **Client-side GitHub repository:** [Client Repo](https://github.com/MozzammelRidoy/shop-esmart-client)
+- **Server-side GitHub repository:** [Server Repo](https://github.com/MozzammelRidoy
+
 # E-commerce Project Overview (Shop esmart)
 
 Shop esmart is a comprehensive e-commerce platform built using the MERN stack (MongoDB, Express.js, React.js, and Node.js). The platform is designed as a single-page application (SPA), ensuring efficient data handling and a smooth user experience. It offers a user-friendly interface with a focus on security, performance, and responsive design. The site includes both user and admin sections, catering to customers and administrators. It also features flexible product search, filtering, and an order management system.
@@ -113,3 +118,19 @@ Shop esmart is a comprehensive e-commerce platform built using the MERN stack (M
 - **Server-side hosted on Vercel:** [Server Link](https://shop-esmart-server.vercel.app/)
 - **Client-side GitHub repository:** [Client Repo](https://github.com/MozzammelRidoy/shop-esmart-client)
 - **Server-side GitHub repository:** [Server Repo](https://github.com/MozzammelRidoy
+
+
+## Environment Variables Key
+
+- **VITE_apiKey**: `your_api_key_here`
+- **VITE_authDomain**: `your_auth_domain_here`
+- **VITE_projectId**: `your_project_id_here`
+- **VITE_storageBucket**: `your_storage_bucket_here`
+- **VITE_messagingSenderId**: `your_messaging_sender_id_here`
+- **VITE_appId**: `your_app_id_here`
+- **VITE_GOOGLE_RECAPTCHA_SITE_KEY_V2**: `your_recaptcha_v2_key_here`
+- **VITE_GOOGLE_RECAPTCHA_SITE_KEY_V3**: `your_recaptcha_v3_key_here`
+- **VITE_CLOUDINARY_CLOUD_NAME**: `your_cloudinary_cloud_name_here`
+- **VITE_CLOUDINARY_API_KEY**: `your_cloudinary_api_key_here`
+- **VITE_CLOUDINARY_API_SECRET**: `your_cloudinary_api_secret_here`
+- **VITE_GOOGLE_MAP_API_KEY**: `your_google_map_api_key_here`
