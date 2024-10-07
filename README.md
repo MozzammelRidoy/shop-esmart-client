@@ -1,5 +1,6 @@
 ## Links to Deployment and Code
-- **Live Link (Client-side hosted on Firebase):** [Live Link](https://shopesmart-51ca8.web.app/dashboard)
+- **Live Link (Client-side hosted on Firebase):** [Live Link](https://shopesmart-51ca8.web.app/dashboard
+- **Admin_Email :** admin123@mail.com **Password:** Password!23
 - **Server-side hosted on Vercel:** [Server Link](https://shop-esmart-server.vercel.app/)
 - **Client-side GitHub repository:** [Client Repo](https://github.com/MozzammelRidoy/shop-esmart-client)
 - **Server-side GitHub repository:** [Server Repo](https://github.com/MozzammelRidoy/shop-esmart-server)
@@ -116,6 +117,7 @@ Shop esmart is a comprehensive e-commerce platform built using the MERN stack (M
 
 ## Links to Deployment and Code
 - **Live Link (Client-side hosted on Firebase):** [Live Link](https://shopesmart-51ca8.web.app/dashboard)
+- **Admin_Email :** admin123@mail.com **Password:** Password!23
 - **Server-side hosted on Vercel:** [Server Link](https://shop-esmart-server.vercel.app/)
 - **Client-side GitHub repository:** [Client Repo](https://github.com/MozzammelRidoy/shop-esmart-client)
 - **Server-side GitHub repository:** [Server Repo](https://github.com/MozzammelRidoy/shop-esmart-server)
