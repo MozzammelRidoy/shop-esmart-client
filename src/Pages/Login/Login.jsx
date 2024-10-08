@@ -97,9 +97,10 @@ const Login = () => {
     <div
       data-aos="zoom-in"
       data-aos-duration="1500"
-      className="md:bg-login-bg bg-cover  bg-center min-h-screen  dark:text-white text-black md:text-white"
+      className="md:bg-login-bg bg-cover  bg-center min-h-screen  dark:text-white  text-black md:text-white"
     >
       <Navbar></Navbar>
+      
 
       <div className="">
         <h2 className="text-center md:text-4xl text-xl font-semibold my-4 ">

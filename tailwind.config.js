@@ -19,8 +19,8 @@ export default {
       },
     },
     backgroundImage: {
-      'login-bg': 'url("src/assets/login/login.jpg")',
-      'signup-bg': 'url("src/assets/login/login2.jpg")',
+      'login-bg': 'url("https://res.cloudinary.com/dsh57dvqf/image/upload/v1728344693/login_n35lza.jpg")',
+      'signup-bg': 'url("https://res.cloudinary.com/dsh57dvqf/image/upload/v1728346227/login2_vb7o18.jpg")',
     },
     fontFamily: {
       'exo-2': ['"Exo 2", sans-serif'],
